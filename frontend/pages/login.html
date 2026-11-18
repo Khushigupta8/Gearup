@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in · My account · GearUp Motorcycles</title>
+<meta name="description" content="Sign in to your GearUp account to track your bike, pay the balance and see your documents.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body>
+<!-- @include icons.html -->
+<!-- @include header.html -->
+
+<main>
+
+<section class="phero slim short">
+  <div class="slab" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <div class="crumbs"><a href="index.html">Home</a><span class="s">/</span><span>Sign in</span></div>
+      <h1 class="disp">Sign <em>in</em></h1>
+    </div>
+    
+  </div>
+</section>
+
+<section class="sec paper" style="padding-top:34px">
+  <div class="wrap">
+      <div class="alow">
+        <div class="signin">
+          <h3>Welcome back</h3>
+          <p class="muted" style="margin-top:6px">Sign in to track your bike, pay the balance and see your documents.</p>
+          <form class="form mt2" onsubmit="return false">
+            <div class="fl"><label for="se">Email</label><input id="se" type="email" placeholder="you@example.com"></div>
+            <div class="fl"><label for="sp">Password</label><input id="sp" type="password" placeholder="Password"></div>
+            <a href="account.html" class="btn btn-ink">Sign in</a>
+          </form>
+          <div class="alt"><a href="#">Text me a sign-in code</a><a href="#">Forgotten password?</a></div>
+        </div>
+        <div class="icard dk" style="display:flex;flex-direction:column">
+          <span class="ic red"><svg class="i"><use href="#i-info"/></svg></span>
+          <h3>No account yet?</h3>
+          <p>One is made for you when you reserve a bike for £99. Use it to follow your bike's prep, pay the balance and keep your documents.</p>
+          <a href="used-bikes.html" class="btn btn-red mt2" style="align-self:flex-start">Find a bike <svg class="i"><use href="#i-right"/></svg></a>
+        </div>
+      </div>
+  </div>
+</section>
+
+</main>
+<!-- @include footer.html -->
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -14,7 +14,7 @@ backend/    API starter: structure and plan, health check only for now
 ```
 frontend/
 ├── pages/            the 17 pages, each holding only its own content (served at /bike.html etc.)
-├── partials/         header.html, footer.html, icons.html, shared by every page
+├── partials/         header.html, footer.html, icons.html (every page), account-nav.html (account pages)
 ├── src/
 │   ├── main.js       entry point, loads styles and scripts
 │   ├── styles/       main.css

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Part-exchange · My account · GearUp Motorcycles</title>
+<meta name="description" content="Add your current bike to your order and take its value off your balance.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body>
+<!-- @include icons.html -->
+<!-- @include header.html -->
+
+<main>
+
+<section class="phero slim short">
+  <div class="slab" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <div class="crumbs"><a href="index.html">Home</a><span class="s">/</span><a href="account.html">My account</a><span class="s">/</span><span>Part-exchange</span></div>
+      <h1 class="disp">Part-<em>exchange</em></h1>
+    </div>
+    <div class="hi"><span>Signed in as <b>Rahim</b></span><span>Not you? <a href="login.html" style="color:#fff;text-decoration:underline;text-underline-offset:3px">Log out</a></span></div>
+  </div>
+</section>
+
+<section class="sec paper" style="padding-top:34px">
+  <div class="wrap acct">
+    <!-- @include account-nav.html active=px -->
+    <div class="apage">
+        <div class="apanel">
+          <div class="ph"><h3>Part-exchange</h3></div>
+          <p class="muted">Add your current bike to this order. We value it and take it off your balance.</p>
+          <form class="mini mt2" onsubmit="return false">
+            <div class="fl"><label for="pxr">Your registration</label><div class="plate"><span><i></i>UK</span><input id="pxr" placeholder="AB12 CDE" maxlength="8"></div></div>
+            <a href="part-exchange.html" class="btn btn-red" style="width:100%">Value my bike <svg class="i"><use href="#i-right"/></svg></a>
+          </form>
+        </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<!-- @include footer.html -->
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
