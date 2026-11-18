@@ -1017,7 +1017,6 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 .wa-pill{background:#fff;color:var(--ink);height:28px;padding:0 14px;border-radius:999px;font-size:13px;transition:background .2s,color .2s,transform .2s}
 .wa-pill svg{color:#1faa53}
 .wa-pill:hover{background:#25D366;color:#fff;transform:translateY(-1px)}.wa-pill:hover svg{color:#fff}
-.hd-act .wa-hd svg{color:#25D366}
 .hd-act .bsk{position:relative}
 .hd-act .bsk i{position:absolute;top:-6px;right:-2px;min-width:18px;height:18px;border-radius:9px;background:var(--red);color:#fff;font-style:normal;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}
 .hd-act a svg{transition:transform .2s var(--ease)}.hd-act a:hover svg{transform:translateY(-2px)}
@@ -1030,7 +1029,6 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 .ftr-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .ftr-acts .btn{height:46px;padding:0 20px;font-size:15px}
 .btn-wa{background:#25D366;color:#fff}.btn-wa:hover{background:#1a9b48}
-@media (max-width:1024px){.hd-act .wa-hd{display:none}}
 @media (max-width:640px){.wa-pill{height:24px;padding:0 10px;font-size:11px}}
 
 /* Home v4: hero carousel (whole bike visible) */
