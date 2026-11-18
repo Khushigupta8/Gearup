@@ -1268,13 +1268,13 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 .tstrip{position:relative;margin-top:10px}
 .ts-track{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--red) var(--paper);padding-bottom:8px;outline:0}
 .ts-track::-webkit-scrollbar{height:6px}.ts-track::-webkit-scrollbar-track{background:var(--paper);border-radius:3px}.ts-track::-webkit-scrollbar-thumb{background:var(--red);border-radius:3px}
-.tb{flex:0 0 calc((100% - 40px) / 5.5);aspect-ratio:4/3;border:2px solid transparent;border-radius:var(--r-sm);overflow:hidden;padding:0;cursor:pointer;background:var(--paper);position:relative;scroll-snap-align:start;transition:border-color .2s,transform .2s}
-.tb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s var(--ease)}
-.tb:hover img{transform:scale(1.07)}
-.tb.on{border-color:var(--red)}
-.tb.vid::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.45)}
-.tb.vid svg{position:absolute;z-index:1;left:50%;top:42%;transform:translate(-50%,-50%);width:26px;height:26px;color:#fff;fill:#fff}
-.tb.vid span{position:absolute;z-index:1;left:0;right:0;bottom:6px;text-align:center;color:#fff;font-family:var(--narrow);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.ts-track .tb{flex:0 0 calc((100% - 40px) / 5.5);aspect-ratio:4/3;border:2px solid transparent;border-radius:var(--r-sm);overflow:hidden;padding:0;cursor:pointer;background:var(--paper);position:relative;scroll-snap-align:start;transition:border-color .2s,transform .2s}
+.ts-track .tb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s var(--ease)}
+.ts-track .tb:hover img{transform:scale(1.07)}
+.ts-track .tb.on{border-color:var(--red)}
+.ts-track .tb.vid::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.45)}
+.ts-track .tb.vid svg{position:absolute;z-index:1;left:50%;top:42%;transform:translate(-50%,-50%);width:26px;height:26px;color:#fff;fill:#fff}
+.ts-track .tb.vid span{position:absolute;z-index:1;left:0;right:0;bottom:6px;text-align:center;color:#fff;font-family:var(--narrow);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
 .ts-nav{position:absolute;top:calc(50% - 4px);transform:translateY(-50%);z-index:2;width:34px;height:34px;border-radius:50%;border:0;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.22);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:opacity .2s,background .2s,color .2s}
 .ts-nav:hover{background:var(--red);color:#fff}
 .ts-nav.l{left:-10px}.ts-nav.r{right:-10px}
@@ -1296,9 +1296,12 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 .usp .ui svg{width:17px;height:17px}
 
 @media (max-width:640px){
-  .tb{flex-basis:calc((100% - 24px) / 3.5)}
+  .ts-track .tb{flex-basis:calc((100% - 24px) / 3.5)}
   .ts-nav{display:none}
   .kspecs{grid-template-columns:1fr;padding:4px 16px}
   .kspecs>div:nth-last-child(2){border-bottom:1px solid var(--line)}
 }
 @media (max-width:640px){.kspecs{grid-template-columns:1fr 1fr;gap:0 12px;padding:4px 12px}.kspecs>div{gap:8px;padding:10px 0}.kspecs>div:nth-last-child(2){border-bottom:0}.kspecs .ki{width:30px;height:30px;border-radius:8px}.kspecs .ki svg{width:16px;height:16px}.kspecs small{font-size:10.5px}.kspecs b{font-size:13.5px}}
+
+/* Workshop tyres panel: rounded like the rest of the site */
+.tyre{border-radius:var(--r);overflow:hidden;box-shadow:var(--sh)}

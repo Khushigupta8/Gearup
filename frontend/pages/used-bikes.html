@@ -86,12 +86,12 @@
           <b>24 bikes</b>
           <div class="tr">
             <button class="btn btn-ink mfilter" type="button" style="height:44px"><svg class="i"><use href="#i-filter"/></svg>Filters</button>
-            <div class="sel"><label class="sr" for="srt">Sort</label><select id="srt"><option>Newest arrivals</option><option>Price: low to high</option><option>Price: high to low</option><option>Monthly: low to high</option><option>Mileage: lowest</option><option>Year: newest</option></select><svg class="i"><use href="#i-down"/></svg></div>
+            <div class="sel"><label class="sr" for="srt">Sort</label><select id="srt"><option value="new">Newest arrivals</option><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option><option value="mo-asc">Monthly: low to high</option><option value="miles-asc">Mileage: lowest</option><option value="year-desc">Year: newest</option></select><svg class="i"><use href="#i-down"/></svg></div>
             <div class="vt"><span class="on"><svg class="i"><use href="#i-grid"/></svg></span><span><svg class="i"><use href="#i-list"/></svg></span></div>
           </div>
         </div>
         <div class="applied"><span>Kawasaki <svg class="i"><use href="#i-x"/></svg></span><span>Any price <svg class="i"><use href="#i-x"/></svg></span></div>
-        <div class="lgrid">
+        <div class="lgrid" id="bikeGrid">
           <article class="bc">
       <a href="bike.html" class="im"><img src="/assets/images/bikes/bmw-r1250gs.webp" alt="2019 BMW R 1250 GS" loading="lazy"><span class="ribbon">12 months<br>warranty free</span><span class="pricechip"><b>£11,495</b><span>£339/mo</span></span></a>
       <div class="bd"><h3><small>BMW</small><a href="bike.html">R 1250 GS</a></h3>
