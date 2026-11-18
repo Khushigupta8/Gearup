@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warranty and 120-Point Inspection · GearUp Motorcycles</title>
+<meta name="description" content="Every GearUp bike comes with 30 days warranty and a 120-point inspection. Selected bikes include 3, 6, 12 or 24 months cover free.">
+<link rel="icon" href="/favicon.png">
+</head>
+<body>
+<!-- @include icons.html -->
+<!-- @include header.html -->
+
+<main>
+
+<style>
+.tiers{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.tier{background:#fff;border:1px solid var(--line);padding:24px 20px 22px;position:relative;display:flex;flex-direction:column}
+.tier .n{font-family:var(--disp);font-weight:400;font-size:84px;line-height:.9}
+.tier .u{font-family:var(--narrow);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:16px;margin-top:2px}
+.tier .who{display:inline-block;align-self:flex-start;margin-top:16px;font-family:var(--narrow);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:#fff;padding:4px 12px 4px 8px;clip-path:polygon(0 0,100% 0,calc(100% - 7px) 100%,0 100%)}
+.tier p{color:var(--mut);font-size:15px;margin-top:10px}
+.tier .ft{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:14px;font-weight:600}
+.tier p+.ft{margin-top:16px}
+.tier.std{background:var(--red);border-color:var(--red);color:#fff}
+.tier.std .who{background:#fff;color:var(--ink)}
+.tier.std p{color:#ffe3e4}
+.tier.std .ft{border-color:rgba(255,255,255,.35)}
+.tier .who.r{background:var(--red)}
+.cov{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.cov .icard{padding:30px}
+.cov h3{display:flex;gap:12px;align-items:center;margin-top:0!important}
+.cov .clist{margin-top:18px}
+.xlist{list-style:none;display:grid;gap:10px;margin-top:18px}
+.xlist li{display:flex;gap:10px;align-items:flex-start}
+.xlist svg{width:20px;height:20px;color:#fff;background:#8a8a92;border-radius:50%;padding:4px;stroke-width:3.5;margin-top:2px;flex:none}
+.badge{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:50px;align-items:center}
+.badge .demo{max-width:420px;width:100%;justify-self:center;position:relative}
+.badge .demo .bc{color:var(--txt)}
+.badge .arrow{position:absolute;left:-14px;top:-40px;background:#fff;color:var(--ink);font-family:var(--narrow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px;padding:6px 12px;transform:rotate(-4deg);z-index:2;box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.badge ol{list-style:none;display:grid;gap:16px;margin-top:26px}
+.badge ol li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start}
+.badge ol li span{width:44px;height:44px;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:22px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+.badge ol li b{display:block;font-family:var(--narrow);text-transform:uppercase;letter-spacing:.06em;font-size:17px}
+.badge ol li p{color:#b9b9c0;font-size:15px;margin-top:2px}
+.ibar{display:grid;grid-template-columns:repeat(6,1fr);gap:0;background:var(--ink);color:#fff;margin-bottom:26px}
+.ibar a{padding:16px 18px;border-left:1px solid var(--char3);display:block}
+.ibar a:first-child{border-left:0}
+.ibar a:hover{background:var(--char2)}
+.ibar b{font-family:var(--disp);font-weight:400;font-size:36px;color:var(--red);line-height:1;display:block}
+.ibar small{font-family:var(--narrow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px;color:#d0d0d6;line-height:1.2;display:block;margin-top:4px}
+.clgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+.cgrp{background:#fff;border:1px solid var(--line)}
+.cgrp.wide{grid-column:1/-1}
+.cgh{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:3px solid var(--red);background:var(--ink);color:#fff}
+.cgh .ci{width:36px;height:36px;background:var(--red);display:flex;align-items:center;justify-content:center;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.cgh .ci svg{width:18px;height:18px}
+.cgh b{font-family:var(--disp);font-weight:400;font-size:24px;text-transform:uppercase;line-height:1}
+.cgh em{margin-left:auto;font-style:normal;font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:#c9c9cf;white-space:nowrap}
+.cgrp ol{list-style:none;columns:2;column-gap:0;padding:8px 0}
+.cgrp.wide ol{columns:3}
+.cgrp li{break-inside:avoid;display:flex;gap:10px;align-items:baseline;padding:7px 18px;font-size:14.5px;line-height:1.35}
+.cgrp li i{font-style:normal;font-family:var(--narrow);font-weight:700;font-size:12px;color:var(--red);min-width:26px}
+.claim .how li p a{color:var(--ink);text-decoration:underline}
+@media (max-width:1200px){.tiers{grid-template-columns:repeat(3,1fr)}.tier.std{grid-column:span 1}}
+@media (max-width:1024px){.cov,.badge,.clgrid{grid-template-columns:1fr}.ibar{grid-template-columns:repeat(3,1fr)}.ibar a:nth-child(4){border-left:0}.ibar a:nth-child(n+4){border-top:1px solid var(--char3)}.cgrp.wide ol{columns:2}.badge .demo{margin-top:40px}}
+@media (max-width:640px){.tiers{grid-template-columns:1fr 1fr}.tier.std{grid-column:1/-1}.tier .n{font-size:64px}.tier{padding:18px 16px}.cov .icard{padding:22px}.ibar{grid-template-columns:1fr 1fr}.ibar a{border-left:1px solid var(--char3)!important;border-top:1px solid var(--char3)}.ibar a:nth-child(odd){border-left:0!important}.ibar a:nth-child(-n+2){border-top:0}.ibar b{font-size:30px}.cgrp ol,.cgrp.wide ol{columns:1}.cgh b{font-size:20px}.badge .arrow{left:0}}
+</style>
+
+<section class="phero">
+  <div class="slab" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <div class="crumbs"><a href="index.html">Home</a><span class="s">/</span><span>Warranty &amp; inspection</span></div>
+      <h1 class="disp">Warranty <em>&amp; inspection</em></h1>
+      <p class="lede">Every bike we sell passes a 120-point inspection and an HPI check, and leaves with 30 days' warranty. Selected bikes include up to 24 months free.</p>
+      <div class="ctas">
+        <a href="#inspection" class="btn btn-red">See the 120 checks <svg class="i"><use href="#i-right"/></svg></a>
+        <a href="#claim" class="btn btn-ghost">Make a claim</a>
+      </div>
+    </div>
+    <div class="pbox"><b>30 days</b><small>Warranty on every bike as standard. Look for the red badge for longer cover included free.</small></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sh"><div><span class="tag">Warranty levels</span><h2 class="disp">How long <em>are you covered?</em></h2><p>Every bike gets the standard 30 days. Bikes with the red badge include longer cover at no extra cost.</p></div><a href="used-bikes.html" class="btn btn-ink">Bikes with free warranty <svg class="i"><use href="#i-right"/></svg></a></div>
+    <div class="tiers">
+      <div class="tier std"><span class="n">30</span><span class="u">Days</span><span class="who">Every bike</span><p>Standard on every bike we sell. Engine, gearbox and electrics covered.</p><div class="ft">Included in the price</div></div>
+      <div class="tier"><span class="n">3</span><span class="u">Months</span><span class="who r">Red badge</span><p>Included free on selected bikes. Shown on the stock card.</p><div class="ft">Free where shown</div></div>
+      <div class="tier"><span class="n">6</span><span class="u">Months</span><span class="who r">Red badge</span><p>Included free on selected bikes. Shown on the stock card.</p><div class="ft">Free where shown</div></div>
+      <div class="tier"><span class="n">12</span><span class="u">Months</span><span class="who r">Red badge</span><p>Free on selected bikes, or ask to extend any bike.</p><div class="ft">Free or extend</div></div>
+      <div class="tier"><span class="n">24</span><span class="u">Months</span><span class="who r">Red badge</span><p>Free on selected bikes, or ask to extend any bike.</p><div class="ft">Free or extend</div></div>
+    </div>
+    <p class="muted" style="font-size:13px;margin-top:16px">Extension prices depend on the bike's age, mileage and engine size. Ask us for a price when you reserve.</p>
+  </div>
+</section>
+
+<section class="sec paper">
+  <div class="wrap">
+    <div class="sh"><div><span class="tag">The cover</span><h2 class="disp">What's <em>covered</em></h2><p>Our warranty covers mechanical and electrical failure. It does not cover parts that wear out with normal riding. Full terms come with your bike.</p></div></div>
+    <div class="cov">
+      <div class="icard" style="border-top:4px solid var(--red)">
+        <h3 class="h3"><span class="ic red" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--red);color:#fff;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)"><svg class="i"><use href="#i-check"/></svg></span>Covered</h3>
+        <ul class="clist cols">
+          <li><svg class="i"><use href="#i-check"/></svg>Engine internal parts</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Gearbox and selector</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Clutch mechanism</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Final drive and shaft</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Fuel system and pump</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Cooling system and water pump</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Starter motor</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Alternator and regulator</li>
+          <li><svg class="i"><use href="#i-check"/></svg>ECU and wiring</li>
+          <li><svg class="i"><use href="#i-check"/></svg>ABS pump and sensors</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Instruments and switches</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Parts and labour</li>
+        </ul>
+      </div>
+      <div class="icard" style="border-top:4px solid var(--ink)">
+        <h3 class="h3"><span style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--ink);color:#fff;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)"><svg class="i"><use href="#i-x"/></svg></span>Not covered</h3>
+        <ul class="xlist">
+          <li><svg class="i"><use href="#i-x"/></svg>Wear items: tyres, brake pads, discs, chain and sprockets, clutch plates</li>
+          <li><svg class="i"><use href="#i-x"/></svg>Routine servicing, bulbs, fuses and batteries</li>
+          <li><svg class="i"><use href="#i-x"/></svg>Accident damage, theft or vandalism</li>
+          <li><svg class="i"><use href="#i-x"/></svg>Damage from neglect, missed services or running low on oil</li>
+          <li><svg class="i"><use href="#i-x"/></svg>Faults caused by modifications after you buy</li>
+          <li><svg class="i"><use href="#i-x"/></svg>Paint, plastics and cosmetic marks</li>
+          <li><svg class="i"><use href="#i-x"/></svg>Track days, racing or courier use</li>
+        </ul>
+      </div>
+    </div>
+    <div class="notice mt2"><svg class="i"><use href="#i-info"/></svg><span>This is a summary. Your warranty booklet sets out the full terms, claim limits and what you need to do to keep cover valid. Your legal rights are not affected.</span></div>
+  </div>
+</section>
+
+<section class="sec dark">
+  <div class="wrap badge">
+    <div>
+      <div class="sh" style="margin-bottom:0"><div><span class="tag">The red badge</span><h2 class="disp">Spot the badge, <em>get the cover</em></h2><p>Some bikes come with longer warranty included free. We mark them with a red corner badge on the stock card and the bike page.</p></div></div>
+      <ol>
+        <li><span>1</span><div><b>Look for the corner badge</b><p>It shows the months of cover included, for example 3, 6, 12 or 24 months.</p></div></li>
+        <li><span>2</span><div><b>It's in the price</b><p>No add-on at checkout. The cover starts the day you collect or take delivery.</p></div></li>
+        <li><span>3</span><div><b>No badge? Still covered</b><p>Every other bike has our standard 30 days. Ask us about extending it when you reserve.</p></div></li>
+      </ol>
+      <a href="used-bikes.html" class="btn btn-red mt3">Free warranty bikes <svg class="i"><use href="#i-right"/></svg></a>
+    </div>
+    <div class="demo">
+      <span class="arrow">Example: 6 months free</span>
+      <article class="bc">
+      <a href="bike.html" class="im"><img src="/assets/images/bikes/kawasaki-ninja-zx6r.webp" alt="2020 Kawasaki Ninja ZX-6R" loading="lazy"><span class="ribbon">6 months<br>warranty free</span><span class="pricechip"><b>£7,995</b><span>£236/mo</span></span></a>
+      <div class="bd"><h3><small>Kawasaki</small><a href="bike.html">Ninja ZX-6R</a></h3>
+        <div class="sp"><span><svg class="i"><use href="#i-cal"/></svg>2020</span><span><svg class="i"><use href="#i-gauge"/></svg>5,640 miles</span><span><svg class="i"><use href="#i-engine"/></svg>636cc</span></div>
+        <div class="ft"><a href="reserve.html" class="lnk">Reserve for £99 <svg class="i"><use href="#i-right"/></svg></a><span class="heart"><svg class="i"><use href="#i-heart"/></svg></span></div></div>
+    </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec claim" id="claim">
+  <div class="wrap">
+    <div class="sh"><div><span class="tag">Making a claim</span><h2 class="disp">Something wrong? <em>Here's what to do</em></h2><p>Stop riding if it is not safe, then get in touch. Do not book repairs elsewhere before speaking to us, or the claim may not be covered.</p></div><a href="contact.html" class="btn btn-red"><svg class="i"><use href="#i-phone"/></svg>Contact the workshop</a></div>
+    <ol class="how">
+      <li><span class="ic"><svg class="i"><use href="#i-phone"/></svg></span><h4><small>Step 01</small>Tell us</h4><p>Call, email or WhatsApp with your order number and what the bike is doing.</p></li>
+      <li><span class="ic"><svg class="i"><use href="#i-search"/></svg></span><h4><small>Step 02</small>We diagnose</h4><p>Bring it to our <a href="workshop.html">workshop</a>, or we arrange an approved garage near you.</p></li>
+      <li><span class="ic"><svg class="i"><use href="#i-doc"/></svg></span><h4><small>Step 03</small>We confirm cover</h4><p>We tell you what is covered before any work starts. No surprises.</p></li>
+      <li><span class="ic"><svg class="i"><use href="#i-wrench"/></svg></span><h4><small>Step 04</small>We fix it</h4><p>Covered parts and labour are paid by the warranty. You get back on the road.</p></li>
+    </ol>
+    <div class="grid3 mt3">
+      <div class="icard"><div class="ic red"><svg class="i"><use href="#i-doc"/></svg></div><h3>Keep your paperwork</h3><p>Hold on to your service receipts. You may be asked for them when you claim.</p></div>
+      <div class="icard"><div class="ic"><svg class="i"><use href="#i-clock"/></svg></div><h3>Report it early</h3><p>Tell us as soon as you notice a fault. Riding on can turn a small fix into a big one.</p></div>
+      <div class="icard"><div class="ic"><svg class="i"><use href="#i-shield"/></svg></div><h3>14-day money back</h3><p>Changed your mind? Return the bike within 14 days as set out in our terms.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec paper" id="inspection">
+  <div class="wrap">
+    <div class="sh"><div><span class="tag">120-point inspection</span><h2 class="disp">Every check, <em>in full</em></h2><p>Before a bike goes on sale our technicians work through all 120 checks. If something fails, we fix it or the bike does not go on sale. Your bike's report is in your account.</p></div><a href="bike.html" class="lnk">See an example report <svg class="i"><use href="#i-right"/></svg></a></div>
+    <div class="ibar">
+      <a href="#c1"><b>24</b><small>Engine &amp; drivetrain</small></a>
+      <a href="#c2"><b>16</b><small>Brakes &amp; ABS</small></a>
+      <a href="#c3"><b>18</b><small>Suspension &amp; steering</small></a>
+      <a href="#c4"><b>14</b><small>Wheels &amp; tyres</small></a>
+      <a href="#c5"><b>20</b><small>Electrics &amp; lights</small></a>
+      <a href="#c6"><b>28</b><small>Frame, body &amp; road test</small></a>
+    </div>
+    <div class="clgrid">
+<div class="cgrp wide" id="c1"><div class="cgh"><span class="ci"><svg class="i"><use href="#i-engine"/></svg></span><b>Engine &amp; drivetrain</b><em>24 checks</em></div><ol><li><i>001</i>Engine oil level and condition</li><li><i>002</i>Oil filter and service due date</li><li><i>003</i>Oil leaks from cases and gaskets</li><li><i>004</i>Coolant level and strength</li><li><i>005</i>Radiator, hoses and clips</li><li><i>006</i>Cooling fan switches on</li><li><i>007</i>Cold start and idle quality</li><li><i>008</i>Throttle response and return</li><li><i>009</i>Throttle cables or ride-by-wire</li><li><i>010</i>Air filter condition</li><li><i>011</i>Spark plugs, where accessible</li><li><i>012</i>Valve train and top-end noise</li><li><i>013</i>Exhaust system and mounts</li><li><i>014</i>Exhaust joints for blowing</li><li><i>015</i>Fuel tank, cap and fuel lines</li><li><i>016</i>Fuel leaks and fuel smell</li><li><i>017</i>Clutch operation and free play</li><li><i>018</i>Clutch cable or hydraulics</li><li><i>019</i>Gear selection, every gear</li><li><i>020</i>Neutral finding and neutral light</li><li><i>021</i>Chain wear and stretch</li><li><i>022</i>Chain tension and lubrication</li><li><i>023</i>Front and rear sprocket wear</li><li><i>024</i>Shaft or belt drive, where fitted</li></ol></div>
+<div class="cgrp" id="c2"><div class="cgh"><span class="ci"><svg class="i"><use href="#i-shield"/></svg></span><b>Brakes &amp; ABS</b><em>16 checks</em></div><ol><li><i>025</i>Front pad thickness</li><li><i>026</i>Rear pad thickness</li><li><i>027</i>Front disc thickness and run-out</li><li><i>028</i>Rear disc thickness and wear</li><li><i>029</i>Front caliper pistons and seals</li><li><i>030</i>Rear caliper pistons and seals</li><li><i>031</i>Brake fluid level and age</li><li><i>032</i>Brake fluid leaks</li><li><i>033</i>Front brake hoses and lines</li><li><i>034</i>Rear brake hoses and lines</li><li><i>035</i>Front lever feel and adjustment</li><li><i>036</i>Rear pedal feel and return</li><li><i>037</i>Master cylinders and reservoirs</li><li><i>038</i>ABS warning light self-test</li><li><i>039</i>ABS sensors and reluctor rings</li><li><i>040</i>Front and rear brake light switches</li></ol></div>
+<div class="cgrp" id="c3"><div class="cgh"><span class="ci"><svg class="i"><use href="#i-wrench"/></svg></span><b>Suspension &amp; steering</b><em>18 checks</em></div><ol><li><i>041</i>Fork seals for leaks</li><li><i>042</i>Fork stanchions for pitting</li><li><i>043</i>Fork damping action</li><li><i>044</i>Fork alignment and twist</li><li><i>045</i>Front preload and damping adjusters</li><li><i>046</i>Rear shock for leaks</li><li><i>047</i>Rear shock damping</li><li><i>048</i>Rear preload and adjusters</li><li><i>049</i>Rear linkage bearings</li><li><i>050</i>Swingarm pivot bearings</li><li><i>051</i>Swingarm condition</li><li><i>052</i>Head bearings for free play</li><li><i>053</i>Head bearings for notchiness</li><li><i>054</i>Handlebars straight and secure</li><li><i>055</i>Full lock both ways, cables free</li><li><i>056</i>Steering damper, where fitted</li><li><i>057</i>Yokes and clamp bolts torqued</li><li><i>058</i>Wheel alignment</li></ol></div>
+<div class="cgrp" id="c4"><div class="cgh"><span class="ci"><svg class="i"><use href="#i-gauge"/></svg></span><b>Wheels &amp; tyres</b><em>14 checks</em></div><ol><li><i>059</i>Front tyre tread depth</li><li><i>060</i>Rear tyre tread depth</li><li><i>061</i>Tyre age from DOT date</li><li><i>062</i>Sidewalls for cracks and damage</li><li><i>063</i>Tyre pressures set</li><li><i>064</i>Correct tyre size and rating</li><li><i>065</i>Front wheel bearings</li><li><i>066</i>Rear wheel bearings</li><li><i>067</i>Front rim run-out and damage</li><li><i>068</i>Rear rim run-out and damage</li><li><i>069</i>Spoke tension, where fitted</li><li><i>070</i>Valves and valve caps</li><li><i>071</i>Wheel spindles and pinch bolts</li><li><i>072</i>Cush drive rubbers</li></ol></div>
+<div class="cgrp" id="c5"><div class="cgh"><span class="ci"><svg class="i"><use href="#i-key"/></svg></span><b>Electrics &amp; lights</b><em>20 checks</em></div><ol><li><i>073</i>Battery health test</li><li><i>074</i>Battery terminals and mounting</li><li><i>075</i>Charging system output</li><li><i>076</i>Starter motor and relay</li><li><i>077</i>Headlight dipped beam</li><li><i>078</i>Headlight main beam</li><li><i>079</i>Headlight aim</li><li><i>080</i>Sidelight or daytime running light</li><li><i>081</i>Tail light</li><li><i>082</i>Brake light</li><li><i>083</i>Front indicators</li><li><i>084</i>Rear indicators</li><li><i>085</i>Hazard lights, where fitted</li><li><i>086</i>Number plate light</li><li><i>087</i>Horn</li><li><i>088</i>Dash warning lights self-test</li><li><i>089</i>Speedo, rev counter and gauges</li><li><i>090</i>Kill switch and side-stand cut-out</li><li><i>091</i>Ignition switch and all keys</li><li><i>092</i>Diagnostic fault code scan</li></ol></div>
+<div class="cgrp wide" id="c6"><div class="cgh"><span class="ci"><svg class="i"><use href="#i-cal"/></svg></span><b>Frame, bodywork &amp; road test</b><em>28 checks</em></div><ol><li><i>093</i>Frame for cracks or damage</li><li><i>094</i>Frame for weld repairs</li><li><i>095</i>Subframe condition</li><li><i>096</i>Frame number matches V5C</li><li><i>097</i>Engine number checked</li><li><i>098</i>HPI check: stolen, scrapped, written off, finance</li><li><i>099</i>Fairings and panels fit and secure</li><li><i>100</i>Paintwork and scratches recorded</li><li><i>101</i>Seat and seat lock</li><li><i>102</i>Mirrors</li><li><i>103</i>Footpegs and hangers</li><li><i>104</i>Side stand and spring</li><li><i>105</i>Centre stand, where fitted</li><li><i>106</i>Levers for damage</li><li><i>107</i>Grips and bar ends</li><li><i>108</i>Number plate legal and secure</li><li><i>109</i>Luggage, screens and accessories secure</li><li><i>110</i>Corrosion and fasteners</li><li><i>111</i>Road test: warm-up from cold</li><li><i>112</i>Road test: clutch take-up</li><li><i>113</i>Road test: gear changes up and down</li><li><i>114</i>Road test: straight-line stability</li><li><i>115</i>Road test: braking performance</li><li><i>116</i>Road test: ABS operation</li><li><i>117</i>Road test: steering and handling</li><li><i>118</i>Road test: suspension over bumps</li><li><i>119</i>Road test: unusual noises or vibration</li><li><i>120</i>Post-ride check for leaks</li></ol></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap" style="display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:50px" id="faqgrid">
+    <div><span class="sh"><span class="tag">Warranty FAQs</span></span><h2 class="disp" style="font-size:64px;margin-top:12px">Cover, <em style="font-style:normal;color:var(--red)">explained</em></h2><p class="muted" style="margin-top:12px;font-size:17px">Questions about a particular bike? Ask us before you reserve.</p><a href="faq.html" class="btn btn-ink mt2">All FAQs <svg class="i"><use href="#i-right"/></svg></a></div>
+    <div class="faq">
+      <details open><summary>When does my warranty start?</summary><p>On the day you collect the bike or we deliver it to you.</p></details>
+      <details><summary>Can I extend the warranty?</summary><p>Yes, on most bikes, to 12 or 24 months. The price depends on the bike. Ask us when you reserve.</p></details>
+      <details><summary>Does the warranty cover delivered bikes?</summary><p>Yes. The cover is the same whether you collect or we deliver anywhere in mainland UK.</p></details>
+      <details><summary>Do I have to service the bike with you?</summary><p>No, but it must be serviced on time by a qualified garage, and you need to keep the receipts. Our <a href="workshop.html" style="text-decoration:underline">workshop</a> can do it for you.</p></details>
+      <details><summary>Can I see the inspection report?</summary><p>Yes. Every bike's 120-point report is on its bike page and in your account once you reserve.</p></details>
+    </div>
+  </div>
+</section>
+
+</main>
+<!-- @include footer.html -->
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

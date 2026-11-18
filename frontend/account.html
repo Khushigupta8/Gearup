@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Track my bike · My account · GearUp Motorcycles</title>
+<meta name="description" content="Follow your bike through valet, MOT and the 120-point inspection, then track the delivery van live. Your orders, documents and saved bikes in one place.">
+<link rel="icon" href="/favicon.png">
+</head>
+<body>
+<!-- @include icons.html -->
+<!-- @include header.html -->
+
+<main>
+
+<style>
+.phero.slim .wrap{padding-top:26px;padding-bottom:30px;align-items:center;grid-template-columns:minmax(0,1fr) auto}
+.phero.slim h1{font-size:60px}
+.phero.slim .hi{display:flex;gap:14px;align-items:center;justify-content:flex-end;flex-wrap:wrap;color:#cfcfd5;font-size:15px}
+.phero.slim .hi b{color:#fff}
+.ahd{background:var(--ink);color:#fff;display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:20px;align-items:center;padding:18px 22px 18px 18px}
+.ahd img{width:150px;height:100px;object-fit:cover}
+.ahd small{display:block;color:#a5a5ac;font-size:13px}
+.ahd h2{font-family:var(--disp);font-weight:400;font-size:38px;text-transform:uppercase;line-height:1;margin-top:2px}
+.ahd .wb{display:inline-block;background:var(--red);font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;padding:4px 10px;margin-top:8px;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.ahd .st{text-align:right}
+.ahd .st span{display:inline-block;background:#fff;color:var(--red);font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:14px;padding:7px 14px}
+.ahd .st small{margin-top:8px}
+.prog{display:flex;align-items:center;gap:12px;margin-top:14px}
+.prog .bar{flex:1;margin:0}
+.prog .bar div{background:var(--line)}
+.prog .bar div.d{background:var(--red)}
+.prog b{font-family:var(--narrow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:14px;white-space:nowrap}
+.apanel{background:#fff;border:1px solid var(--line);padding:26px}
+.apanel>.ph{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.apanel>.ph h3{font-family:var(--disp);font-weight:400;font-size:30px;text-transform:uppercase;line-height:1}
+.apanel>.ph small{color:var(--mut);font-size:14px}
+.amid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:22px;align-items:start}
+.timeline li.u h4{color:#9a9aa1}
+.timeline .who{display:inline-flex;gap:6px;align-items:center;font-size:13px;font-weight:600;color:var(--ink);background:var(--paper);padding:3px 8px;margin-top:6px}
+.timeline .who svg{width:14px;height:14px;color:var(--red)}
+.nowbox{background:#fff5f5;border-left:3px solid var(--red);padding:8px 12px;margin-top:8px;font-size:14px}
+.pay dl{display:grid;grid-template-columns:1fr auto;gap:10px 0;font-size:15px}
+.pay dt{padding-right:16px}
+.pay dt{color:var(--mut)}
+.pay dd{text-align:right;font-weight:600}
+.pay dd.g{color:#1a9b54}
+.pay .tot{border-top:2px solid var(--ink);padding-top:12px;margin-top:4px;font-family:var(--disp);font-weight:400;font-size:28px;color:var(--ink);text-transform:uppercase}
+.pay .tot+dd{border-top:2px solid var(--ink);padding-top:12px;margin-top:4px;font-family:var(--disp);font-weight:400;font-size:28px}
+.pay .acts{display:grid;gap:8px;margin-top:18px}
+.pay .acts .btn{width:100%;height:50px;font-size:16px}
+.acct>.aside{position:sticky;top:70px}
+.map.wait{aspect-ratio:21/9}
+.olist td:first-child{white-space:nowrap}
+.map .live.off{background:var(--char3)}
+.map .live.off::before{background:#8f8f97}
+.map.wait svg.m{filter:grayscale(.55);opacity:.8}
+.olist{width:100%;border-collapse:collapse;font-size:15px}
+.olist th,.olist td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left}
+.olist th{font-family:var(--narrow);font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:13px;color:var(--mut)}
+.olist .pill{display:inline-block;font-family:var(--narrow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:12px;padding:3px 8px;background:var(--paper)}
+.olist .pill.r{background:var(--red);color:#fff}
+.savedgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.savedgrid .bc h3{font-size:24px}
+.savedgrid .bc .heart{color:var(--red)}
+.savedgrid .bc .heart svg{fill:var(--red)}
+.alow{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.mini{display:grid;gap:12px}
+.signin{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--ink);padding:24px}
+.signin h3{font-family:var(--disp);font-weight:400;font-size:28px;text-transform:uppercase;line-height:1}
+.signin .btn{width:100%;height:50px}
+.signin .alt{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:14px;margin-top:12px}
+.signin .alt a{color:var(--red);font-weight:600}
+.ddl{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;font-size:15px}
+.ddl dt{color:var(--mut)}
+.ddl dd{font-weight:600}
+.samp{display:inline-block;background:var(--plate);color:var(--ink);font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:11px;padding:1px 6px;vertical-align:middle}
+.aside .aout{color:#a5a5ac;border-top:1px solid var(--char3)}
+.aside .cnt{margin-left:auto;background:var(--red);color:#fff;font-size:12px;padding:1px 7px;font-weight:700}
+@media (max-width:1200px){.amid{grid-template-columns:1fr}}
+@media (max-width:1024px){
+  .aside{display:flex;overflow-x:auto;white-space:nowrap}
+  .aside .who{display:none}
+  .aside a{border-left:0;border-bottom:3px solid transparent;padding:14px 16px}
+  .aside a.on{border-bottom-color:var(--red)}
+  .aside .aout{border-top:0}
+  .savedgrid{grid-template-columns:1fr 1fr}
+  .alow{grid-template-columns:1fr}
+  .phero.slim .hi{justify-content:flex-start}
+  .phero.slim .wrap{grid-template-columns:1fr;gap:12px}
+  .aside{position:static}
+  .map.wait{aspect-ratio:16/9}
+}
+@media (max-width:640px){
+  .phero.slim h1{font-size:44px}
+  .ahd{grid-template-columns:96px minmax(0,1fr);padding:14px;gap:14px}
+  .ahd img{width:96px;height:72px}
+  .ahd h2{font-size:26px}
+  .ahd .st{grid-column:1/-1;text-align:left}
+  .apanel{padding:18px}
+  .savedgrid{grid-template-columns:1fr}
+  .timeline .tphoto img{width:80px;height:58px}
+  .olist .hm{display:none}
+  .map.wait{aspect-ratio:4/5}
+  .apanel .docs{grid-template-columns:1fr 1fr;gap:8px}
+  .apanel .docs a{padding:12px 10px;gap:8px;font-size:14px;align-items:flex-start}
+  .apanel .docs a small{font-size:12px}
+  .prog b{font-size:12px}
+}
+.map .driver{color:var(--ink)}
+</style>
+
+<section class="phero slim short">
+  <div class="slab" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <div class="crumbs"><a href="index.html">Home</a><span class="s">/</span><a href="account.html">My account</a><span class="s">/</span><span>Track my bike</span></div>
+      <h1 class="disp">Track <em>my bike</em></h1>
+    </div>
+    <div class="hi"><span>Signed in as <b>Rahim</b></span><span>Not you? <a href="#signin" style="color:#fff;text-decoration:underline;text-underline-offset:3px">Log out</a></span></div>
+  </div>
+</section>
+
+<section class="sec paper" style="padding-top:34px">
+  <div class="wrap acct">
+    <nav class="aside" aria-label="My account">
+      <div class="who"><b>Hi, Rahim</b><small>Customer no. GU-0000 (sample)</small></div>
+      <a href="#track" class="on"><svg class="i"><use href="#i-pin"/></svg>Track my bike</a>
+      <a href="#orders"><svg class="i"><use href="#i-bag"/></svg>My orders</a>
+      <a href="#saved"><svg class="i"><use href="#i-heart"/></svg>Saved bikes<span class="cnt">3</span></a>
+      <a href="#docs"><svg class="i"><use href="#i-doc"/></svg>Documents</a>
+      <a href="#px"><svg class="i"><use href="#i-key"/></svg>Part-exchange</a>
+      <a href="#details"><svg class="i"><use href="#i-user"/></svg>Details</a>
+      <a href="#signin" class="aout"><svg class="i"><use href="#i-logout"/></svg>Log out</a>
+    </nav>
+
+    <div style="display:grid;gap:22px;min-width:0">
+      <div id="track">
+        <div class="ahd">
+          <img src="/assets/images/bikes/bmw-r1250gs.webp" alt="2019 BMW R 1250 GS">
+          <div><small>Order GU-1042 · reserved Thu 12 Nov</small><h2>2019 BMW R 1250 GS</h2><span class="wb">12 months warranty free</span></div>
+          <div class="st"><span>Inspection under way</span><small>Stage 3 of 6</small></div>
+        </div>
+        <div class="ostat mt1">
+          <div><small>Order number</small><b>GU-1042</b></div>
+          <div><small>Bike</small><b>R 1250 GS · £11,495</b></div>
+          <div><small>Deposit paid</small><b>£99.00 · 12 Nov</b></div>
+          <div><small>Delivery date</small><b>Thu 19 Nov</b></div>
+        </div>
+      </div>
+
+      <div class="amid">
+        <div class="apanel">
+          <div class="ph"><h3>Your bike's progress</h3><small>Updated by our team as each job is done</small></div>
+          <ol class="timeline">
+            <li class="d"><span class="tdot"><svg class="i"><use href="#i-check"/></svg></span><div><h4>Deposit received</h4><p>£99 paid. The bike came off sale straight away.</p></div><time>Thu 12 Nov, 10:42</time></li>
+            <li class="d"><span class="tdot"><svg class="i"><use href="#i-check"/></svg></span><div><h4>Full PDI started</h4><p>Pre-delivery inspection booked in. Fluids, tyres, chain and lights checked, and photos added as we go.</p><div class="tphoto"><img src="/assets/images/gallery/bmw-r1250gs/02-front.webp" alt="Valeted GS, front"><img src="/assets/images/gallery/bmw-r1250gs/03-engine.webp" alt="Valeted GS, engine"></div></div><time>Fri 13 Nov, 15:10</time></li>
+            <li class="n"><span class="tdot"><svg class="i"><use href="#i-wrench"/></svg></span><div><h4>PDI: 120-point inspection under way</h4><p>Brakes, suspension, wheels, electrics and a road test.</p><div class="nowbox"><b>84 of 120 checks done.</b> Photos are added as we go.</div><div class="tphoto"><img src="/assets/images/gallery/bmw-r1250gs/05-cockpit.webp" alt="Inspection, dash and controls"><img src="/assets/images/gallery/bmw-r1250gs/06-front-wheel.webp" alt="Inspection, wheel and brake"></div><span class="who"><svg class="i"><use href="#i-user"/></svg>Technician: Sam (sample)</span></div><time>Today</time></li>
+            <li class="u"><span class="tdot"><svg class="i"><use href="#i-award"/></svg></span><div><h4>Ready for delivery</h4><p>Final check, photos and your paperwork packed.</p></div><time>Expected Wed 18 Nov</time></li>
+            <li class="u"><span class="tdot"><svg class="i"><use href="#i-truck"/></svg></span><div><h4>Out for delivery</h4><p>Live GPS tracking from your driver's phone switches on here.</p></div><time>Thu 19 Nov</time></li>
+            <li class="u"><span class="tdot"><svg class="i"><use href="#i-key"/></svg></span><div><h4>Delivered</h4><p>Handover checklist signed. Enjoy the ride.</p></div><time>Thu 19 Nov</time></li>
+          </ol>
+        </div>
+
+        <div style="display:grid;gap:22px">
+          <div class="apanel pay">
+            <div class="ph"><h3>Balance and payment</h3></div>
+            <dl>
+              <dt>Cash price</dt><dd>£11,495.00</dd>
+              <dt>12 months warranty</dt><dd class="g">Free</dd>
+              <dt>Delivery, 84 miles <span class="samp">Sample</span></dt><dd>£101.00</dd>
+              <dt>Deposit paid</dt><dd class="g">−£99.00</dd>
+              <dt>Part-exchange</dt><dd><a href="#px" style="color:var(--red)">Add one</a></dd>
+              <dt class="tot">Balance</dt><dd>£11,497.00</dd>
+            </dl>
+            <div class="notice mt2"><svg class="i"><use href="#i-clock"/></svg><span>Balance due by <b>Wed 18 Nov</b> so your bike can go out on time.</span></div>
+            <div class="acts"><a href="#" class="btn btn-red"><svg class="i"><use href="#i-lock"/></svg>Pay the balance</a><a href="finance.html" class="btn btn-ink">Pay on finance instead</a></div>
+            <p class="muted" style="font-size:13px;margin-top:12px">Finance example: £339.39/month over 48 months, 19.9% APR representative. Subject to status.</p>
+          </div>
+          <div class="icard" style="padding:20px">
+            <div class="h4" style="display:flex;gap:8px;align-items:center"><svg class="i" style="color:var(--red)"><use href="#i-chat"/></svg>Question about your bike?</div>
+            <p style="margin-top:6px">Call 0744 072 1478 or message us on WhatsApp. Quote order GU-1042.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="apanel">
+        <div class="ph"><h3>Live delivery tracking</h3><small>Switches on when the driver sets off on Thu 19 Nov</small></div>
+        <div class="map wait" role="img" aria-label="Delivery tracking map, live on delivery day">
+          <svg class="m" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="800" height="450" fill="#e9eae4"/>
+            <g fill="#dedfd7"><rect x="40" y="30" width="160" height="90"/><rect x="290" y="30" width="110" height="70"/><rect x="600" y="180" width="170" height="90"/><rect x="40" y="170" width="150" height="80"/><rect x="300" y="330" width="200" height="60"/><rect x="620" y="320" width="160" height="70"/></g>
+            <g fill="#d3e4c6"><rect x="440" y="20" width="90" height="80" rx="4"/><rect x="80" y="370" width="140" height="70" rx="4"/><circle cx="700" cy="60" r="36"/></g>
+            <path d="M-20 415 C 150 380 260 440 420 410 S 680 380 820 400" fill="none" stroke="#c6dbe9" stroke-width="24"/>
+            <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <g stroke="#cfd0c7" stroke-width="12"><path d="M250 -10 V460"/><path d="M560 -10 V460"/><path d="M-10 150 H810"/><path d="M-10 260 H260"/><path d="M380 -10 L420 200"/><path d="M560 300 H810"/><path d="M120 -10 V460"/><path d="M690 -10 V460"/></g>
+              <g stroke="#fff" stroke-width="8"><path d="M250 -10 V460"/><path d="M560 -10 V460"/><path d="M-10 150 H810"/><path d="M-10 260 H260"/><path d="M380 -10 L420 200"/><path d="M560 300 H810"/><path d="M120 -10 V460"/><path d="M690 -10 V460"/></g>
+              <path d="M-10 330 L250 300 L430 220 L600 140 L810 110" stroke="#d9a93a" stroke-width="17"/>
+              <path d="M-10 330 L250 300 L430 220 L600 140 L810 110" stroke="#f3cf6a" stroke-width="12"/>
+              <path d="M250 262 L250 300 L430 220 L560 159 L560 112" stroke="#E1141B" stroke-width="6" stroke-dasharray="2 12"/>
+            </g>
+            <g transform="translate(250 262)"><circle r="34" fill="#E1141B" opacity=".18"/><circle r="22" fill="#09090B" stroke="#fff" stroke-width="4"/><path d="M-11 -5 h13 v10 h-13z M2 -2 h5 l4 4 v3 h-9z" fill="#fff"/><circle cx="-6" cy="7" r="2.6" fill="#E1141B"/><circle cx="6" cy="7" r="2.6" fill="#E1141B"/></g>
+            <g transform="translate(560 112)"><path d="M0 0 C-4 -12 -16 -20 -16 -32 A16 16 0 1 1 16 -32 C16 -20 4 -12 0 0Z" fill="#E1141B" stroke="#fff" stroke-width="3"/><circle cy="-32" r="6" fill="#fff"/></g>
+          </svg>
+          <div class="eta"><small>Delivery day</small><b>Thu 19 Nov</b></div>
+          <span class="live off">Not live yet</span>
+          <div class="driver"><div><b>Your driver is assigned the day before</b><small>We text you their name and a time window. Then follow the van right here.</small></div><a href="delivery.html#tracking" class="lnk" style="font-size:14px">How tracking works <svg class="i"><use href="#i-right"/></svg></a></div>
+        </div>
+      </div>
+
+      <div class="apanel" id="docs">
+        <div class="ph"><h3>Documents</h3><small>Saved here for good. Download any time.</small></div>
+        <div class="docs">
+          <a href="#"><svg class="i"><use href="#i-doc"/></svg><span>Deposit receipt<small>PDF · 12 Nov</small></span></a>
+          <a href="#"><svg class="i"><use href="#i-shield"/></svg><span>HPI report<small>Clear · PDF · 12 Nov</small></span></a>
+          <a href="#"><svg class="i"><use href="#i-award"/></svg><span>MOT certificate<small>Passed · PDF · 14 Nov</small></span></a>
+          <a href="#" style="color:var(--mut)"><svg class="i"><use href="#i-wrench"/></svg><span>120-point report<small>When inspection is done</small></span></a>
+          <a href="#" style="color:var(--mut)"><svg class="i"><use href="#i-card"/></svg><span>Invoice<small>When balance is paid</small></span></a>
+          <a href="#" style="color:var(--mut)"><svg class="i"><use href="#i-shield"/></svg><span>Warranty, 12 months<small>Starts on delivery</small></span></a>
+        </div>
+      </div>
+
+      <div class="apanel" id="orders">
+        <div class="ph"><h3>My orders</h3><small>Bikes and accessories</small></div>
+        <table class="olist">
+          <thead><tr><th>Order</th><th>Item</th><th class="hm">Date</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><b>GU-1042</b></td><td>2019 BMW R 1250 GS</td><td class="hm">12 Nov 2026</td><td><span class="pill r">In prep</span></td></tr>
+            <tr><td><b>GA-0000</b></td><td>Helmet and gloves (sample)</td><td class="hm">2 Nov 2026</td><td><span class="pill">Delivered</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="apanel" id="saved">
+        <div class="ph"><h3>Saved bikes</h3><a href="used-bikes.html" class="lnk" style="font-size:14px">Browse all stock <svg class="i"><use href="#i-right"/></svg></a></div>
+        <div class="savedgrid">
+          <article class="bc">
+      <a href="bike.html" class="im"><img src="/assets/images/bikes/triumph-street-triple-rs.webp" alt="2018 Triumph Street Triple RS" loading="lazy"><span class="ribbon">3 months<br>warranty free</span><span class="pricechip"><b>£6,495</b><span>£192/mo</span></span></a>
+      <div class="bd"><h3><small>Triumph</small><a href="bike.html">Street Triple RS</a></h3>
+        <div class="sp"><span><svg class="i"><use href="#i-cal"/></svg>2018</span><span><svg class="i"><use href="#i-gauge"/></svg>9,412 miles</span><span><svg class="i"><use href="#i-engine"/></svg>765cc</span></div>
+        <div class="ft"><a href="reserve.html" class="lnk">Reserve for £99 <svg class="i"><use href="#i-right"/></svg></a><span class="heart"><svg class="i"><use href="#i-heart"/></svg></span></div></div>
+    </article>
+<article class="bc">
+      <a href="bike.html" class="im"><img src="/assets/images/bikes/kawasaki-z900.webp" alt="2020 Kawasaki Z900" loading="lazy"><span class="flag red">Price drop</span><span class="pricechip"><s>£6,795</s><b>£6,295</b><span>£186/mo</span></span></a>
+      <div class="bd"><h3><small>Kawasaki</small><a href="bike.html">Z900</a></h3>
+        <div class="sp"><span><svg class="i"><use href="#i-cal"/></svg>2020</span><span><svg class="i"><use href="#i-gauge"/></svg>7,880 miles</span><span><svg class="i"><use href="#i-engine"/></svg>948cc</span></div>
+        <div class="ft"><a href="reserve.html" class="lnk">Reserve for £99 <svg class="i"><use href="#i-right"/></svg></a><span class="heart"><svg class="i"><use href="#i-heart"/></svg></span></div></div>
+    </article>
+<article class="bc">
+      <a href="bike.html" class="im"><img src="/assets/images/bikes/triumph-bonneville-t120.webp" alt="2019 Triumph Bonneville T120" loading="lazy"><span class="flag">Just arrived</span><span class="pricechip"><b>£8,295</b><span>£245/mo</span></span></a>
+      <div class="bd"><h3><small>Triumph</small><a href="bike.html">Bonneville T120</a></h3>
+        <div class="sp"><span><svg class="i"><use href="#i-cal"/></svg>2019</span><span><svg class="i"><use href="#i-gauge"/></svg>8,450 miles</span><span><svg class="i"><use href="#i-engine"/></svg>1200cc</span></div>
+        <div class="ft"><a href="reserve.html" class="lnk">Reserve for £99 <svg class="i"><use href="#i-right"/></svg></a><span class="heart"><svg class="i"><use href="#i-heart"/></svg></span></div></div>
+    </article>
+        </div>
+      </div>
+
+      <div class="alow">
+        <div class="apanel" id="px">
+          <div class="ph"><h3>Part-exchange</h3></div>
+          <p class="muted">Add your current bike to this order. We value it and take it off your balance.</p>
+          <form class="mini mt2" onsubmit="return false">
+            <div class="fl"><label for="pxr">Your registration</label><div class="plate"><span><i></i>UK</span><input id="pxr" placeholder="AB12 CDE" maxlength="8"></div></div>
+            <a href="part-exchange.html" class="btn btn-red" style="width:100%">Value my bike <svg class="i"><use href="#i-right"/></svg></a>
+          </form>
+        </div>
+        <div class="apanel" id="details">
+          <div class="ph"><h3>Details</h3><a href="#" class="lnk" style="font-size:14px">Edit</a></div>
+          <dl class="ddl">
+            <dt>Name</dt><dd>Rahim (sample)</dd>
+            <dt>Mobile</dt><dd>07••• •••123</dd>
+            <dt>Email</dt><dd>r•••@example.com</dd>
+            <dt>Delivery to</dt><dd>Address on file, postcode hidden</dd>
+            <dt>Text updates</dt><dd style="color:#1a9b54">On</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div class="alow" id="signin">
+        <div class="signin">
+          <h3>Not Rahim?</h3>
+          <p class="muted" style="margin-top:6px">Log out, then sign in with your own email to see your bike.</p>
+          <form class="form mt2" onsubmit="return false">
+            <div class="fl"><label for="se">Email</label><input id="se" type="email" placeholder="you@example.com"></div>
+            <div class="fl"><label for="sp">Password</label><input id="sp" type="password" placeholder="Password"></div>
+            <button class="btn btn-ink" type="submit">Sign in</button>
+          </form>
+          <div class="alt"><a href="#">Text me a sign-in code</a><a href="#">Forgotten password?</a></div>
+        </div>
+        <div class="icard dk" style="display:flex;flex-direction:column">
+          <span class="ic red"><svg class="i"><use href="#i-info"/></svg></span>
+          <h3>No account yet?</h3>
+          <p>One is made for you when you reserve a bike for £99. Use it to follow your bike's prep, pay the balance and keep your documents.</p>
+          <a href="used-bikes.html" class="btn btn-red mt2" style="align-self:flex-start">Find a bike <svg class="i"><use href="#i-right"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<!-- @include footer.html -->
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

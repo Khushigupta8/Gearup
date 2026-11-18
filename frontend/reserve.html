@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reserve your bike · GearUp Motorcycles</title>
+<meta name="description" content="Reserve your bike online for £99. Choose collection or UK delivery and pay securely.">
+<link rel="icon" href="/favicon.png">
+</head>
+<body>
+<!-- @include icons.html -->
+<!-- @include header.html active=used -->
+
+<main>
+
+<section class="sec" style="padding-top:30px">
+  <div class="wrap">
+    <div class="crumbs" style="color:var(--mut)"><a href="index.html">Home</a><span class="s">/</span><a href="bike.html">BMW R 1250 GS</a><span class="s">/</span><span>Reserve</span></div>
+    <h1 class="disp" style="font-size:64px;margin-bottom:22px">Reserve <span style="color:var(--red)">your bike</span></h1>
+    <div class="csteps"><div class="d"><b>01</b>Your bike</div><div class="n"><b>02</b>Details &amp; delivery</div><div><b>03</b>Pay deposit</div><div><b>04</b>Track your bike</div></div>
+    <div class="howwrap">
+        <details class="howbox">
+          <summary><span><svg class="i"><use href="#i-info"/></svg>How buying online works</span><small>4 simple steps</small></summary>
+          <ol class="how4">
+            <li><span class="ic"><svg class="i"><use href="#i-card"/></svg></span><h4><small>Step 01</small>Reserve for £99</h4><p>The bike comes off sale the moment you pay. The deposit comes off the price.</p></li>
+            <li><span class="ic"><svg class="i"><use href="#i-wrench"/></svg></span><h4><small>Step 02</small>Full PDI</h4><p>A full pre-delivery inspection, tied to our 120-point check. Each stage ticks off in your account.</p></li>
+            <li><span class="ic"><svg class="i"><use href="#i-truck"/></svg></span><h4><small>Step 03</small>Collect or deliver</h4><p>Collect from the showroom, or we deliver nationwide at a price per mile.</p></li>
+            <li><span class="ic"><svg class="i"><use href="#i-key"/></svg></span><h4><small>Step 04</small>Pay the balance &amp; ride</h4><p>Pay what's left on collection or delivery. Keys, logbook and warranty handed over.</p></li>
+          </ol>
+        </details>
+        <details class="howbox">
+          <summary><span><svg class="i"><use href="#i-shield"/></svg>Bike history check for this bike</span><small>All clear</small></summary>
+          <div class="hchecks" style="justify-content:flex-start;padding:4px 0 6px"><span><svg class="i"><use href="#i-check"/></svg>Not reported stolen</span><span><svg class="i"><use href="#i-check"/></svg>Not scrapped</span><span><svg class="i"><use href="#i-check"/></svg>Not written off</span><span><svg class="i"><use href="#i-check"/></svg>No outstanding finance</span></div>
+        </details>
+    </div>
+
+    <div class="split">
+      <form class="form" onsubmit="location.href='account.html';return false">
+        <div class="formcard">
+          <h2>Your details</h2>
+          <p>Already have an account? <a href="account.html" style="color:var(--red);font-weight:600">Log in</a> to fill this in faster.</p>
+          <div class="form mt2">
+            <div class="frow"><div class="fl"><label for="fn">First name</label><input id="fn" value="Rahim"></div><div class="fl"><label for="ln">Last name</label><input id="ln" placeholder="Last name"></div></div>
+            <div class="frow"><div class="fl"><label for="em">Email</label><input id="em" type="email" placeholder="you@example.com"></div><div class="fl"><label for="mb">Mobile</label><input id="mb" placeholder="07..."><small>We will text your tracking updates here.</small></div></div>
+          </div>
+        </div>
+
+        <div class="formcard">
+          <h2>How do you want your bike?</h2>
+          <div class="radios mt2">
+            <label class="rcard"><input type="radio" name="ful" value="col"><span class="dot"></span><span><b>Collect from showroom</b><small>Free. We will call to book a time.</small></span></label>
+            <label class="rcard on"><input type="radio" name="ful" value="del" checked><span class="dot"></span><span><b>Deliver to my door</b><small>Priced per mile, live GPS tracking.</small></span></label>
+          </div>
+          <div id="delBox" class="mt2">
+            <div class="frow"><div class="fl"><label for="pc">Delivery postcode</label><input id="pc" placeholder="e.g. M1 1AA" style="text-transform:uppercase"></div><div class="fl"><label>&nbsp;</label><button class="btn btn-ink" type="button" style="width:100%;height:52px" onclick="return quote(event)">Get delivery price</button></div></div>
+            <p class="qout" id="qOut">Enter your postcode to see the delivery price.</p>
+            <div class="fl"><label for="ad">Delivery address</label><input id="ad" placeholder="House number and street"></div>
+          </div>
+        </div>
+
+        <div class="formcard">
+          <h2>Paying for the rest</h2>
+          <p>Choose how you plan to pay the balance. You can change your mind before collection or delivery.</p>
+          <div class="radios mt2">
+            <label class="rcard on"><input type="radio" name="pay" checked><span class="dot"></span><span><b>Finance</b><small>From £339.39/month</small></span></label>
+            <label class="rcard"><input type="radio" name="pay"><span class="dot"></span><span><b>Bank transfer</b><small>Before delivery</small></span></label>
+            <label class="rcard"><input type="radio" name="pay"><span class="dot"></span><span><b>Part-exchange</b><small>Plus finance or transfer</small></span></label>
+          </div>
+          <div class="fl mt2"><label for="px">Part-exchange registration (optional)</label><div class="plate" style="height:56px;border:2px solid #d8b200"><span><i></i>UK</span><input id="px" placeholder="AB12 CDE" maxlength="8"></div></div>
+        </div>
+
+        <div class="formcard">
+          <h2>Pay today: £99 deposit + kit</h2>
+          <div class="form mt2">
+            <div class="fl"><label for="cn">Card number</label><input id="cn" placeholder="1234 5678 9012 3456" inputmode="numeric"></div>
+            <div class="frow"><div class="fl"><label for="ex">Expiry</label><input id="ex" placeholder="MM / YY"></div><div class="fl"><label for="cv">Security code</label><input id="cv" placeholder="CVC"></div></div>
+            <label class="chk"><input type="checkbox" checked>I agree to the reservation terms. My deposit comes off the price of the bike and is refundable if the bike fails its pre-sale checks.</label>
+            <button class="btn btn-red" type="submit"><svg class="i"><use href="#i-lock"/></svg>Pay and reserve my bike</button>
+            <div class="secure"><svg class="i"><use href="#i-lock"/></svg>Secure payment by Stripe. Paid straight to GearUp.</div>
+          </div>
+        </div>
+      </form>
+
+      <aside class="stick">
+        <div class="summary">
+          <div class="sb"><img src="/assets/images/bikes/bmw-r1250gs.webp" alt=""><div><small>2019 · 18,760 miles</small><b>BMW R 1250 GS</b></div></div>
+          <dl>
+            <dt>Cash price</dt><dd>£11,495.00</dd>
+            <dt>Warranty</dt><dd>12 months free</dd>
+            <dt>Reservation deposit</dt><dd>£99.00</dd>
+            <dt>Kit from your basket (3)</dt><dd>£296.97</dd>
+            <dt>Delivery</dt><dd id="delivFee">Enter postcode</dd>
+            <dt class="tot">Due today</dt><dd id="dueNow" data-base="395.97">£395.97</dd>
+          </dl>
+          <p class="note"><b style="color:#fff">Balance due on collection or delivery: £11,396.00</b> less any part-exchange. <a href="basket.html" style="text-decoration:underline">Edit basket</a>. The bike comes off sale as soon as you pay.</p>
+        </div>
+        <div class="icard mt1"><div class="h4" style="display:flex;gap:8px;align-items:center"><svg class="i" style="color:var(--red)"><use href="#i-pin"/></svg>What happens next</div><ul class="clist mt1" style="font-size:15px"><li><svg class="i"><use href="#i-check"/></svg>We confirm by text within the hour</li><li><svg class="i"><use href="#i-check"/></svg>Full PDI and 120-point check, live in your account</li><li><svg class="i"><use href="#i-check"/></svg>Collect it, or follow the van live on delivery day</li></ul></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+</main>
+<!-- @include footer.html -->
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

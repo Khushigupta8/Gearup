@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motorcycle Servicing, MOT and Repairs · GearUp Motorcycles</title>
+<meta name="description" content="Motorcycle MOTs, servicing, tyres and repairs on all makes, by the team that preps every GearUp bike. Book online.">
+<link rel="icon" href="/favicon.png">
+</head>
+<body>
+<!-- @include icons.html -->
+<!-- @include header.html active=workshop -->
+
+<main>
+
+<style>
+.wphoto{position:relative;align-self:stretch;min-height:340px}
+.wphoto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:polygon(8% 0,100% 0,100% 100%,0 100%)}
+.wphoto .big{position:absolute;left:0;bottom:22px;background:var(--red);color:#fff;padding:14px 20px;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+.wphoto .big b{font-family:var(--disp);font-weight:400;font-size:44px;line-height:.95;display:block}
+.wphoto .big small{font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+.phero.ws .wrap{align-items:stretch;padding-bottom:0}
+.phero.ws .wrap>div:first-child{padding-bottom:46px}
+.wfacts{display:flex;gap:10px 22px;flex-wrap:wrap;margin-top:26px;font-size:15px;color:#cfcfd5}
+.wfacts span{display:flex;gap:8px;align-items:center}
+.wfacts svg{color:var(--red);stroke-width:3}
+.ptable td.pr{white-space:nowrap;text-align:right}
+.ptable th.pr{text-align:right}
+.ptable td.pr small{text-align:right}
+.ptable tr.hl td{background:#fff5f5}
+.ptable td:first-child b{font-family:var(--narrow);font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:.04em;display:block}
+.from{font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;color:var(--mut);display:block}
+.samp{display:inline-block;background:var(--plate);color:var(--ink);font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;padding:3px 8px;vertical-align:middle}
+.formcard .plate{height:64px;border-width:2px}
+.formcard .plate input{font-size:30px}
+.formcard .plate span{width:48px;font-size:13px}
+.bsec{margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.bsec .h4{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.bsec .h4 i{font-style:normal;width:26px;height:26px;background:var(--ink);color:#fff;font-family:var(--disp);font-weight:400;font-size:15px;display:flex;align-items:center;justify-content:center}
+.slots{display:flex;gap:8px;flex-wrap:wrap}
+.slots label{position:relative;cursor:pointer}
+.slots input{position:absolute;opacity:0}
+.slots span{display:block;border:1.5px solid var(--line);background:#fff;padding:10px 16px;font-weight:600;font-size:15px}
+.slots input:checked+span{background:var(--ink);color:#fff;border-color:var(--ink)}
+.slots s{color:#b0b0b6}
+.success[hidden]{display:none}
+.fl textarea{font:inherit}
+#book .radios{grid-template-columns:repeat(3,1fr)}
+.hours{width:100%;border-collapse:collapse;font-size:16px}
+.hours td{padding:12px 0;border-bottom:1px solid var(--char3)}
+.hours td:last-child{text-align:right;font-weight:700;color:#fff}
+.hours tr.c td:last-child{color:#8f8f97}
+.tyre{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--ink);color:#fff}
+.tyre .ti{position:relative;min-height:380px}
+.tyre .ti img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tyre .tb{padding:44px 40px}
+.tyre .tb p{color:#c3c3ca;margin-top:12px}
+.tyre .clist{margin-top:20px}
+@media (max-width:1024px){.wphoto{min-height:260px}.wphoto img{clip-path:none}.phero.ws .wrap>div:first-child{padding-bottom:0}.phero.ws .wrap{padding-bottom:34px}.tyre{grid-template-columns:1fr}.tyre .ti{min-height:260px}}
+@media (max-width:640px){
+#book .radios{grid-template-columns:1fr 1fr}
+#prices .ptable thead{display:none}
+#prices .ptable tr{display:grid;grid-template-columns:1fr auto;border-bottom:1px solid var(--line)}
+#prices .ptable td{border:0;padding:14px 12px 0}
+#prices .ptable td:nth-child(2){grid-column:1/-1;grid-row:2;padding:4px 12px 14px;font-size:14px}
+#prices .ptable td.pr{grid-row:1;grid-column:2}
+.tyre .tb{padding:28px 20px}.ptable td:first-child b{font-size:16px}.formcard .plate input{font-size:24px}.wphoto .big b{font-size:34px}}
+</style>
+
+<section class="phero ws">
+  <div class="slab" aria-hidden="true" style="width:22%"></div>
+  <div class="wrap">
+    <div>
+      <div class="crumbs"><a href="index.html">Home</a><span class="s">/</span><span>Workshop and MOT</span></div>
+      <h1 class="disp">Servicing, MOT <em>and repairs</em></h1>
+      <p class="lede">All makes and models. The same technicians who prep every GearUp bike look after yours. Clear prices, and we call before doing any extra work.</p>
+      <div class="ctas"><a href="#book" class="btn btn-red"><svg class="i"><use href="#i-cal"/></svg>Book an MOT or service</a><a href="#prices" class="btn btn-ghost">See prices</a></div>
+      <div class="wfacts"><span><svg class="i"><use href="#i-check"/></svg>All makes</span><span><svg class="i"><use href="#i-check"/></svg>Book online</span><span><svg class="i"><use href="#i-check"/></svg>Tyres fitted</span></div>
+    </div>
+    <div class="wphoto">
+      <img src="/assets/images/lifestyle/workshop-stand.webp" alt="The GearUp workshop with benches and tools">
+      <div class="big"><b>All makes</b><small>Bikes, scooters and 125s</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="prices">
+  <div class="wrap">
+    <div class="sh"><div><span class="tag">Workshop prices</span><h2 class="disp">Prices <em>upfront</em></h2><p>Starting prices for most bikes. We confirm the exact price for your bike when you book, before we pick up a spanner.</p></div><a href="#book" class="btn btn-ink"><svg class="i"><use href="#i-cal"/></svg>Book now</a></div>
+    <table class="ptable">
+      <thead><tr><th>Service</th><th>What's included</th><th class="pr">Price</th></tr></thead>
+      <tbody>
+        <tr class="hl"><td><b>Motorcycle MOT</b></td><td>Class 1 and 2 MOT test on any make of motorcycle.<small>We tell you about any fails or advisories before you collect.</small></td><td class="pr"><span class="from">Up to</span><b>£29.65</b></td></tr>
+        <tr><td><b>MOT collection &amp; return</b></td><td>We collect your bike in our van, take it for its MOT and bring it back to your door.<small>Charged on top of the MOT fee. Price depends on distance.</small></td><td class="pr"><span class="from">From</span><b>£20</b></td></tr>
+        <tr><td><b>Pre-MOT check</b></td><td>Lights, tyres, brakes, chain and horn checked so there are no surprises on the day.</td><td class="pr"><span class="from">From</span><b>£25</b></td></tr>
+        <tr><td><b>Interim service</b></td><td>Oil and filter change, chain adjust and lube, brakes, lights and fluid levels checked.<small>Ideal every 3,000 to 4,000 miles.</small></td><td class="pr"><span class="from">From</span><b>£119</b></td></tr>
+        <tr><td><b>Full service</b></td><td>Everything in the interim service plus air filter, plugs, brake fluid and a full safety inspection. Service book stamped.</td><td class="pr"><span class="from">From</span><b>£229</b></td></tr>
+        <tr><td><b>Tyre fitting</b></td><td>Fit and balance, new valve. Supply your own or let us order them.<small>Price per wheel, wheel off the bike.</small></td><td class="pr"><span class="from">From</span><b>£20</b></td></tr>
+        <tr><td><b>Chain and sprocket kit</b></td><td>Supply and fit. Price depends on your bike and the kit.</td><td class="pr"><span class="from">From</span><b>£139</b></td></tr>
+        <tr><td><b>Brake pads</b></td><td>Supply and fit, per axle. Discs and fluid checked.</td><td class="pr"><span class="from">From</span><b>£55</b></td></tr>
+        <tr><td><b>Diagnostics and repairs</b></td><td>Warning lights, electrics, running problems and crash repairs. We quote before we fix.</td><td class="pr"><span class="from">Per hour</span><b>£60</b></td></tr>
+      </tbody>
+    </table>
+    <p class="muted mt1" style="font-size:13px"><span class="samp">Sample prices</span> Mockup figures, apart from the MOT, which is the government maximum fee for a motorcycle. GearUp to confirm workshop rates.</p>
+  </div>
+</section>
+
+<section class="sec paper" id="book">
+  <div class="wrap split">
+    <form class="formcard" onsubmit="document.getElementById('bkOk').hidden=false;document.getElementById('bkOk').scrollIntoView({block:'center'});return false">
+      <h2>Book your bike in</h2>
+      <p>Takes two minutes. We text to confirm your slot.</p>
+
+      <div class="bsec" style="border-top:0;padding-top:0">
+        <div class="h4"><i>1</i>Your bike</div>
+        <div class="frow">
+          <div class="fl"><label for="wreg">Registration</label><div class="plate"><span><i></i>UK</span><input id="wreg" placeholder="AB12 CDE" maxlength="8"></div></div>
+          <div class="fl"><label for="wml">Mileage</label><input id="wml" placeholder="e.g. 8,500" inputmode="numeric"><small>Roughly is fine.</small></div>
+        </div>
+      </div>
+
+      <div class="bsec">
+        <div class="h4"><i>2</i>What do you need?</div>
+        <div class="radios">
+          <label class="rcard on"><input type="radio" name="wsv" checked><span class="dot"></span><span><b>MOT</b><small>Up to £29.65</small></span></label>
+          <label class="rcard"><input type="radio" name="wsv"><span class="dot"></span><span><b>MOT and service</b><small>Save a second trip</small></span></label>
+          <label class="rcard"><input type="radio" name="wsv"><span class="dot"></span><span><b>MOT with collection</b><small>We collect and return it, from £20 + MOT</small></span></label>
+          <label class="rcard"><input type="radio" name="wsv"><span class="dot"></span><span><b>Service only</b><small>Interim or full</small></span></label>
+          <label class="rcard"><input type="radio" name="wsv"><span class="dot"></span><span><b>Tyres</b><small>Fit and balance</small></span></label>
+          <label class="rcard"><input type="radio" name="wsv"><span class="dot"></span><span><b>Repair</b><small>Tell us below</small></span></label>
+          <label class="rcard"><input type="radio" name="wsv"><span class="dot"></span><span><b>Not sure</b><small>We will call you</small></span></label>
+        </div>
+      </div>
+
+      <div class="bsec">
+        <div class="h4"><i>3</i>Day and time</div>
+        <div class="form">
+          <div class="fl" style="max-width:320px"><label for="wdt">Date</label><div class="sel"><select id="wdt"><option>Tue 17 Nov</option><option selected>Wed 18 Nov</option><option>Thu 19 Nov</option><option>Fri 20 Nov</option><option>Sat 21 Nov</option><option>Mon 23 Nov</option></select><svg class="i"><use href="#i-down"/></svg></div></div>
+          <div class="fl"><span class="lbl">Drop-off time</span>
+            <div class="slots"><label><input type="radio" name="wtm"><span><s>9:00</s></span></label><label><input type="radio" name="wtm" checked><span>10:00</span></label><label><input type="radio" name="wtm"><span>11:30</span></label><label><input type="radio" name="wtm"><span>13:30</span></label><label><input type="radio" name="wtm"><span>15:00</span></label></div>
+          </div>
+        </div>
+        <label class="chk mt1"><input type="checkbox">Text me if an earlier slot comes up</label>
+      </div>
+
+      <div class="bsec">
+        <div class="h4"><i>4</i>Your details</div>
+        <div class="form">
+          <div class="frow"><div class="fl"><label for="wn">Name</label><input id="wn" placeholder="Full name"></div><div class="fl"><label for="wm">Mobile</label><input id="wm" placeholder="07..." inputmode="tel"></div></div>
+          <div class="fl"><label for="we">Email</label><input id="we" type="email" placeholder="you@example.com"></div>
+          <div class="fl"><label for="wx">Anything we should know?</label><textarea id="wx" placeholder="Noises, warning lights, parts you want fitted"></textarea></div>
+          <button class="btn btn-red" type="submit"><svg class="i"><use href="#i-cal"/></svg>Request this slot</button>
+          <div class="success" id="bkOk" hidden><svg class="i"><use href="#i-check"/></svg><span>Request sent. We will text you to confirm your slot.</span></div>
+        </div>
+      </div>
+    </form>
+
+    <aside class="stick" style="display:grid;gap:18px">
+      <div class="icard">
+        <div class="h4" style="display:flex;gap:8px;align-items:center"><svg class="i" style="color:var(--red)"><use href="#i-info"/></svg>How booking works</div>
+        <ul class="clist mt2" style="font-size:15px">
+          <li><svg class="i"><use href="#i-check"/></svg>Pick a slot and we text you to confirm</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Drop your bike off at the time you chose</li>
+          <li><svg class="i"><use href="#i-check"/></svg>We call before any work beyond what you booked</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Pay when you collect</li>
+        </ul>
+      </div>
+      <div class="icard dk">
+        <span class="ic red"><svg class="i"><use href="#i-clock"/></svg></span>
+        <h3>Workshop hours</h3>
+        <table class="hours mt1">
+          <tr><td>Monday to Friday</td><td>9:00 to 17:30</td></tr>
+          <tr><td>Saturday</td><td>9:00 to 16:00</td></tr>
+          <tr class="c"><td>Sunday</td><td>Closed</td></tr>
+        </table>
+        <p style="margin-top:14px">Rather talk? Call <b style="color:#fff">0744 072 1478</b>.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="sec dark">
+  <div class="wrap">
+    <div class="sh"><div><span class="tag">Why GearUp</span><h2 class="disp">Why use <em>our workshop</em></h2><p>We are a dealer, so our workshop is busy every day. That is good news for your bike.</p></div></div>
+    <div class="grid4b">
+      <div class="icard dk"><span class="ic red"><svg class="i"><use href="#i-wrench"/></svg></span><h3>The team that preps our stock</h3><p>Every bike we sell gets a 120-point inspection here. Yours gets the same eyes.</p></div>
+      <div class="icard dk"><span class="ic"><svg class="i"><use href="#i-engine"/></svg></span><h3>All makes</h3><p>Japanese, European and American bikes, scooters and 125s. Bought from us or not.</p></div>
+      <div class="icard dk"><span class="ic"><svg class="i"><use href="#i-phone"/></svg></span><h3>No surprises</h3><p>We quote first. If we find something extra, we call you before we touch it.</p></div>
+      <div class="icard dk"><span class="ic"><svg class="i"><use href="#i-doc"/></svg></span><h3>Proper records</h3><p>Service book stamped and a written note of what we did. Good for when you sell.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="tyre">
+      <div class="ti"><img src="/assets/images/lifestyle/workshop-tools.webp" alt="Socket set in the GearUp workshop"></div>
+      <div class="tb">
+        <span class="sh" style="margin:0"><span class="tag" style="background:var(--red)">Tyres</span></span>
+        <h2 class="disp" style="font-size:60px;margin-top:12px">Tyres <em style="font-style:normal;color:var(--red)">fitted</em></h2>
+        <p>Worn tyres are the most common MOT fail we see. Bring your own or let us order the right pair for your bike and how you ride.</p>
+        <ul class="clist">
+          <li><svg class="i"><use href="#i-check"/></svg>Road, sport, touring and adventure tyres</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Fit, balance and new valves</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Wheels in, or bike in for removal and refit</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Tread and pressures checked while you are in</li>
+        </ul>
+        <div class="ctas" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px"><a href="#book" class="btn btn-red">Book tyres</a><a href="accessories.html" class="btn btn-ghost">Shop parts and kit</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="insp-band" id="inspection">
+  <div class="ib-img"><img src="/assets/images/lifestyle/mechanic-engine.webp" alt="Close-up of an engine being inspected"><div class="big"><b>120</b><small>Point inspection</small></div></div>
+  <div class="ib-body">
+    <span class="sh" style="margin:0"><span class="tag">Built in our workshop</span></span>
+    <h2 class="disp" style="font-size:60px;margin-top:12px">The <em style="font-style:normal;color:var(--red)">120-point</em> inspection</h2>
+    <p class="muted" style="font-size:17px;margin-top:12px">Every bike we sell goes through it before it goes on sale. It is the same workshop and the same standard you get when you book your own bike in.</p>
+    <div class="cats">
+      <div>Engine &amp; drivetrain<span>24</span></div><div>Brakes<span>16</span></div>
+      <div>Suspension &amp; steering<span>18</span></div><div>Wheels &amp; tyres<span>14</span></div>
+      <div>Electrics &amp; lights<span>20</span></div><div>Frame, bodywork &amp; road test<span>28</span></div>
+    </div>
+    <a href="warranty.html#inspection" class="lnk" style="margin-top:26px">See the full checklist <svg class="i"><use href="#i-right"/></svg></a>
+  </div>
+</section>
+
+</main>
+<!-- @include footer.html -->
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

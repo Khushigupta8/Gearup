@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Help and FAQs · GearUp Motorcycles</title>
+<meta name="description" content="Answers on reserving a bike, finance, part-exchange, delivery, tracking your bike, warranty, the workshop and accessories orders.">
+<link rel="icon" href="/favicon.png">
+</head>
+<body>
+<!-- @include icons.html -->
+<!-- @include header.html -->
+
+<main>
+
+<style>
+.fsearch{display:flex;background:#fff;height:58px;margin-top:24px;max-width:600px}
+.fsearch svg{margin:0 12px 0 18px;align-self:center;color:var(--mut)}
+.fsearch input{flex:1;min-width:0;border:0;outline:0;font-size:17px;color:var(--ink)}
+.fsearch .btn{height:58px;clip-path:none}
+.fpop{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;font-size:14px;color:#a7a7ae;align-items:center}
+.fpop a{color:#fff;border:1px solid var(--char3);padding:4px 10px;font-weight:600}
+.fpop a:hover{border-color:var(--red)}
+.fcats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fcats a{display:flex;gap:10px;align-items:center;background:var(--char2);border:1px solid var(--char3);padding:12px 14px;font-family:var(--narrow);font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:15px}
+.fcats a svg{color:var(--red)}
+.fcats a:hover{border-color:var(--red)}
+.fhub{display:grid;grid-template-columns:260px minmax(0,1fr);gap:56px;align-items:start}
+.faqnav{position:sticky;top:70px}
+.faqnav .h4{margin-bottom:10px;font-size:15px;color:var(--mut)}
+.faqnav a{display:flex;justify-content:space-between;align-items:center;font-size:15px}
+.faqnav a i{font-style:normal;font-family:var(--sans);font-weight:600;color:var(--mut);font-size:13px;letter-spacing:0}
+.faqnav .stuck{margin-top:22px;background:var(--ink);color:#fff;padding:18px}
+.faqnav .stuck b{font-family:var(--disp);font-weight:400;font-size:24px;text-transform:uppercase;display:block;line-height:1}
+.faqnav .stuck p{color:#b9b9c0;font-size:14px;margin:6px 0 12px}
+.faqnav .stuck .btn{height:44px;font-size:15px;padding:0 18px;width:100%}
+.fgrp{scroll-margin-top:80px}
+.fgrp+.fgrp{margin-top:54px}
+.fgrp .gh{display:flex;gap:14px;align-items:center;padding-bottom:12px;border-bottom:3px solid var(--ink)}
+.fgrp .gh .ic{width:46px;height:46px;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);flex:none}
+.fgrp .gh h2{font-family:var(--disp);font-weight:400;font-size:40px;text-transform:uppercase;line-height:1}
+.fgrp .gh a{margin-left:auto;font-size:14px}
+.fgrp .faq{max-width:none}
+.fgrp .faq summary{font-size:22px}
+.fgrp .faq p a{color:var(--red);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+@media (max-width:1024px){
+  .fhub{grid-template-columns:1fr;gap:30px}
+  .faqnav{position:static;flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:4px}
+  .faqnav .h4,.faqnav .stuck{display:none}
+  .faqnav a{border-left:0;border-bottom:3px solid var(--line);white-space:nowrap;padding:10px 12px;background:var(--paper)}
+  .faqnav a i{display:none}
+  .faqnav a.on,.faqnav a:hover{border-bottom-color:var(--red)}
+}
+@media (max-width:640px){
+  .fcats{grid-template-columns:1fr 1fr;gap:6px}
+  .fcats a{font-size:13px;padding:10px;gap:8px}
+  .fgrp .gh h2{font-size:30px}
+  .fgrp .gh a{display:none}
+  .fgrp .faq summary{font-size:20px}
+  .fsearch .btn{padding:0 16px}
+}
+</style>
+
+<section class="phero">
+  <div class="slab" aria-hidden="true"></div>
+  <div class="wrap" style="align-items:center">
+    <div>
+      <div class="crumbs"><a href="index.html">Home</a><span class="s">/</span><span>Help and FAQs</span></div>
+      <h1 class="disp">Questions <em>answered</em></h1>
+      <p class="lede">Buying, finance, delivery, tracking your bike and the workshop. Straight answers, no small print games.</p>
+      <form class="fsearch" onsubmit="return false"><svg class="i"><use href="#i-search"/></svg><label class="sr" for="fq">Search help</label><input id="fq" placeholder="Search, e.g. delivery price"><button class="btn btn-red" type="submit">Search</button></form>
+      <div class="fpop"><span>Popular:</span><a href="#buying">Reserving for £99</a><a href="#tracking">Tracking my bike</a><a href="#warranty">Warranty</a></div>
+    </div>
+    <div class="fcats">
+      <a href="#buying"><svg class="i"><use href="#i-card"/></svg>Buying</a>
+      <a href="#finance"><svg class="i"><use href="#i-tag"/></svg>Finance</a>
+      <a href="#px"><svg class="i"><use href="#i-key"/></svg>Part-exchange</a>
+      <a href="#delivery"><svg class="i"><use href="#i-truck"/></svg>Delivery</a>
+      <a href="#tracking"><svg class="i"><use href="#i-pin"/></svg>Tracking</a>
+      <a href="#warranty"><svg class="i"><use href="#i-shield"/></svg>Warranty</a>
+      <a href="#workshop"><svg class="i"><use href="#i-wrench"/></svg>Workshop</a>
+      <a href="#accessories"><svg class="i"><use href="#i-bag"/></svg>Accessories</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:56px">
+  <div class="wrap fhub">
+    <nav class="faqnav" aria-label="FAQ categories">
+      <div class="h4">Categories</div>
+      <a href="#buying" class="on">Buying &amp; reserving<i>6</i></a>
+      <a href="#finance">Finance<i>5</i></a>
+      <a href="#px">Part-ex &amp; selling<i>5</i></a>
+      <a href="#delivery">Delivery &amp; collection<i>6</i></a>
+      <a href="#tracking">Tracking my bike<i>5</i></a>
+      <a href="#warranty">Warranty &amp; returns<i>6</i></a>
+      <a href="#workshop">Workshop<i>5</i></a>
+      <a href="#accessories">Accessories orders<i>4</i></a>
+      <div class="stuck"><b>Still stuck?</b><p>Talk to a real person. Monday to Saturday.</p><a href="contact.html" class="btn btn-red">Contact us</a></div>
+    </nav>
+
+    <div>
+      <div class="fgrp" id="buying">
+        <div class="gh"><span class="ic"><svg class="i"><use href="#i-card"/></svg></span><h2>Buying &amp; reserving</h2><a href="used-bikes.html" class="lnk">Browse bikes <svg class="i"><use href="#i-right"/></svg></a></div>
+        <div class="faq">
+          <details open><summary>How does reserving online work?</summary><p>Pay the £99 deposit on the bike's page. The bike comes off sale straight away and the £99 comes off the price. An account is made for you so you can follow the prep.</p></details>
+          <details><summary>Is the £99 deposit refundable?</summary><p>Yes, if the bike fails its pre-sale checks. The full reservation terms are shown before you pay.</p></details>
+          <details><summary>What checks has every bike had?</summary><p>An HPI check, our 120-point inspection, an MOT where needed and a full valet. You can see each stage tick off in your account.</p></details>
+          <details><summary>Can I see the bike before I buy?</summary><p>Yes. Visit the showroom, watch the walkaround video on the bike's page, or ask us for a live video call.</p></details>
+          <details><summary>How do I pay the balance?</summary><p>By bank transfer, card or finance, less any part-exchange. The balance is due before collection or delivery.</p></details>
+          <details><summary>Do you sell 125cc and learner bikes?</summary><p>Yes. Use the 125cc and learner filter on our <a href="used-bikes.html">motorbikes</a> page to see what is in stock.</p></details>
+        </div>
+      </div>
+
+      <div class="fgrp" id="finance">
+        <div class="gh"><span class="ic"><svg class="i"><use href="#i-tag"/></svg></span><h2>Finance</h2><a href="finance.html" class="lnk">Finance options <svg class="i"><use href="#i-right"/></svg></a></div>
+        <div class="faq">
+          <details><summary>What is the representative APR?</summary><p>19.9% APR representative. For example, a £6,495 bike over 48 months with no deposit is £191.77 a month, £9,204.73 in total. Finance is subject to status and affordability.</p></details>
+          <details><summary>Can I get finance with poor credit?</summary><p>Often, yes. Apply online and we will look at the options available to you. Every application is subject to status.</p></details>
+          <details><summary>How long can I spread the cost?</summary><p>Usually 2 to 5 years. Use the calculator on the <a href="finance.html">finance page</a> to see monthly figures.</p></details>
+          <details><summary>Do I need a deposit for finance?</summary><p>Not always. You can put down cash or use your part-exchange as a deposit to lower the monthly payment.</p></details>
+          <details><summary>Can I reserve first and apply later?</summary><p>Yes. Reserve for £99, then apply from your account before your collection or delivery date.</p></details>
+        </div>
+      </div>
+
+      <div class="fgrp" id="px">
+        <div class="gh"><span class="ic"><svg class="i"><use href="#i-key"/></svg></span><h2>Part-exchange &amp; selling</h2><a href="part-exchange.html" class="lnk">Value my bike <svg class="i"><use href="#i-right"/></svg></a></div>
+        <div class="faq">
+          <details><summary>How do I get a part-exchange valuation?</summary><p>Enter your registration and mileage on the <a href="part-exchange.html">part-exchange page</a> or on any bike page. We confirm the figure when we see the bike.</p></details>
+          <details><summary>Can I part-exchange if I still owe finance?</summary><p>Usually, yes. Tell us when you ask for a valuation and we will talk you through it.</p></details>
+          <details><summary>Can I sell you my bike without buying one?</summary><p>Yes. Use <a href="sell-your-bike.html">sell your bike</a> for a valuation. We buy bikes outright.</p></details>
+          <details><summary>What happens to my part-exchange on delivery day?</summary><p>Tell us when you reserve and we will agree the handover of your old bike with you.</p></details>
+          <details><summary>What do I need to bring?</summary><p>All keys, the V5C logbook, the service history and any MOT certificates you have.</p></details>
+        </div>
+      </div>
+
+      <div class="fgrp" id="delivery">
+        <div class="gh"><span class="ic"><svg class="i"><use href="#i-truck"/></svg></span><h2>Delivery &amp; collection</h2><a href="delivery.html" class="lnk">Delivery prices <svg class="i"><use href="#i-right"/></svg></a></div>
+        <div class="faq">
+          <details><summary>Where do you deliver?</summary><p>Anywhere in mainland UK. For islands, call us before you reserve.</p></details>
+          <details><summary>How much is delivery?</summary><p>It is priced per mile from our showroom by road. Enter your postcode on the <a href="delivery.html">delivery page</a> or at checkout for an instant price.</p></details>
+          <details><summary>When do I pay for delivery?</summary><p>At checkout, with your £99 deposit. The price is fixed once paid.</p></details>
+          <details><summary>Is collection free?</summary><p>Yes. Collect from the showroom at a time we agree. We call you to book it in.</p></details>
+          <details><summary>Do I need to be in?</summary><p>Yes, or someone you trust. The handover checklist has to be signed and we hand over the keys and paperwork in person.</p></details>
+          <details><summary>Can I switch between collection and delivery?</summary><p>Yes, any time before your bike is ready. Just call us.</p></details>
+        </div>
+      </div>
+
+      <div class="fgrp" id="tracking">
+        <div class="gh"><span class="ic"><svg class="i"><use href="#i-pin"/></svg></span><h2>Tracking my bike</h2><a href="account.html" class="lnk">Track my bike <svg class="i"><use href="#i-right"/></svg></a></div>
+        <div class="faq">
+          <details><summary>What can I see in my account?</summary><p>Each prep stage as our team ticks it off: deposit received, valet, MOT, 120-point inspection, ready for delivery, out for delivery and delivered. Photos are added as we go.</p></details>
+          <details><summary>How does live tracking work?</summary><p>On delivery day our driver shares the GPS from their phone. You see the van on a map with an arrival time that updates as they drive.</p></details>
+          <details><summary>When does the tracking link appear?</summary><p>As soon as the driver sets off. It shows in your account and we text you the link.</p></details>
+          <details><summary>I collected my bike. Can I still use my account?</summary><p>Yes. Your documents, invoice and warranty stay in your account for good.</p></details>
+          <details><summary>I cannot log in. What do I do?</summary><p>Ask for a sign-in code by text on the <a href="account.html">account page</a>, or call us and we will sort it.</p></details>
+        </div>
+      </div>
+
+      <div class="fgrp" id="warranty">
+        <div class="gh"><span class="ic"><svg class="i"><use href="#i-shield"/></svg></span><h2>Warranty &amp; returns</h2><a href="warranty.html" class="lnk">Warranty details <svg class="i"><use href="#i-right"/></svg></a></div>
+        <div class="faq">
+          <details><summary>What warranty comes with every bike?</summary><p>Every bike comes with 30 days' warranty as standard.</p></details>
+          <details><summary>What does the red warranty badge mean?</summary><p>Bikes with the red badge include longer cover free: 3, 6, 12 or 24 months, as shown on the badge.</p></details>
+          <details><summary>Can I extend my warranty?</summary><p>Yes. You can add longer cover to any bike at checkout. See the <a href="warranty.html">warranty page</a> for options.</p></details>
+          <details><summary>What is the 14-day money back?</summary><p>If the bike is not right for you, you have 14 days to tell us. Call us first and we will explain how the return works.</p></details>
+          <details><summary>What is the 120-point inspection?</summary><p>Our technicians check engine, brakes, suspension, wheels, electrics and frame, then road test the bike. See the <a href="warranty.html#inspection">full checklist</a>.</p></details>
+          <details><summary>How do I make a warranty claim?</summary><p>Call or message us with your order number. Your warranty documents are saved in your account.</p></details>
+        </div>
+      </div>
+
+      <div class="fgrp" id="workshop">
+        <div class="gh"><span class="ic"><svg class="i"><use href="#i-wrench"/></svg></span><h2>Workshop</h2><a href="workshop.html" class="lnk">Book a service <svg class="i"><use href="#i-right"/></svg></a></div>
+        <div class="faq">
+          <details><summary>Do you work on bikes not bought from you?</summary><p>Yes. We service, MOT and repair all makes, bought from us or not.</p></details>
+          <details><summary>How do I book an MOT?</summary><p>Use the booking form on the <a href="workshop.html#book">workshop page</a>. Enter your reg, pick a slot and we text to confirm.</p></details>
+          <details><summary>Will you do extra work without asking?</summary><p>No. If we find something beyond what you booked, we call you with a price first.</p></details>
+          <details><summary>Do you fit tyres?</summary><p>Yes. Bring your own or we order the right pair for you.</p></details>
+          <details><summary>Will you stamp my service book?</summary><p>Yes, and you get a written note of the work done.</p></details>
+        </div>
+      </div>
+
+      <div class="fgrp" id="accessories">
+        <div class="gh"><span class="ic"><svg class="i"><use href="#i-bag"/></svg></span><h2>Accessories orders</h2><a href="accessories.html" class="lnk">Shop accessories <svg class="i"><use href="#i-right"/></svg></a></div>
+        <div class="faq">
+          <details><summary>Do you post accessories?</summary><p>Yes, anywhere in the UK. Or pick your order up from the showroom.</p></details>
+          <details><summary>Can I try on a helmet first?</summary><p>Yes. Visit the showroom and our team will help you find the right size and fit.</p></details>
+          <details><summary>Can I return something?</summary><p>Unused items in their original packaging can be returned. Call us first and quote your order number.</p></details>
+          <details><summary>Where do I see my accessories order?</summary><p>In your <a href="account.html#orders">account</a>, under My orders.</p></details>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec paper">
+  <div class="wrap">
+    <div class="sh"><div><span class="tag">Contact</span><h2 class="disp">Can't find <em>your answer?</em></h2><p>Talk to a real person at the showroom. Quote your order number if you have one.</p></div><a href="contact.html" class="btn btn-red">Contact page <svg class="i"><use href="#i-right"/></svg></a></div>
+    <div class="cblocks">
+      <a href="contact.html" class="cblock"><span class="ic"><svg class="i"><use href="#i-phone"/></svg></span><div><b>Call us</b><span>0744 072 1478</span><span>Monday to Saturday, see hours below</span></div></a>
+      <a href="contact.html" class="cblock"><span class="ic"><svg class="i"><use href="#i-chat"/></svg></span><div><b>WhatsApp</b><span>Message us any time</span><span>We reply in opening hours</span></div></a>
+      <a href="contact.html" class="cblock"><span class="ic"><svg class="i"><use href="#i-mail"/></svg></span><div><b>Email</b><span>sales@gearupmotorcycles.co.uk</span><span>For orders, quote GU-number</span></div></a>
+    </div>
+  </div>
+</section>
+
+</main>
+<!-- @include footer.html -->
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
