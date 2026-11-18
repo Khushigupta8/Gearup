@@ -29,8 +29,10 @@ Use lowercase, hyphenated names (`yamaha-mt07.webp`), save as WebP, and put each
 
 ## Run locally
 
+There's no build step. Open `index.html` in a browser, or serve the folder:
+
 ```
-python -m http.server 8765
+npx serve .
 ```
 
-Then open http://127.0.0.1:8765.
+Then open the URL it prints (usually http://localhost:3000).
