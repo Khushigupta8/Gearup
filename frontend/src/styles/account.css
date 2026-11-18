@@ -7,7 +7,6 @@
 .ahd img{width:150px;height:100px;object-fit:cover}
 .ahd small{display:block;color:#a5a5ac;font-size:13px}
 .ahd h2{font-family:var(--disp);font-weight:400;font-size:38px;text-transform:uppercase;line-height:1;margin-top:2px}
-.ahd .wb{display:inline-block;background:var(--red);font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;padding:4px 10px;margin-top:8px;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
 .ahd .st{text-align:right}
 .ahd .st span{display:inline-block;background:#fff;color:var(--red);font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:14px;padding:7px 14px}
 .ahd .st small{margin-top:8px}
