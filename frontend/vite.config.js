@@ -3,13 +3,14 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const root = import.meta.dirname;
+const pagesDir = resolve(root, 'pages');
 const partialsDir = resolve(root, 'partials');
 
-// Every .html file in the frontend root is a page.
+// Every .html file in pages/ is a page. It is served and built at the site root (/bike.html).
 const pages = Object.fromEntries(
-  readdirSync(root)
+  readdirSync(pagesDir)
     .filter((f) => f.endsWith('.html'))
-    .map((f) => [f.replace(/\.html$/, ''), resolve(root, f)]),
+    .map((f) => [f.replace(/\.html$/, ''), resolve(pagesDir, f)]),
 );
 
 /**
@@ -36,8 +37,34 @@ function partials() {
   };
 }
 
+/** Pages live in pages/ but keep their URLs at the root: /bike.html, not /pages/bike.html. */
+function pagesAtRoot() {
+  return {
+    name: 'gearup-pages-at-root',
+    enforce: 'post',
+    configureServer(server) {
+      server.middlewares.use((req, _res, next) => {
+        const [path, query = ''] = req.url.split('?');
+        const page = path === '/' ? 'index.html' : path.slice(1);
+        if (/^[\w-]+\.html$/.test(page) && pages[page.replace(/\.html$/, '')]) {
+          req.url = `/pages/${page}${query ? `?${query}` : ''}`;
+        }
+        next();
+      });
+    },
+    generateBundle: {
+      order: 'post',
+      handler(_, bundle) {
+        for (const file of Object.values(bundle)) {
+          if (file.fileName.startsWith('pages/')) file.fileName = file.fileName.slice('pages/'.length);
+        }
+      },
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [partials()],
+  plugins: [partials(), pagesAtRoot()],
   build: {
     rollupOptions: { input: pages },
   },
