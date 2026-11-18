@@ -3,13 +3,14 @@
 const num = (s) => Number(String(s || '').replace(/[^0-9.]/g, '')) || 0;
 const text = (el, sel) => el.querySelector(sel)?.textContent || '';
 
-/** Re-append items in a new order without moving any non-item tiles (e.g. promo tiles). */
+/** Re-append items in a new order. Non-item tiles (e.g. the promo tile) keep the slot they had on page load. */
+const slotsOf = new WeakMap();
 function reorder(grid, items, sorted) {
-  const slots = items.map((el) => el.previousElementSibling);
-  const fixed = [...grid.children].filter((el) => !items.includes(el)).map((el) => [el, [...grid.children].indexOf(el)]);
+  if (!slotsOf.has(grid)) slotsOf.set(grid, [...grid.children].map((el, i) => [el, i]).filter(([el]) => !items.includes(el)));
+  const fixed = slotsOf.get(grid);
+  fixed.forEach(([el]) => el.remove());
   sorted.forEach((el) => grid.appendChild(el));
   fixed.forEach(([el, i]) => grid.insertBefore(el, grid.children[i] || null));
-  void slots;
 }
 
 // ---------- Accessories ----------
@@ -80,5 +81,39 @@ function reorder(grid, items, sorted) {
     'miles-asc': (a, b) => spec(a, 'i-gauge') - spec(b, 'i-gauge'),
     'year-desc': (a, b) => spec(b, 'i-cal') - spec(a, 'i-cal'),
   };
-  sortSel.addEventListener('change', () => reorder(grid, items, [...items].sort(sorters[sortSel.value] || sorters.new)));
+  // Pagination: 8 bikes a page (plus the promo tile on page 1 makes a full 3 x 3 grid).
+  const PER = 8;
+  const pager = document.querySelector('.pager');
+  const fixed = [...grid.children].filter((el) => !items.includes(el));
+  const pages = Math.ceil(items.length / PER);
+  let page = 1;
+
+  const icon = (id) => `<svg class="i"><use href="#${id}"/></svg>`;
+  function drawPager() {
+    if (!pager) return;
+    if (pages < 2) { pager.hidden = true; return; }
+    let h = page > 1 ? `<a href="#" data-p="${page - 1}" aria-label="Previous page">${icon('i-left')}</a>` : '';
+    for (let p = 1; p <= pages; p++) h += `<a href="#" data-p="${p}"${p === page ? ' class="on" aria-current="page"' : ''}>${p}</a>`;
+    if (page < pages) h += `<a href="#" data-p="${page + 1}" aria-label="Next page">${icon('i-right')}</a>`;
+    pager.innerHTML = h;
+  }
+
+  function render() {
+    const sorted = [...items].sort(sorters[sortSel.value] || sorters.new);
+    reorder(grid, items, sorted);
+    sorted.forEach((el, i) => { el.hidden = Math.floor(i / PER) + 1 !== page; });
+    fixed.forEach((el) => { el.hidden = page !== 1; });
+    drawPager();
+  }
+
+  sortSel.addEventListener('change', () => { page = 1; render(); });
+  pager?.addEventListener('click', (e) => {
+    const a = e.target.closest('a[data-p]');
+    if (!a) return;
+    e.preventDefault();
+    page = Number(a.dataset.p);
+    render();
+    grid.parentElement.querySelector('.toolbar')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  render();
 })();
