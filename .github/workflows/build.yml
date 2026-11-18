@@ -1,0 +1,39 @@
+name: Build
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - name: Check every page got the shared header and footer
+        run: |
+          fail=0
+          for f in dist/*.html; do
+            grep -q '@include' "$f" && { echo "::error file=$f::unresolved @include"; fail=1; }
+            grep -q 'class="promo"' "$f" || { echo "::error file=$f::header missing"; fail=1; }
+            grep -q 'class="ftr"' "$f" || { echo "::error file=$f::footer missing"; fail=1; }
+          done
+          exit $fail
+      - name: Check image and font links resolve
+        run: |
+          fail=0
+          for r in $(grep -ohE '(src|href)="/assets/(images|fonts)/[^"#?]+' dist/*.html | sed 's/.*="//' | sort -u); do
+            [ -f "dist$r" ] || { echo "::error::missing $r"; fail=1; }
+          done
+          exit $fail

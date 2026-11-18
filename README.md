@@ -9,6 +9,17 @@ frontend/   website: Vite, 17 pages, shared header and footer partials
 backend/    API starter: structure and plan, health check only for now
 ```
 
+## Quick start
+
+```
+npm run setup     # install frontend + backend
+npm run dev       # website at http://localhost:5173
+npm run build     # production build
+npm run backend   # API at http://localhost:4000
+```
+
+**Working on this repo?** Read [CONTRIBUTING.md](CONTRIBUTING.md) first: branches, pull requests, previews and the folder rules.
+
 ## Frontend
 
 ```
