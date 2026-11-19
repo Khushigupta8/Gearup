@@ -3,6 +3,7 @@ import { Icon } from '@/components/ui/Icon';
 import { bikeName } from '@/lib/bikes';
 import { gbp, monthlyPayment } from '@/lib/format';
 import type { Bike } from '@/types';
+import { SaveButton } from './SaveButton';
 
 export function bikeHref(bike: Bike) {
   return `/used-bikes/${bike.slug}`;
@@ -97,9 +98,7 @@ export function BikeCard({ bike, big = false }: { bike: Bike; big?: boolean }) {
                 Reserve for £99 <Icon name="right" />
               </Link>
             )}
-            <span className="heart">
-              <Icon name="heart" />
-            </span>
+            <SaveButton slug={bike.slug} />
           </div>
         )}
       </div>
