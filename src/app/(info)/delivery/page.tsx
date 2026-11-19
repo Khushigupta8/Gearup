@@ -3,7 +3,7 @@ import { PagePlaceholder } from '@/components/layout/PagePlaceholder';
 
 export const metadata: Metadata = {
   title: 'Delivery and Collection',
-  description: 'Collect your bike from our showroom or have it delivered anywhere in mainland UK. Instant price per mile and live GPS tracking on delivery day.',
+  description: 'Collect your bike from our showroom or have it delivered nationwide. Instant price per mile and live GPS tracking on delivery day.',
 };
 
 export default function DeliveryPage() {
