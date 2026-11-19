@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { bikes } from '@/data/bikes';
 import { site } from '@/lib/site';
 
 const pages = [
@@ -18,6 +19,8 @@ const pages = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Add one entry per bike once stock comes from the API.
-  return pages.map((path) => ({ url: `${site.url}${path}` }));
+  return [
+    ...pages.map((path) => ({ url: `${site.url}${path}` })),
+    ...bikes.map((b) => ({ url: `${site.url}/used-bikes/${b.slug}` })),
+  ];
 }
