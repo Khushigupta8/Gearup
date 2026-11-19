@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useActionState } from 'react';
 import { quickUpdateBike, type QuickUpdateResult } from '@/app/admin/(panel)/stock/actions';
 
@@ -38,7 +39,9 @@ export function StockRow({ bike }: { bike: StockRowData }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           {bike.image ? <img src={bike.image} alt="" /> : <span className="adm-noimg" />}
           <div>
-            <b>{bike.name}</b>
+            <Link href={`/admin/stock/${bike.id}`} className="adm-bike-name">
+              <b>{bike.name}</b>
+            </Link>
             <small>
               {bike.registration ?? 'No reg'} · {bike.mileage.toLocaleString('en-GB')} miles
             </small>

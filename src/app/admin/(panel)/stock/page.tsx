@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { StockRow, type StockRowData } from '@/components/admin/StockRow';
 import { db } from '@/server/db';
 
@@ -11,9 +12,10 @@ function daysSince(date: Date): number {
   return Math.max(0, Math.floor((Date.now() - date.getTime()) / DAY));
 }
 
-export default async function StockPage() {
+export default async function StockPage({ searchParams }: { searchParams: Promise<{ show?: string }> }) {
+  const archived = (await searchParams).show === 'archived';
   const rows = await db.bike.findMany({
-    where: { status: { not: 'archived' } },
+    where: archived ? { status: 'archived' } : { status: { not: 'archived' } },
     orderBy: [{ status: 'asc' }, { publishedAt: 'desc' }],
     include: { photos: { select: { kind: true, url: true, sortOrder: true }, orderBy: { sortOrder: 'asc' } } },
   });
@@ -40,14 +42,17 @@ export default async function StockPage() {
     <>
       <header className="adm-head">
         <div>
-          <h1>Stock</h1>
+          <h1>{archived ? 'Archived bikes' : 'Stock'}</h1>
           <p className="adm-muted">
-            {bikes.length} bikes. Change a price or status and press Save: the website updates straight away.
+            {bikes.length} bikes. Click a bike to edit it, or change price and status here and press Save: the website updates straight away.{' '}
+            <Link href={archived ? '/admin/stock' : '/admin/stock?show=archived'} className="adm-link">
+              {archived ? 'Back to stock' : 'Show archived'}
+            </Link>
           </p>
         </div>
-        <span className="adm-btn adm-btn-red is-disabled" title="Add-bike wizard arrives in M1">
+        <Link href="/admin/stock/new" className="adm-btn adm-btn-red">
           + Add bike
-        </span>
+        </Link>
       </header>
       <div className="adm-card adm-table-wrap">
         <table className="adm-table">
