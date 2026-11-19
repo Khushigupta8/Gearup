@@ -12,15 +12,15 @@ const sections: { title: string; items: Item[] }[] = [
     items: [
       { href: '/admin/stock', label: 'Stock' },
       { href: '/admin/sales', label: 'Sales & reservations', soon: 'M3' },
-      { href: '/admin/valuations', label: 'Part-ex & valuations', soon: 'M2' },
+      { href: '/admin/valuations', label: 'Part-ex & valuations' },
       { href: '/admin/prep', label: 'Prep & delivery', soon: 'Phase 2' },
     ],
   },
   {
     title: 'CRM',
     items: [
-      { href: '/admin/customers', label: 'Customers', soon: 'M2' },
-      { href: '/admin/leads', label: 'Leads & enquiries', soon: 'M2' },
+      { href: '/admin/customers', label: 'Customers' },
+      { href: '/admin/leads', label: 'Leads & enquiries' },
     ],
   },
   {
