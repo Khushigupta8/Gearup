@@ -10,6 +10,7 @@ import { hashPassword } from 'better-auth/crypto';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient, type Licence } from '../src/generated/prisma/client';
 import { sampleBikes } from './seed-data/bikes';
+import { categories, sampleProducts } from './seed-data/products';
 
 config({ path: '.env.local' });
 config();
@@ -61,7 +62,9 @@ async function seedBikes() {
       reservedAt: b.status === 'reserved' ? new Date(now) : null,
     };
 
-    const bike = await db.bike.upsert({ where: { slug: b.slug }, create: { slug: b.slug, ...data }, update: data });
+    // Never overwrite a bike staff may have edited: only create missing sample bikes.
+    if (await db.bike.findUnique({ where: { slug: b.slug }, select: { id: true } })) continue;
+    const bike = await db.bike.create({ data: { slug: b.slug, ...data } });
 
     await db.bikePhoto.deleteMany({ where: { bikeId: bike.id } });
     await db.bikeHistoryEntry.deleteMany({ where: { bikeId: bike.id } });
@@ -113,6 +116,48 @@ async function seedSettings() {
   console.log('✓ settings');
 }
 
+async function seedShop() {
+  for (const [i, c] of categories.entries()) {
+    await db.productCategory.upsert({ where: { slug: c.slug }, create: { ...c, sortOrder: i }, update: { name: c.name, sortOrder: i } });
+  }
+  const cats = await db.productCategory.findMany();
+  for (const p of sampleProducts) {
+    const data = {
+      name: p.name,
+      brand: p.brand,
+      category: { connect: { id: cats.find((c) => c.slug === p.category)!.id } },
+      images: [p.image],
+      meta: p.meta,
+      flagText: p.flagText ?? null,
+      rating: p.rating,
+      reviewCount: p.reviewCount,
+      popularity: p.popularity,
+      active: true,
+    };
+    const product = await db.product.upsert({ where: { slug: p.slug }, create: { slug: p.slug, ...data }, update: data });
+    if ((await db.productVariant.count({ where: { productId: product.id } })) === 0) {
+      const sizes = p.sizes ?? ['Standard'];
+      await db.productVariant.createMany({
+        data: sizes.map((name) => ({
+          productId: product.id,
+          name,
+          sku: `${p.slug}-${name}`.toUpperCase(),
+          price: pence(p.price),
+          wasPrice: p.wasPrice ? pence(p.wasPrice) : null,
+          stockQty: p.stock,
+        })),
+      });
+    }
+  }
+  // "10% off kit with any bike" from the accessories page
+  await db.discountCode.upsert({
+    where: { code: 'BIKE10' },
+    create: { code: 'BIKE10', percentOff: 10, appliesTo: 'accessories', active: true },
+    update: {},
+  });
+  console.log(`✓ ${sampleProducts.length} products, BIKE10 code`);
+}
+
 async function seedAdmin() {
   const email = process.env.SEED_ADMIN_EMAIL;
   const password = process.env.SEED_ADMIN_PASSWORD;
@@ -144,6 +189,7 @@ async function main() {
   await seedSettings();
   await seedPrepStages();
   await seedBikes();
+  await seedShop();
   await seedAdmin();
 }
 

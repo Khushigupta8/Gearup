@@ -382,29 +382,35 @@ enum OrderStatus {
 }
 
 model Order {
-  id              String       @id @default(cuid())
-  reference       String       @unique // GU-2026-0001
-  customerId      String
-  customer        Customer     @relation(fields: [customerId], references: [id], onDelete: Restrict)
-  bikeId          String?
-  bike            Bike?        @relation(fields: [bikeId], references: [id], onDelete: SetNull)
-  status          OrderStatus  @default(pending_payment)
-  fulfilment      Fulfilment   @default(collection)
+  id               String       @id @default(cuid())
+  reference        String       @unique // GU-2026-0001
+  customerId       String
+  customer         Customer     @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  bikeId           String?
+  bike             Bike?        @relation(fields: [bikeId], references: [id], onDelete: SetNull)
+  status           OrderStatus  @default(pending_payment)
+  fulfilment       Fulfilment   @default(collection)
   // all money in pence
-  depositAmount   Int          @default(0)
-  deliveryFee     Int          @default(0)
-  itemsTotal      Int          @default(0)
-  discountCode    String?
-  discountTotal   Int          @default(0)
-  amountPaid      Int          @default(0)
-  balanceDue      Int          @default(0)
-  stripeSessionId String?      @unique
-  holdExpiresAt   DateTime? // unpaid reservations release the bike after this
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
-  items           OrderItem[]
-  payments        Payment[]
-  stages          OrderStage[]
+  depositAmount    Int          @default(0)
+  deliveryFee      Int          @default(0)
+  itemsTotal       Int          @default(0)
+  discountCode     String?
+  discountTotal    Int          @default(0)
+  amountPaid       Int          @default(0)
+  balanceDue       Int          @default(0)
+  stripeSessionId  String?      @unique
+  holdExpiresAt    DateTime? // unpaid reservations release the bike after this
+  balanceMethod    String? // finance, bank_transfer, part_exchange
+  partExReg        String?
+  deliveryAddress  String?
+  deliveryPostcode String?
+  notes            String?
+  paidAt           DateTime?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  items            OrderItem[]
+  payments         Payment[]
+  stages           OrderStage[]
 
   @@index([status])
   @@map("order")
@@ -431,6 +437,7 @@ model Payment {
   provider    String   @default("stripe")
   providerRef String?  @unique
   status      String // succeeded, refunded, failed
+  receiptUrl  String?
   createdAt   DateTime @default(now())
 
   @@map("payment")
@@ -499,6 +506,10 @@ model Product {
   images      String[]
   active      Boolean          @default(true)
   popularity  Int              @default(0)
+  flagText    String? // "Best seller", "Winter"
+  meta        String? // short spec line under the name
+  rating      Float?
+  reviewCount Int?
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
   variants    ProductVariant[]
