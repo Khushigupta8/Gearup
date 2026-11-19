@@ -42,9 +42,9 @@ const brands: { key: string; name: string; logo?: string }[] = [
 ];
 
 const budgets = [
-  { href: '/used-bikes', small: 'Up to', big: '£100', note: 'a month · 6 bikes' },
-  { href: '/used-bikes', small: 'Up to', big: '£150', note: 'a month · 9 bikes' },
-  { href: '/used-bikes', small: 'Up to', big: '£200', note: 'a month · 15 bikes' },
+  { href: '/used-bikes?monthly=100', small: 'Up to', big: '£100', note: 'a month · 6 bikes' },
+  { href: '/used-bikes?monthly=150', small: 'Up to', big: '£150', note: 'a month · 9 bikes' },
+  { href: '/used-bikes?monthly=200', small: 'Up to', big: '£200', note: 'a month · 15 bikes' },
   { href: '/used-bikes', small: 'From', big: '£200+', note: 'a month · 9 bikes' },
   { href: '/used-bikes?cc=125', small: 'CBT & A2 riders', big: '125cc', note: 'Learner legal · 7 bikes', learner: true },
   { href: '/used-bikes?cc=50', small: 'CBT · age 16+', big: '50cc', note: 'Mopeds & scooters · 3 bikes', learner: true },
@@ -190,7 +190,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <SearchDock />
+      <SearchDock makes={[...new Set(bikes.map((b) => b.make))].sort()} />
 
       <section className="stats" aria-label="Why buy from GearUp">
         <div className="wrap">

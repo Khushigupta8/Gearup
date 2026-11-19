@@ -24,8 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!bike) return {};
   const warranty = bike.badge?.kind === 'warranty' ? `, ${bike.badge.months} months warranty included free` : '';
   return {
-    title: `${bikeName(bike)} · ${gbp(bike.price)}`,
-    description: `${bikeName(bike)}, ${bike.mileage.toLocaleString('en-GB')} miles, HPI clear and 120-point inspected${warranty}. Reserve online for £99.`,
+    title: bike.seoTitle ?? `${bikeName(bike)} · ${gbp(bike.price)}`,
+    description: bike.seoDescription ?? `${bikeName(bike)}, ${bike.mileage.toLocaleString('en-GB')} miles, HPI clear and 120-point inspected${warranty}. Reserve online for £99.`,
   };
 }
 

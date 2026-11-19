@@ -1346,3 +1346,23 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 .buybox .contact .shr svg{color:var(--ink)}
 .buybox .contact .shr:hover{border-color:var(--ink);background:var(--ink);color:#fff}.buybox .contact .shr:hover svg{color:#fff}
 @media (max-width:400px){.buybox .contact{flex-wrap:wrap}.buybox .contact a,.buybox .contact button{flex:1 1 40%}}
+
+/* Motorbikes listing: real filters (links) */
+.fgroup a.fopt{display:flex;justify-content:space-between;align-items:center;font-size:15px;padding:4px 0;color:inherit;text-decoration:none}
+.fgroup a.fopt span{display:flex;gap:9px;align-items:center}
+.fgroup a.fopt input{width:18px;height:18px;accent-color:var(--red);pointer-events:none}
+.fgroup a.fopt i{font-style:normal;color:var(--mut);font-size:13px}
+.fgroup a.fopt:hover span{color:var(--red)}
+.fgroup a.fopt.empty{opacity:.45}
+.applied a{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:#fff;font-size:13px;font-weight:600;padding:6px 10px;border-radius:999px;text-decoration:none}
+.applied a:hover{background:var(--red)}
+.applied a svg{width:13px;height:13px}
+a.chip{display:inline-flex;align-items:center;text-decoration:none}
+.ntabs a{display:inline-flex;align-items:center;gap:8px;height:46px;padding:0 26px;border-radius:9px;font-family:var(--narrow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:16px;color:var(--mut);text-decoration:none}
+.ntabs a i{font-style:normal;font-family:var(--sans);font-size:12px;background:var(--line);color:var(--ink);border-radius:999px;padding:1px 8px}
+.ntabs a.on{background:var(--ink);color:#fff}.ntabs a.on i{background:var(--red);color:#fff}
+.ntabs a:not(.on):hover{color:var(--ink)}
+@media (max-width:640px){.ntabs a{padding:0 14px;font-size:14px}}
+.listing-empty{border:2px dashed var(--line);border-radius:14px;padding:40px 24px;text-align:center;margin-bottom:18px}
+.listing-empty h3{font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:28px}
+.listing-empty p{color:var(--mut);margin-top:8px}

@@ -21,7 +21,7 @@ const sorts = {
 type SortKey = keyof typeof sorts;
 
 /** Toolbar, sort, pager and grid for /used-bikes. `filters` is the sidebar, `promo` the tile shown on page 1. */
-export function BikeListing({ bikes, filters, promo }: { bikes: Bike[]; filters: ReactNode; promo: ReactNode }) {
+export function BikeListing({ bikes, filters, promo, applied = [] }: { bikes: Bike[]; filters: ReactNode; promo: ReactNode; applied?: ReactNode[] }) {
   const [sort, setSort] = useState<SortKey>('new');
   const [page, setPage] = useState(1);
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -44,7 +44,9 @@ export function BikeListing({ bikes, filters, promo }: { bikes: Bike[]; filters:
 
       <div>
         <div className="toolbar" ref={toolbar}>
-          <b>{bikes.length} bikes</b>
+          <b>
+            {bikes.length} {bikes.length === 1 ? 'bike' : 'bikes'}
+          </b>
           <div className="tr">
             <button className="btn btn-ink mfilter" type="button" style={{ height: 44 }} onClick={() => setFiltersOpen((o) => !o)}>
               <Icon name="filter" />
@@ -80,14 +82,13 @@ export function BikeListing({ bikes, filters, promo }: { bikes: Bike[]; filters:
             </div>
           </div>
         </div>
-        <div className="applied">
-          <span>
-            Kawasaki <Icon name="x" />
-          </span>
-          <span>
-            Any price <Icon name="x" />
-          </span>
-        </div>
+        {applied.length > 0 && <div className="applied">{applied}</div>}
+        {bikes.length === 0 && (
+          <div className="listing-empty">
+            <h3>No bikes match those filters</h3>
+            <p>Try removing a filter, or set up a stock alert below and we will message you when a match arrives.</p>
+          </div>
+        )}
         <div className="lgrid" id="bikeGrid">
           {shown.map((bike, i) => (
             <Fragment key={bike.slug}>
