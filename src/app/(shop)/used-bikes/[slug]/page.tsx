@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { BikeBadge, BikeCard } from '@/components/bikes/BikeCard';
 import { BikeGallery } from '@/components/bikes/BikeGallery';
+import { PhotoGrid } from '@/components/bikes/PhotoGrid';
+import { ShareButton } from '@/components/bikes/ShareButton';
 import { DeliveryQuote } from '@/components/forms/DeliveryQuote';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { Tabs } from '@/components/ui/Tabs';
@@ -53,7 +55,7 @@ export default async function BikePage({ params }: Props) {
     ['gauge', 'Mileage', `${bike.mileage.toLocaleString('en-GB')} miles`],
     ['engine', 'Engine', `${bike.engineCc.toLocaleString('en-GB')}cc`],
     ['bike', 'Body type', styleLabel],
-    ['plate', 'Registration', 'Shown on viewing'],
+    ['plate', 'Registration', bike.registration ?? 'Shown on viewing'],
     ...(d
       ? ([
           ['users', 'Previous owners', String(d.owners)],
@@ -164,14 +166,25 @@ export default async function BikePage({ params }: Props) {
           id: 't-hist',
           label: 'History',
           content: (
-            <ul className="hist">
-              {d.history.map(([title, note]) => (
-                <li key={title}>
-                  <b>{title}</b>
-                  <small>{note}</small>
-                </li>
-              ))}
-            </ul>
+            <>
+              <ul className="hist">
+                {d.history.map(([title, note]) => (
+                  <li key={title}>
+                    <b>{title}</b>
+                    <small>{note}</small>
+                  </li>
+                ))}
+              </ul>
+              {d.receipts.length > 0 && (
+                <div className="hist-rc">
+                  <h4>Receipts and invoices</h4>
+                  <p className="muted" style={{ fontSize: 14, marginTop: 4 }}>
+                    Every receipt we hold for this bike. Tap one to read it full size.
+                  </p>
+                  <PhotoGrid photos={d.receipts} kind="receipt" />
+                </div>
+              )}
+            </>
           ),
         },
         { id: 't-fin', label: 'Finance', content: financeTab },
@@ -219,6 +232,15 @@ export default async function BikePage({ params }: Props) {
                   </div>
                 ))}
               </div>
+              {d && d.detailPhotos.length > 0 && (
+                <section className="dpics" aria-labelledby="dpics-h">
+                  <h2 id="dpics-h">Detailed pictures</h2>
+                  <p className="muted">
+                    Close-ups of every mark, scratch and sign of wear, so you know exactly what you are buying.
+                  </p>
+                  <PhotoGrid photos={d.detailPhotos} />
+                </section>
+              )}
             </div>
 
             <aside className="stick pdp-buy">
@@ -291,22 +313,19 @@ export default async function BikePage({ params }: Props) {
                   </div>
                   <Link href="/contact" className="btn btn-line">
                     <Icon name="cal" />
-                    Book a viewing or test ride
+                    Book a viewing
                   </Link>
                 </div>
                 <div className="contact">
-                  <a href={site.phone.href}>
+                  <a href={site.phone.href} className="ph">
                     <Icon name="phone" />
                     {site.phone.display}
                   </a>
-                  <a href={site.whatsapp}>
+                  <a href={site.whatsapp} className="wa" target="_blank" rel="noopener">
                     <Icon name="wa" />
                     WhatsApp
                   </a>
-                  <a href="#">
-                    <Icon name="share" />
-                    Share
-                  </a>
+                  <ShareButton title={name} />
                 </div>
               </div>
               <div className="qbox mt1">

@@ -17,6 +17,7 @@ export const bikes: Bike[] = [
     image: '/assets/images/bikes/bmw-r1250gs.webp',
     badge: { kind: 'warranty', months: 12 },
     status: 'available',
+    registration: 'KY69 GUP',
     highlights: [
       'Full service history',
       'Panniers and top box included',
@@ -77,6 +78,19 @@ export const bikes: Bike[] = [
           ['Frame, body & road test', '28 of 28 passed'],
         ],
       },
+      // Sample close-ups until real detailed photos come from the DMS.
+      detailPhotos: [
+        { src: '/assets/images/gallery/bmw-r1250gs/04-seat-topbox.webp', label: 'Light scuff on left pannier' },
+        { src: '/assets/images/gallery/bmw-r1250gs/06-front-wheel.webp', label: 'Front wheel and discs' },
+        { src: '/assets/images/gallery/bmw-r1250gs/03-engine.webp', label: 'Engine casing' },
+        { src: '/assets/images/gallery/bmw-r1250gs/05-cockpit.webp', label: 'Dash and switchgear' },
+      ],
+      // Placeholder receipts until real scans come from the DMS.
+      receipts: [
+        { src: '/assets/images/placeholders/receipt.svg', label: 'Service at 18,500 miles, Sep 2026' },
+        { src: '/assets/images/placeholders/receipt.svg', label: 'Service at 12,000 miles, Mar 2024' },
+        { src: '/assets/images/placeholders/receipt.svg', label: 'Service at 6,000 miles, Jun 2021' },
+      ],
       history: [
         ['HPI clear', 'Not stolen, scrapped or written off. No outstanding finance.'],
         ['Service at 18,500 miles', 'BMW dealer, Sep 2026'],
@@ -233,7 +247,7 @@ export const styleLabels: Record<Bike['style'], string> = {
   cruiser: 'Cruiser',
   classic: 'Classic',
   tourer: 'Tourer',
-  scooter: 'Scooter & moped',
+  scooter: 'Scooter/Moped',
   enduro: 'Enduro',
 };
 

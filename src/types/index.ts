@@ -4,6 +4,8 @@ export type BikeBadge =
   | { kind: 'warranty'; months: number }
   | { kind: 'flag'; text: string; red?: boolean };
 
+export type Photo = { src: string; label: string };
+
 export type BikeDetail = {
   plate: string;
   owners: number;
@@ -12,7 +14,12 @@ export type BikeDetail = {
   fuel: string;
   gearbox: string;
   warrantyWorth?: number;
-  gallery: { src: string; label: string }[];
+  /** Main photos: the good shots. */
+  gallery: Photo[];
+  /** Close-ups of marks, scratches and damage. Uploaded separately in the DMS. */
+  detailPhotos: Photo[];
+  /** Photos of service receipts and invoices, shown under History. */
+  receipts: Photo[];
   headline: string;
   overview: string[];
   features: string[];
@@ -34,6 +41,8 @@ export type Bike = {
   image: string;
   badge?: BikeBadge;
   status: 'available' | 'reserved' | 'sold';
+  /** Number plate, pulled from the DMS when the bike is added to stock. */
+  registration?: string;
   /** Short bullet points shown on the large card. */
   highlights?: string[];
   /** Full bike page content. Bikes without it get a basic page. */
