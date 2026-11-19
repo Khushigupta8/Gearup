@@ -75,8 +75,6 @@ async function seedBikes() {
       ...(d?.detailPhotos ?? []).map((p, n) => ({ kind: 'detail' as const, url: p.src, caption: p.label, sortOrder: n })),
       ...(d?.receipts ?? []).map((p, n) => ({ kind: 'receipt' as const, url: p.src, caption: p.label, sortOrder: n })),
     ];
-    // The listing card uses the first main photo, so make sure the card image comes first.
-    if (d && b.image !== main[0]?.src) photos.unshift({ kind: 'main', url: b.image, caption: 'Side view', sortOrder: -1 });
     await db.bikePhoto.createMany({ data: photos.map((p) => ({ ...p, bikeId: bike.id })) });
 
     if (d?.history.length) {
