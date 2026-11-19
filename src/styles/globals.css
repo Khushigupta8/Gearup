@@ -635,8 +635,8 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 .promo-tile h3{font-family:var(--disp);font-weight:400;font-size:40px;text-transform:uppercase;line-height:.95}
 .promo-tile p{margin:10px 0 18px;color:#ffe3e4}
 .pager{display:flex;gap:6px;justify-content:center;margin-top:34px}
-.pager a{min-width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--line);font-weight:700}
-.pager a.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pager a,.pager button{background:none;color:inherit;font:inherit;cursor:pointer;min-width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--line);font-weight:700}
+.pager a.on,.pager button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 .mfilter{display:none}
 
 /* Bike detail */
@@ -962,7 +962,7 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 
 /* Rounded boxes */
 .bc,.bud,.valbox,.trk-card,.qbox,.slider,.rq,.rs,.dt,.icard,.formcard,.summary,.filters,.gal-main,.buybox,.pricebox,.prod,.basket,.aside,.ostat div,.map,.docs a,.vid,.alertform,.member,.numbers,.cblock,.mapbox,.notice,.success,.upl,.rcard,.promo-tile,.insp div,.insp-band .cats div,.phero .pbox,.spec-t,.seg,.qty,.wbanner,.applied span,.timeline .tphoto img,.trk-head img,.summary .sb img,.bline img,.thumbs div,.thumbs img,.prod .pi,.member .av,.cblock .ic{border-radius:var(--r)}
-.sel select,.sel input,.fl input,.fl select,.fl textarea,.qbox input,.alertform .sel select,.alertform input,.fgroup .sel select,.toolbar .sel select,.terms button,.pager a,.vt,.bc .heart,.seg button,.cats div{border-radius:var(--r-sm)}
+.sel select,.sel input,.fl input,.fl select,.fl textarea,.qbox input,.alertform .sel select,.alertform input,.fgroup .sel select,.toolbar .sel select,.terms button,.pager a,.pager button,.vt,.bc .heart,.seg button,.cats div{border-radius:var(--r-sm)}
 .chip{border-radius:999px}
 .dock-box{border-radius:0 var(--r) var(--r) var(--r)}
 .bc .im{border-radius:var(--r) var(--r) 0 0}
