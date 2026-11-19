@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { PagePlaceholder } from '@/components/layout/PagePlaceholder';
+import { LegacyPage } from '@/components/layout/LegacyPage';
 
 export const metadata: Metadata = {
   title: 'Motorcycle Accessories',
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function AccessoriesPage() {
-  return <PagePlaceholder title="Motorcycle Accessories" legacyFile="accessories.html" />;
+  return <LegacyPage file="accessories" />;
 }

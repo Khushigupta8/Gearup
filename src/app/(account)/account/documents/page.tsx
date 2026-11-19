@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import { AccountShell } from '@/components/account/AccountShell';
-import { PagePlaceholder } from '@/components/layout/PagePlaceholder';
+import { LegacyPage } from '@/components/layout/LegacyPage';
 
 export const metadata: Metadata = {
   title: 'Documents · My account',
@@ -8,10 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function DocumentsPage() {
-  return (
-    <>
-      <PagePlaceholder title="Documents" legacyFile="account-documents.html" />
-      <AccountShell>{null}</AccountShell>
-    </>
-  );
+  return <LegacyPage file="account-documents" />;
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { PagePlaceholder } from '@/components/layout/PagePlaceholder';
+import { LegacyPage } from '@/components/layout/LegacyPage';
 
 export const metadata: Metadata = {
   title: 'Warranty and 120-Point Inspection',
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function WarrantyPage() {
-  return <PagePlaceholder title="Warranty and 120-Point Inspection" legacyFile="warranty.html" />;
+  return <LegacyPage file="warranty" />;
 }

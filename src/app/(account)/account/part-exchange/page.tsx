@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import { AccountShell } from '@/components/account/AccountShell';
-import { PagePlaceholder } from '@/components/layout/PagePlaceholder';
+import { LegacyPage } from '@/components/layout/LegacyPage';
 
 export const metadata: Metadata = {
   title: 'Part-exchange · My account',
@@ -8,10 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function AccountPartExchangePage() {
-  return (
-    <>
-      <PagePlaceholder title="Part-exchange" legacyFile="account-part-exchange.html" />
-      <AccountShell>{null}</AccountShell>
-    </>
-  );
+  return <LegacyPage file="account-part-exchange" />;
 }

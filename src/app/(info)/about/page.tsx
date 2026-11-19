@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { PagePlaceholder } from '@/components/layout/PagePlaceholder';
+import { LegacyPage } from '@/components/layout/LegacyPage';
 
 export const metadata: Metadata = {
   title: 'About GearUp Motorcycles · Independent used bike dealer',
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  return <PagePlaceholder title="About GearUp Motorcycles" legacyFile="about.html" />;
+  return <LegacyPage file="about" />;
 }

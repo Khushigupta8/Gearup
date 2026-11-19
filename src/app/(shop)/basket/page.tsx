@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { PagePlaceholder } from '@/components/layout/PagePlaceholder';
+import { LegacyPage } from '@/components/layout/LegacyPage';
 
 export const metadata: Metadata = {
   title: 'Your Basket',
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function BasketPage() {
-  return <PagePlaceholder title="Your Basket" legacyFile="basket.html" />;
+  return <LegacyPage file="basket" />;
 }

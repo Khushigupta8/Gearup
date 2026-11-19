@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { PagePlaceholder } from '@/components/layout/PagePlaceholder';
+import { LegacyPage } from '@/components/layout/LegacyPage';
 
 export const metadata: Metadata = {
   title: 'Contact GearUp Motorcycles · Call, WhatsApp or visit',
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  return <PagePlaceholder title="Contact GearUp Motorcycles" legacyFile="contact.html" />;
+  return <LegacyPage file="contact" />;
 }
