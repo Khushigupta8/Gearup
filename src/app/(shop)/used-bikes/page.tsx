@@ -19,7 +19,7 @@ const filterGroups: { title: string; options: [string, number | null, boolean?][
   },
   {
     title: 'Style',
-    options: [['Sportsbike', 4], ['Naked', 6], ['Adventure', 5], ['Cruiser', 3], ['Classic', 2], ['Scooter & moped', 4], ['Tourer', 1], ['Enduro', 1]],
+    options: [['Sportsbike', 4], ['Naked', 6], ['Adventure', 5], ['Cruiser', 3], ['Classic', 2], ['Scooter/Moped', 4], ['Tourer', 1], ['Enduro', 1]],
   },
   {
     title: 'Engine size',

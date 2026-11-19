@@ -15,7 +15,7 @@ import { bikes, getBike } from '@/data/bikes';
 export const metadata: Metadata = {
   title: { absolute: 'GearUp Motorcycles · Quality Used Motorbikes, Delivered UK-Wide' },
   description:
-    'Quality used motorbikes, inspected and warranted. Reserve online for £99, finance and part-exchange welcome, delivered anywhere in mainland UK.',
+    'Quality used motorbikes, inspected and warranted. Reserve online for £99, finance and part-exchange welcome, with nationwide delivery.',
 };
 
 const heroSlides: HeroSlide[] = [
@@ -60,7 +60,7 @@ const styles = [
   { key: 'cruiser', label: 'Cruiser', img: 'styles/cruiser.webp' },
   { key: 'classic', label: 'Classic', img: 'cutouts/triumph-bonneville.webp' },
   { key: 'tourer', label: 'Tourer', img: 'styles/tourer.webp' },
-  { key: 'scooter', label: 'Scooter & moped', img: 'styles/scooter-moped.webp' },
+  { key: 'scooter', label: 'Scooter/Moped', img: 'styles/scooter-moped.webp' },
   { key: 'enduro', label: 'Enduro', img: 'styles/enduro.webp' },
 ];
 
@@ -116,7 +116,7 @@ const reviews = [
 
 const faqs = [
   ['How does reserving online work?', 'Pay the £99 deposit on the bike page and it comes off sale straight away. The deposit is taken off the price, and you can follow the prep from your account.'],
-  ['Do you deliver, and how much is it?', 'Yes, anywhere in mainland UK. Enter your postcode for an instant price per mile and pay it with your deposit. On delivery day you get a live tracking link.'],
+  ['Do you deliver, and how much is it?', 'Yes, we deliver nationwide. Enter your postcode for an instant price per mile and pay it with your deposit. On delivery day you get a live tracking link.'],
   ['Can I part-exchange my bike?', 'Yes. Enter your reg on any bike page or in the search bar for a valuation, then use your bike as the deposit.'],
   ['Can I get finance with poor credit?', 'Often, yes. Apply online and we will look at the options available to you. Finance is subject to status and affordability.'],
   ['What does the warranty cover?', "Every bike comes with 30 days' warranty. Bikes with the red badge include longer cover free, and you can extend any bike to 12 or 24 months."],
@@ -471,14 +471,17 @@ export default function HomePage() {
               </span>
             </span>
             <h2 className="disp">
-              Every bike.
+              Peace of mind
               <br />
-              <em>Warrantied.</em>
+              <em>comes standard.</em>
             </h2>
             <p>
-              Every GearUp bike comes with 30 days&apos; warranty as standard. Selected bikes include longer cover free (look for the red badge)
-              and you can extend any bike to 12 or 24 months at checkout.
+              Every bike leaves us with 30 days&apos; cover. Selected bikes include longer warranty free, and you can extend any bike to 12 or 24
+              months at checkout.
             </p>
+            <div className="note">
+              <span>3 months warranty free</span>Spot this badge on a bike? Extra cover is already included.
+            </div>
             <Link href="/warranty" className="btn btn-white mt2">
               Warranty explained <Icon name="right" />
             </Link>
