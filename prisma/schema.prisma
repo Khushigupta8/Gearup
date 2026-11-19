@@ -1,0 +1,585 @@
+// GearUp Motorcycles: one database for the website, DMS, CMS and CRM.
+// Money is always stored as whole pence (Int).
+// Phase 1 tables. Phase 2 (invoices, deliveries, channel listings, reports) is added in later migrations.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─────────────────────────────── Auth (Better Auth) ───────────────────────────────
+
+enum Role {
+  customer
+  sales
+  manager
+  admin
+}
+
+model User {
+  id            String     @id
+  name          String
+  email         String     @unique
+  emailVerified Boolean    @default(false)
+  image         String?
+  role          Role       @default(customer)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  customer      Customer?
+  assignedLeads Lead[]     @relation("LeadAssignee")
+  auditLogs     AuditLog[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+// ─────────────────────────────── Customers (CRM) ───────────────────────────────
+
+model Customer {
+  id               String        @id @default(cuid())
+  userId           String?       @unique
+  user             User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  firstName        String
+  lastName         String?
+  email            String?       @unique
+  phone            String?
+  addressLine1     String?
+  addressLine2     String?
+  town             String?
+  postcode         String?
+  marketingConsent Boolean       @default(false)
+  source           String? // website form, walk-in, phone, part-ex...
+  notes            String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  leads            Lead[]
+  orders           Order[]
+  savedBikes       SavedBike[]
+  soldBikes        Bike[]        @relation("BikeBuyer")
+  acquisitions     Acquisition[]
+
+  @@map("customer")
+}
+
+enum LeadType {
+  enquiry
+  viewing
+  finance
+  part_exchange
+  sell_bike
+  insurance
+  stock_alert
+  newsletter
+  workshop
+}
+
+enum LeadStage {
+  new
+  contacted
+  viewing_booked
+  negotiating
+  won
+  lost
+}
+
+model Lead {
+  id           String         @id @default(cuid())
+  type         LeadType
+  stage        LeadStage      @default(new)
+  customerId   String
+  customer     Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  bikeId       String?
+  bike         Bike?          @relation(fields: [bikeId], references: [id], onDelete: SetNull)
+  assignedToId String?
+  assignedTo   User?          @relation("LeadAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+  message      String?
+  data         Json? // the full form submission (reg, mileage, preferred date...)
+  sourcePage   String?
+  followUpAt   DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  activities   LeadActivity[]
+
+  @@index([stage])
+  @@index([type])
+  @@map("lead")
+}
+
+model LeadActivity {
+  id        String   @id @default(cuid())
+  leadId    String
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  kind      String // note, call, email, stage_change
+  body      String
+  byUserId  String?
+  createdAt DateTime @default(now())
+
+  @@index([leadId])
+  @@map("lead_activity")
+}
+
+// ─────────────────────────────── Stock (DMS) ───────────────────────────────
+
+enum BikeStatus {
+  draft
+  in_preparation
+  available
+  reserved
+  sold
+  archived
+}
+
+enum BikeStyle {
+  sports
+  naked
+  adventure
+  cruiser
+  classic
+  tourer
+  scooter
+  enduro
+}
+
+enum Condition {
+  new
+  used
+}
+
+enum Licence {
+  cbt
+  a2
+  full_a
+}
+
+model Bike {
+  id       String     @id @default(cuid())
+  slug     String     @unique
+  status   BikeStatus @default(draft)
+  visible  Boolean    @default(true) // show on website when available/reserved
+  featured Boolean    @default(false)
+
+  // identity (registration comes from the DMS / DVLA lookup)
+  registration String?
+  vin          String?
+  make         String
+  model        String
+  variant      String?
+  year         Int
+  plate        String? // e.g. "2019 (69 plate)"
+  condition    Condition @default(used)
+
+  // spec
+  mileage   Int
+  engineCc  Int
+  style     BikeStyle
+  colour    String?
+  licence   Licence?
+  fuel      String?   @default("Petrol")
+  gearbox   String?
+  owners    Int?
+  keys      Int?
+  motExpiry DateTime?
+
+  // price
+  // all money in pence
+  price    Int
+  wasPrice Int?
+
+  // badges (Rahim: per-bike toggles in the DMS)
+  freeWarrantyMonths Int     @default(0) // 0, 3, 6, 12, 24
+  showWarrantyBadge  Boolean @default(true)
+  showA2Badge        Boolean @default(false)
+  flagText           String? // "Just arrived", "Price drop"...
+  freeWarrantyValue  Int? // pence, "Worth £349" on the bike page
+
+  // content
+  headline         String?
+  description      String?
+  features         String[]
+  specRows         Json? // [[label, value], ...]
+  highlights       String[]
+  inspectionReport Json? // { date, results: [[area, result]] } until the PDI checklist (Phase 2)
+  seoTitle         String?
+  seoDescription   String?
+
+  // lifecycle
+  publishedAt DateTime?
+  reservedAt  DateTime?
+  soldAt      DateTime?
+  soldPrice   Int? // pence
+  buyerId     String?
+  buyer       Customer? @relation("BikeBuyer", fields: [buyerId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  photos      BikePhoto[]
+  history     BikeHistoryEntry[]
+  acquisition Acquisition?
+  costs       BikeCost[]
+  leads       Lead[]
+  orders      Order[]
+  savedBy     SavedBike[]
+
+  @@index([status, visible])
+  @@index([make])
+  @@map("bike")
+}
+
+enum PhotoKind {
+  main // the good shots (gallery)
+  detail // close-ups of marks and scratches ("Detailed pictures")
+  receipt // service receipts and invoices (History tab)
+}
+
+model BikePhoto {
+  id        String    @id @default(cuid())
+  bikeId    String
+  bike      Bike      @relation(fields: [bikeId], references: [id], onDelete: Cascade)
+  kind      PhotoKind @default(main)
+  url       String
+  caption   String?
+  sortOrder Int       @default(0)
+  createdAt DateTime  @default(now())
+
+  @@index([bikeId, kind, sortOrder])
+  @@map("bike_photo")
+}
+
+model BikeHistoryEntry {
+  id        String    @id @default(cuid())
+  bikeId    String
+  bike      Bike      @relation(fields: [bikeId], references: [id], onDelete: Cascade)
+  title     String
+  note      String?
+  date      DateTime?
+  sortOrder Int       @default(0)
+
+  @@map("bike_history_entry")
+}
+
+enum AcquisitionSource {
+  trade
+  private
+  part_exchange
+  auction
+  other
+}
+
+enum VatType {
+  margin
+  qualifying
+}
+
+model Acquisition {
+  id            String            @id @default(cuid())
+  bikeId        String            @unique
+  bike          Bike              @relation(fields: [bikeId], references: [id], onDelete: Cascade)
+  source        AcquisitionSource
+  purchasePrice Int // pence
+  purchasedAt   DateTime
+  sellerId      String?
+  seller        Customer?         @relation(fields: [sellerId], references: [id], onDelete: SetNull)
+  sellerName    String?
+  vatType       VatType           @default(margin)
+  notes         String?
+
+  @@map("acquisition")
+}
+
+model BikeCost {
+  id         String   @id @default(cuid())
+  bikeId     String
+  bike       Bike     @relation(fields: [bikeId], references: [id], onDelete: Cascade)
+  category   String // parts, labour, mot, valet, transport, other
+  amount     Int // pence
+  note       String?
+  incurredAt DateTime @default(now())
+
+  @@index([bikeId])
+  @@map("bike_cost")
+}
+
+model SavedBike {
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  bikeId     String
+  bike       Bike     @relation(fields: [bikeId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@id([customerId, bikeId])
+  @@map("saved_bike")
+}
+
+// ─────────────────────────────── Orders & payments ───────────────────────────────
+
+enum Fulfilment {
+  collection
+  delivery
+}
+
+enum OrderStatus {
+  pending_payment
+  reserved
+  in_preparation
+  ready
+  out_for_delivery
+  completed
+  cancelled
+  refunded
+}
+
+model Order {
+  id              String       @id @default(cuid())
+  reference       String       @unique // GU-2026-0001
+  customerId      String
+  customer        Customer     @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  bikeId          String?
+  bike            Bike?        @relation(fields: [bikeId], references: [id], onDelete: SetNull)
+  status          OrderStatus  @default(pending_payment)
+  fulfilment      Fulfilment   @default(collection)
+  // all money in pence
+  depositAmount   Int          @default(0)
+  deliveryFee     Int          @default(0)
+  itemsTotal      Int          @default(0)
+  discountCode    String?
+  discountTotal   Int          @default(0)
+  amountPaid      Int          @default(0)
+  balanceDue      Int          @default(0)
+  stripeSessionId String?      @unique
+  holdExpiresAt   DateTime? // unpaid reservations release the bike after this
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  items           OrderItem[]
+  payments        Payment[]
+  stages          OrderStage[]
+
+  @@index([status])
+  @@map("order")
+}
+
+model OrderItem {
+  id        String          @id @default(cuid())
+  orderId   String
+  order     Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  variantId String?
+  variant   ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+  name      String // snapshot at time of order
+  unitPrice Int // pence
+  quantity  Int
+
+  @@map("order_item")
+}
+
+model Payment {
+  id          String   @id @default(cuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  amount      Int // pence, negative for refunds
+  provider    String   @default("stripe")
+  providerRef String?  @unique
+  status      String // succeeded, refunded, failed
+  createdAt   DateTime @default(now())
+
+  @@map("payment")
+}
+
+model DiscountCode {
+  id         String    @id @default(cuid())
+  code       String    @unique
+  percentOff Int?
+  amountOff  Int? // pence
+  appliesTo  String    @default("accessories") // accessories, bikes, all
+  startsAt   DateTime?
+  endsAt     DateTime?
+  maxUses    Int?
+  timesUsed  Int       @default(0)
+  active     Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+
+  @@map("discount_code")
+}
+
+// Preparation stages the customer sees in "Track my bike" (staff tick them in the DMS).
+model PrepStageTemplate {
+  id        String       @id @default(cuid())
+  name      String
+  sortOrder Int
+  active    Boolean      @default(true)
+  stages    OrderStage[]
+
+  @@map("prep_stage_template")
+}
+
+model OrderStage {
+  id         String            @id @default(cuid())
+  orderId    String
+  order      Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  templateId String
+  template   PrepStageTemplate @relation(fields: [templateId], references: [id], onDelete: Restrict)
+  doneAt     DateTime?
+  doneById   String?
+
+  @@unique([orderId, templateId])
+  @@map("order_stage")
+}
+
+// ─────────────────────────────── Accessories ───────────────────────────────
+
+model ProductCategory {
+  id        String    @id @default(cuid())
+  slug      String    @unique
+  name      String
+  sortOrder Int       @default(0)
+  products  Product[]
+
+  @@map("product_category")
+}
+
+model Product {
+  id          String           @id @default(cuid())
+  slug        String           @unique
+  name        String
+  brand       String?
+  description String?
+  categoryId  String?
+  category    ProductCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  images      String[]
+  active      Boolean          @default(true)
+  popularity  Int              @default(0)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  variants    ProductVariant[]
+
+  @@map("product")
+}
+
+model ProductVariant {
+  id         String      @id @default(cuid())
+  productId  String
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name       String      @default("Standard") // size / colour
+  sku        String?     @unique
+  price      Int // pence
+  wasPrice   Int?
+  stockQty   Int         @default(0)
+  orderItems OrderItem[]
+
+  @@map("product_variant")
+}
+
+// ─────────────────────────────── CMS & settings ───────────────────────────────
+
+model Banner {
+  id        String    @id @default(cuid())
+  placement String // home_hero, promo_strip, listing_tile...
+  title     String
+  subtitle  String?
+  imageUrl  String?
+  linkUrl   String?
+  active    Boolean   @default(true)
+  sortOrder Int       @default(0)
+  startsAt  DateTime?
+  endsAt    DateTime?
+
+  @@map("banner")
+}
+
+model Faq {
+  id        String  @id @default(cuid())
+  section   String // home, delivery, finance...
+  question  String
+  answer    String
+  sortOrder Int     @default(0)
+  active    Boolean @default(true)
+
+  @@map("faq")
+}
+
+model Review {
+  id       String   @id @default(cuid())
+  author   String
+  rating   Int
+  body     String
+  source   String   @default("Trustpilot")
+  date     DateTime
+  featured Boolean  @default(false)
+  active   Boolean  @default(true)
+
+  @@map("review")
+}
+
+// Key/value business settings editable in the admin (deposit, delivery rate, contact details...).
+model Setting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+
+  @@map("setting")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String // bike.update, order.status...
+  entity    String
+  entityId  String
+  changes   Json?
+  createdAt DateTime @default(now())
+
+  @@index([entity, entityId])
+  @@map("audit_log")
+}

@@ -22,3 +22,6 @@ dist/
 # misc
 .DS_Store
 npm-debug.log*
+
+# prisma client (generated)
+src/generated/
