@@ -29,6 +29,9 @@ export function Header() {
             <Link href="/" className="logo" aria-label="GearUp Motorcycles home">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/assets/images/logo/gearup-logo.webp" alt={site.name} />
+              <sup className="tm" aria-label="Registered trademark">
+                ®
+              </sup>
             </Link>
             <div className="hd-act">
               <a href={site.phone.href} className="call">
@@ -65,6 +68,9 @@ export function Header() {
                 {item.label}
               </NavLink>
             ))}
+            <Link href="/used-bikes" className="cta">
+              Reserve online
+            </Link>
           </div>
         </nav>
       </header>

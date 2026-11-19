@@ -10,8 +10,13 @@ export function Footer() {
       <footer className="ftr">
         <div className="wrap">
           <div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/images/logo/gearup-logo.webp" alt={site.name} style={{ height: 56, width: 'auto' }} />
+            <span className="ftr-logo" style={{ display: 'inline-flex', alignItems: 'flex-start' }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/assets/images/logo/gearup-logo.webp" alt={site.name} style={{ height: 56, width: 'auto' }} />
+              <sup className="tm" aria-label="Registered trademark">
+                ®
+              </sup>
+            </span>
             <p className="blurb">{site.description}</p>
             <div className="ftr-acts">
               <a href={site.phone.href} className="btn btn-red">

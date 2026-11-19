@@ -110,7 +110,9 @@ svg.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-widt
 /* Header: two tier */
 .hd{background:var(--ink);color:#fff}
 .hd-top .wrap{display:flex;align-items:center;gap:28px;height:84px}
+.logo{position:relative;display:inline-flex;align-items:flex-start}
 .logo img{height:54px;width:auto}
+.logo .tm,.ftr-logo .tm{font-family:Arial,sans-serif;font-size:13px;font-weight:700;line-height:1;color:#fff;margin-left:3px;margin-top:-2px}
 .qsearch{flex:1;max-width:560px;display:flex;align-items:center;background:var(--char2);border:1.5px solid var(--char3);height:48px;padding:0 6px 0 16px;gap:10px}
 .qsearch svg{color:#9a9aa2}
 .qsearch input{flex:1;background:transparent;border:0;outline:0;color:#fff;font-size:15px}
@@ -345,8 +347,8 @@ svg.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .seal.on{background:var(--red);border-color:var(--red)}
 .seal.on::before{border-color:rgba(255,255,255,.6)}
 .seal.on small{color:#fff}
-.wty .note{margin-top:22px;display:flex;align-items:center;gap:12px;font-size:15px;color:#c3c3ca}
-.wty .note span{white-space:nowrap;background:var(--red);color:#fff;font-family:var(--narrow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px;padding:5px 10px;transform:rotate(-3deg);display:inline-block}
+.wty .note,.wty2 .note{margin-top:22px;display:flex;align-items:center;gap:12px;font-size:15px;color:#c3c3ca}
+.wty .note span,.wty2 .note span{white-space:nowrap;background:var(--red);color:#fff;font-family:var(--narrow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px;padding:5px 10px;transform:rotate(-3deg);display:inline-block}
 
 /* Finance */
 .fin{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--char);color:#fff}
@@ -1020,12 +1022,13 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 .hd-act .bsk{position:relative}
 .hd-act .bsk i{position:absolute;top:-6px;right:-2px;min-width:18px;height:18px;border-radius:9px;background:var(--red);color:#fff;font-style:normal;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}
 .hd-act a svg{transition:transform .2s var(--ease)}.hd-act a:hover svg{transform:translateY(-2px)}
-.nav2 .wrap{justify-content:space-between}
-.nav2 a{gap:8px;padding:0 10px;font-size:15px;transition:color .15s,border-color .15s,background .15s}
+.nav2 a{gap:7px;padding:0 11px;transition:color .15s,border-color .15s,background .15s}
+.nav2 a.cta{margin-left:auto;gap:8px}.nav2 a.cta:hover{background:var(--red2,#c40f15)}
 .nav2 a svg.i{width:18px;height:18px;color:var(--red);transition:transform .25s var(--ease)}
 .nav2 a:hover{background:var(--char2)}
 .nav2 a:hover svg.i{transform:translateY(-2px) scale(1.1)}
-@media (max-width:1200px){.nav2 a{font-size:14px;padding:0 7px;gap:6px}.nav2 a svg.i{width:16px;height:16px}}
+@media (max-width:1360px){.nav2 a{padding:0 7px;gap:6px}.nav2 a svg.i{width:16px;height:16px}.nav2 a.cta{padding:0 14px 0 20px}}
+@media (max-width:1240px){.nav2 a{font-size:15px;padding:0 6px;letter-spacing:.04em}.nav2 a svg.i{display:none}}
 .ftr-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .ftr-acts .btn{height:46px;padding:0 20px;font-size:15px}
 .btn-wa{background:#25D366;color:#fff}.btn-wa:hover{background:#1a9b48}
@@ -1050,11 +1053,11 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 @keyframes mq{to{transform:translateX(calc(-50% - 9px))}}
 .mq-track a{flex:none;width:190px;height:96px;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);display:flex;align-items:center;justify-content:center;padding:18px 26px;transition:transform .3s var(--ease),box-shadow .3s,border-color .2s}
 .mq-track a:hover{transform:translateY(-5px);box-shadow:var(--sh-h);border-color:var(--red)}
-.mq-track img{max-height:52px;max-width:120px;width:auto;filter:grayscale(1) opacity(.75);transition:filter .25s}
-.mq-track a:hover img{filter:none}
+.mq-track img{max-height:52px;max-width:120px;width:auto;transition:transform .25s var(--ease)}
+.mq-track a:hover img{transform:scale(1.05)}
 .wm{font-family:var(--disp);text-transform:uppercase;font-size:26px;letter-spacing:.04em;color:#555;transition:color .2s;white-space:nowrap}
-.wm-harley{font-size:19px}.wm-kawasaki{font-style:italic}
-.mq-track a:hover .wm{color:var(--red)}
+.wm-harley{font-size:19px;color:#F26F21}.wm-kawasaki{font-style:italic;color:#4BA82E}.wm-triumph{color:#111}.wm-lexmoto{color:#E2231A}
+.mq-track a:hover .wm{opacity:.85}
 
 /* Budget: 6 tiles + finance CTA */
 .budget{grid-template-columns:repeat(6,1fr)}
@@ -1063,7 +1066,7 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 .fincta{margin-top:34px;display:grid;grid-template-columns:minmax(0,1.6fr) auto;gap:30px;align-items:center;background:var(--ink);color:#fff;padding:34px 40px;border:2px solid var(--red);box-shadow:0 0 0 1px rgba(225,20,27,.4),0 0 28px rgba(225,20,27,.45),0 20px 46px rgba(0,0,0,.25);animation:glow 3.2s ease-in-out infinite}
 @keyframes glow{50%{box-shadow:0 0 0 1px rgba(225,20,27,.6),0 0 42px rgba(225,20,27,.7),0 20px 46px rgba(0,0,0,.25)}}
 .fincta .fc-k{font-family:var(--narrow);font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--red);font-size:14px}
-.fincta h3{font-size:46px;margin-top:6px}.fincta h3 em{font-style:normal;color:var(--red)}
+.fincta h3{font-size:46px;margin-top:6px;line-height:1.08}.fincta h3 em{font-style:normal;color:var(--red);display:inline-block;margin-top:.14em}
 .fincta p{color:#c5c5cc;margin-top:10px;max-width:620px}
 .fincta .fc-a{display:grid;gap:10px;justify-items:center}.fincta small{color:#9a9aa2;font-size:13px}
 #budget .fincta{max-width:none;margin-left:0;margin-right:0}
@@ -1124,6 +1127,7 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 .w2-hist{display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:center;background:#fff;color:var(--ink);margin:0 24px 24px;border-radius:var(--r);padding:24px 30px}
 .w2-hist h3{font-size:34px}.w2-hist p{color:var(--mut);margin-top:4px;font-size:15px}
 .hchecks{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}
+@media (min-width:1025px){.hchecks{flex-wrap:nowrap;gap:8px}.hchecks span{white-space:nowrap;padding:9px 14px}}
 .hchecks span{display:flex;align-items:center;gap:8px;background:var(--paper);border-radius:999px;padding:9px 16px;font-weight:600;font-size:15px}
 .hchecks svg{color:#fff;background:#1a9b54;border-radius:50%;padding:3px;width:20px;height:20px;stroke-width:3.5}
 @media (max-width:1024px){.w2-top,.w2-hist{grid-template-columns:1fr}.w2-top{padding:40px 28px 30px}.hchecks{justify-content:flex-start}}
@@ -1217,13 +1221,8 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 @media (max-width:640px){.sec.paper,.sec.dark,.kitband{margin:24px 12px;border-radius:16px}.sec.paper>.wrap,.sec.dark>.wrap{padding-left:16px;padding-right:16px}}
 .val{margin-top:40px}
 
-/* 22:43: no Trustpilot look-alike star boxes ("we might get sued"); plain GearUp stars */
-.stars{gap:3px;align-items:center}
-.stars i{background:none!important;width:18px;height:18px}
-.stars svg{width:18px;height:18px;fill:var(--red)}
-.stars i.half svg{opacity:.4}
-.dark .stars svg,.rq .stars svg,.hero .stars svg{fill:#ff3b41}
-.prod .rt .stars i{width:14px;height:14px}.prod .rt .stars svg{width:14px;height:14px}
+/* Trustpilot green star badges (client asked to keep them, 18 Nov) */
+.stars{align-items:center}
 .bk-ship .sh h2{font-size:44px}
 .bk-ship .shipcards{grid-template-columns:1fr 1fr}
 @media (max-width:640px){.bk-ship .shipcards{grid-template-columns:1fr}}
@@ -1305,3 +1304,45 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 
 /* Workshop tyres panel: rounded like the rest of the site */
 .tyre{border-radius:var(--r);overflow:hidden;box-shadow:var(--sh)}
+
+/* Bike page: detailed pictures, receipts and photo viewer (client 18 Nov) */
+.dpics{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:22px 24px}
+.dpics h2{font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:30px;line-height:1}
+.dpics p.muted{font-size:14px;margin:8px 0 16px}
+.pgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.pgrid.receipts{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:14px}
+.pg-item{display:grid;gap:8px;text-align:left;background:none;border:0;padding:0;cursor:pointer;font:inherit;color:inherit}
+.pg-img{position:relative;display:block;aspect-ratio:4/3;border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--line);background:var(--paper)}
+.receipts .pg-img{aspect-ratio:3/4}
+.pg-img img{width:100%;height:100%;object-fit:cover;transition:transform .35s var(--ease)}
+.receipts .pg-img img{object-fit:contain}
+.pg-item:hover .pg-img img{transform:scale(1.05)}
+.pg-zoom{position:absolute;right:8px;bottom:8px;width:32px;height:32px;border-radius:50%;background:rgba(9,9,11,.75);color:#fff;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.pg-zoom svg{width:16px;height:16px}
+.pg-item:hover .pg-zoom,.pg-item:focus-visible .pg-zoom{opacity:1}
+.pg-cap{font-size:13px;font-weight:600;line-height:1.3}
+.hist-rc{margin-top:26px}
+.hist-rc h4{font-family:var(--narrow);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:16px}
+.lbox{position:fixed;inset:0;z-index:100;background:rgba(9,9,11,.92);display:flex;align-items:center;justify-content:center;padding:60px 70px}
+.lbox figure{margin:0;max-width:min(1100px,100%);max-height:100%;display:grid;gap:12px}
+.lbox img{max-width:100%;max-height:calc(100vh - 170px);object-fit:contain;margin:0 auto;border-radius:var(--r-sm)}
+.lbox figcaption{display:flex;justify-content:space-between;gap:16px;color:#e7e7ea;font-size:15px}
+.lb-close,.lb-nav{position:absolute;width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.lb-close:hover,.lb-nav:hover{background:var(--red)}
+.lb-close{top:18px;right:18px}
+.lb-nav{top:50%;transform:translateY(-50%)}.lb-nav.l{left:14px}.lb-nav.r{right:14px}
+@media (max-width:640px){.pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.pgrid.receipts{grid-template-columns:repeat(2,minmax(0,1fr))}.dpics{padding:18px 16px}.lbox{padding:60px 10px}.lb-nav{top:auto;bottom:16px;transform:none}}
+
+/* Bike page: phone, WhatsApp and share stand out more */
+.buybox .contact{gap:8px}
+.buybox .contact a,.buybox .contact button{flex:1;display:flex;align-items:center;gap:6px;cursor:pointer;font-family:inherit;justify-content:center;height:44px;border:1.5px solid var(--line);border-radius:var(--r-sm);font-weight:700;font-size:14px;background:#fff;transition:border-color .15s,background .15s,color .15s}
+.buybox .contact a svg,.buybox .contact button svg{width:18px;height:18px}
+.buybox .contact a.ph{color:var(--ink)}
+.buybox .contact a.ph:hover{border-color:var(--red)}
+.buybox .contact a.wa{border-color:#25D366;color:#128C4B}
+.buybox .contact a.wa svg{color:#25D366}
+.buybox .contact a.wa:hover{background:#25D366;color:#fff}.buybox .contact a.wa:hover svg{color:#fff}
+.buybox .contact .shr{color:var(--ink)}
+.buybox .contact .shr svg{color:var(--ink)}
+.buybox .contact .shr:hover{border-color:var(--ink);background:var(--ink);color:#fff}.buybox .contact .shr:hover svg{color:#fff}
+@media (max-width:400px){.buybox .contact{flex-wrap:wrap}.buybox .contact a,.buybox .contact button{flex:1 1 40%}}
