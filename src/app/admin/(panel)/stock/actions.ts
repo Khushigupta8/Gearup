@@ -39,7 +39,8 @@ export async function quickUpdateBike(_prev: QuickUpdateResult | null, form: For
       status,
       visible,
       // lifecycle dates follow the status
-      ...(status === 'available' && before.status !== 'available' ? { publishedAt: now } : {}),
+      // first time on sale only; coming back from reserved keeps its place in the list
+      ...(status === 'available' && ['draft', 'in_preparation'].includes(before.status) ? { publishedAt: now } : {}),
       ...(status === 'reserved' && before.status !== 'reserved' ? { reservedAt: now } : {}),
       ...(status === 'sold' && before.status !== 'sold' ? { soldAt: now } : {}),
     },

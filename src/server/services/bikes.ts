@@ -89,7 +89,8 @@ const getPublicBikeRows = unstable_cache(
       include: withPhotos,
       orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
     }),
-  ['public-bike-rows'],
+  // a fresh cache per deployment, so a deploy never serves rows cached by older code
+  ['public-bike-rows', process.env.VERCEL_DEPLOYMENT_ID ?? 'local'],
   { tags: [BIKES_TAG] },
 );
 
