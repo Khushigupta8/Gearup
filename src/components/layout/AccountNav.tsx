@@ -1,26 +1,26 @@
-import Link from 'next/link';
 import { Icon } from '@/components/ui/Icon';
 import { accountNav } from '@/lib/navigation';
+import { AccountSignOut } from '../account/AccountSignOut';
 import { NavLink } from './NavLink';
 
-export function AccountNav() {
+export function AccountNav({ name, customerNo, savedCount }: { name: string; customerNo: string; savedCount: number }) {
   return (
     <nav className="aside" aria-label="My account">
       <div className="who">
-        <b>Hi, Rahim</b>
-        <small>Customer no. GU-0000 (sample)</small>
+        <b>Hi, {name}</b>
+        <small>Customer no. {customerNo}</small>
       </div>
       {accountNav.map((item) => (
         <NavLink key={item.href} href={item.href} exact>
           {item.icon && <Icon name={item.icon} />}
           {item.label}
-          {item.href === '/account/saved' && <span className="cnt">3</span>}
+          {item.href === '/account/saved' && savedCount > 0 && <span className="cnt">{savedCount}</span>}
         </NavLink>
       ))}
-      <Link href="/login" className="aout">
+      <AccountSignOut className="aout">
         <Icon name="logout" />
         Log out
-      </Link>
+      </AccountSignOut>
     </nav>
   );
 }

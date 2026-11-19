@@ -6,12 +6,32 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import type { Role } from '@/generated/prisma/client';
 import { db } from './db';
+import { customerForUser } from './services/customers';
+import { renderEmail, sendEmail } from './services/email';
 
 export const auth = betterAuth({
   database: prismaAdapter(db, { provider: 'postgresql' }),
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 8,
+    sendResetPassword: async ({ user, url }) => {
+      const mail = renderEmail({
+        heading: 'Reset your password',
+        paragraphs: [`Hi ${user.name.split(' ')[0]}, use the button below to choose a new password. The link works for one hour.`, "If you didn't ask for this, you can ignore this email."],
+        cta: { label: 'Choose a new password', href: url },
+      });
+      await sendEmail({ to: user.email, subject: 'Reset your GearUp password', ...mail });
+    },
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        // Every website account gets a CRM customer (joined up with any earlier enquiries by email).
+        after: async (user) => {
+          await customerForUser(user);
+        },
+      },
+    },
   },
   user: {
     additionalFields: {
@@ -47,8 +67,8 @@ export async function requireStaff(roles: Role[] = STAFF_ROLES): Promise<Session
 }
 
 /** For /account pages: any signed-in user. */
-export async function requireUser(): Promise<SessionUser> {
+export async function requireUser(next = '/account'): Promise<SessionUser> {
   const user = await getUser();
-  if (!user) redirect('/login');
+  if (!user) redirect(`/login?next=${encodeURIComponent(next)}`);
   return user;
 }
