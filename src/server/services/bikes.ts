@@ -72,24 +72,31 @@ function toBike(b: BikeRow): Bike {
     badge: badgeFor(b),
     status: b.status === 'reserved' ? 'reserved' : b.status === 'sold' ? 'sold' : 'available',
     registration: b.registration ?? undefined,
+    featured: b.featured,
     highlights: b.highlights.length ? b.highlights : undefined,
     detail,
   };
 }
 
-/** Bikes shown on the website: visible and available or reserved, newest first. */
-export const getPublicBikes = unstable_cache(
-  async (): Promise<Bike[]> => {
-    const rows = await db.bike.findMany({
+/**
+ * Raw rows for the website, cached under the 'bikes' tag. Only DB rows are cached (not the mapped
+ * shape), so changing toBike() never serves stale data. Dates come back as strings from the cache.
+ */
+const getPublicBikeRows = unstable_cache(
+  () =>
+    db.bike.findMany({
       where: { visible: true, status: { in: ['available', 'reserved'] } },
       include: withPhotos,
       orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
-    });
-    return rows.map(toBike);
-  },
-  ['public-bikes'],
+    }),
+  ['public-bike-rows'],
   { tags: [BIKES_TAG] },
 );
+
+/** Bikes shown on the website: visible and available or reserved, newest first. */
+export async function getPublicBikes(): Promise<Bike[]> {
+  return (await getPublicBikeRows()).map(toBike);
+}
 
 export async function getPublicBike(slug: string): Promise<Bike | undefined> {
   return (await getPublicBikes()).find((b) => b.slug === slug);
