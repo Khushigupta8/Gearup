@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Icon } from '@/components/ui/Icon';
-import { bikeName } from '@/data/bikes';
+import { bikeName } from '@/lib/bikes';
 import { gbp, monthlyPayment } from '@/lib/format';
 import type { Bike } from '@/types';
 

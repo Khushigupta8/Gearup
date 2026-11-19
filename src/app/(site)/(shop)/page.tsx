@@ -10,7 +10,7 @@ import { ValuationSection } from '@/components/home/ValuationSection';
 import { Icon } from '@/components/ui/Icon';
 import { RideIn, ScrollReveal } from '@/components/ui/ScrollReveal';
 import { Stars } from '@/components/ui/Stars';
-import { bikes, getBike } from '@/data/bikes';
+import { getPublicBikes } from '@/server/services/bikes';
 
 export const metadata: Metadata = {
   title: { absolute: 'GearUp Motorcycles · Quality Used Motorbikes, Delivered UK-Wide' },
@@ -25,9 +25,6 @@ const heroSlides: HeroSlide[] = [
   { href: '/used-bikes/2019-bmw-r1250gs', image: '/assets/images/hero/bmw-r1250gs.webp', name: '2019 BMW R 1250 GS', kicker: 'Adventure', price: '£11,495', monthly: '£339.39' },
 ];
 
-const featured = ['2019-bmw-r1250gs', '2021-yamaha-mt07', '2020-kawasaki-z900', '2020-kawasaki-ninja-zx6r', '2020-honda-africa-twin']
-  .map(getBike)
-  .filter((b) => b !== undefined);
 
 const brands: { key: string; name: string; logo?: string }[] = [
   { key: 'honda', name: 'Honda', logo: 'honda.svg' },
@@ -143,7 +140,10 @@ function BrandLink({ brand, hidden = false }: { brand: (typeof brands)[number]; 
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const bikes = await getPublicBikes();
+  const featured = bikes.filter((b) => b.featured).slice(0, 5);
+
   return (
     <>
       <section className="hero">

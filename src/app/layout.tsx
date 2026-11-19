@@ -1,8 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
-import { Footer } from '@/components/layout/Footer';
-import { Header } from '@/components/layout/Header';
-import { IconSprite } from '@/components/ui/IconSprite';
 import { site } from '@/lib/site';
 import '@/styles/globals.css';
 import '@/styles/account.css';
@@ -22,15 +19,11 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+/** Bare html shell. The public site chrome lives in (site)/layout.tsx, the staff area in admin/layout.tsx. */
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en-GB">
-      <body>
-        <IconSprite />
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

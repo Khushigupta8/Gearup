@@ -41,6 +41,8 @@ export type Bike = {
   image: string;
   badge?: BikeBadge;
   status: 'available' | 'reserved' | 'sold';
+  /** Shown in "Fresh on the forecourt" on the home page. */
+  featured?: boolean;
   /** Number plate, pulled from the DMS when the bike is added to stock. */
   registration?: string;
   /** Short bullet points shown on the large card. */

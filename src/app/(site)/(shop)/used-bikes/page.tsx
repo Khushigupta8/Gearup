@@ -4,7 +4,7 @@ import { BikeListing } from '@/components/bikes/BikeListing';
 import { AlertForm } from '@/components/forms/AlertForm';
 import { ChipGroup } from '@/components/ui/ChipGroup';
 import { Icon } from '@/components/ui/Icon';
-import { bikes } from '@/data/bikes';
+import { getPublicBikes } from '@/server/services/bikes';
 
 export const metadata: Metadata = {
   title: 'Motorbikes for Sale',
@@ -121,7 +121,9 @@ const promoTile = (
   </div>
 );
 
-export default function UsedBikesPage() {
+export default async function UsedBikesPage() {
+  const bikes = await getPublicBikes();
+
   return (
     <>
       <section className="phero">

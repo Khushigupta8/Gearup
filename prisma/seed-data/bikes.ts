@@ -1,10 +1,10 @@
 import type { Bike } from '@/types';
 
 /**
- * Sample stock used until bikes come from the DMS via /api/bikes.
- * Order = newest arrivals first.
+ * Sample stock loaded by prisma/seed.ts. Order = newest arrivals first.
+ * Prices here are whole pounds (the seed converts to pence).
  */
-export const bikes: Bike[] = [
+export const sampleBikes: Bike[] = [
   {
     slug: '2019-bmw-r1250gs',
     make: 'BMW',
@@ -231,28 +231,3 @@ export const bikes: Bike[] = [
     status: 'reserved',
   },
 ];
-
-export function getBike(slug: string): Bike | undefined {
-  return bikes.find((b) => b.slug === slug);
-}
-
-export function bikeName(b: Pick<Bike, 'year' | 'make' | 'model'>): string {
-  return `${b.year} ${b.make} ${b.model}`;
-}
-
-export const styleLabels: Record<Bike['style'], string> = {
-  sports: 'Sportsbike',
-  naked: 'Naked',
-  adventure: 'Adventure',
-  cruiser: 'Cruiser',
-  classic: 'Classic',
-  tourer: 'Tourer',
-  scooter: 'Scooter/Moped',
-  enduro: 'Enduro',
-};
-
-/** Bikes in the same style first, then the rest; never the bike itself. */
-export function similarBikes(bike: Bike, count = 3): Bike[] {
-  const others = bikes.filter((b) => b.slug !== bike.slug);
-  return [...others.filter((b) => b.style === bike.style), ...others.filter((b) => b.style !== bike.style)].slice(0, count);
-}

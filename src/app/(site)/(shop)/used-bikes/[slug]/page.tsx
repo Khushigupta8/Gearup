@@ -8,18 +8,19 @@ import { ShareButton } from '@/components/bikes/ShareButton';
 import { DeliveryQuote } from '@/components/forms/DeliveryQuote';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { Tabs } from '@/components/ui/Tabs';
-import { bikeName, bikes, getBike, similarBikes, styleLabels } from '@/data/bikes';
+import { bikeName, similarBikes, styleLabels } from '@/lib/bikes';
+import { getPublicBike, getPublicBikes } from '@/server/services/bikes';
 import { gbp, monthlyPayment } from '@/lib/format';
 import { site } from '@/lib/site';
 
 type Props = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
-  return bikes.map((b) => ({ slug: b.slug }));
+export async function generateStaticParams() {
+  return (await getPublicBikes()).map((b) => ({ slug: b.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const bike = getBike((await params).slug);
+  const bike = await getPublicBike((await params).slug);
   if (!bike) return {};
   const warranty = bike.badge?.kind === 'warranty' ? `, ${bike.badge.months} months warranty included free` : '';
   return {
@@ -40,8 +41,9 @@ const usps: [IconName, string][] = [
 const TERM = 48;
 
 export default async function BikePage({ params }: Props) {
-  const bike = getBike((await params).slug);
+  const bike = await getPublicBike((await params).slug);
   if (!bike) notFound();
+  const allBikes = await getPublicBikes();
 
   const name = bikeName(bike);
   const d = bike.detail;
@@ -368,7 +370,7 @@ export default async function BikePage({ params }: Props) {
             </Link>
           </div>
           <div className="stock">
-            {similarBikes(bike).map((b) => (
+            {similarBikes(bike, allBikes).map((b) => (
               <BikeCard key={b.slug} bike={b} />
             ))}
           </div>

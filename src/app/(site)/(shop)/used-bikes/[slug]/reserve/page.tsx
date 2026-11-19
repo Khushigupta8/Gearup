@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { bikes } from '@/data/bikes';
+import { getPublicBikes } from '@/server/services/bikes';
 import { LegacyPage } from '@/components/layout/LegacyPage';
 
 export const metadata: Metadata = {
@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   description: 'Reserve your bike online for £99. Choose collection or UK delivery and pay securely.',
 };
 
-export function generateStaticParams() {
-  return bikes.map((b) => ({ slug: b.slug }));
+export async function generateStaticParams() {
+  return (await getPublicBikes()).map((b) => ({ slug: b.slug }));
 }
 
 export default function ReservePage() {

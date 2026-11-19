@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { bikes } from '@/data/bikes';
+import { getPublicBikes } from '@/server/services/bikes';
 import { site } from '@/lib/site';
 
 const pages = [
@@ -18,7 +18,8 @@ const pages = [
   '/contact',
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const bikes = await getPublicBikes();
   return [
     ...pages.map((path) => ({ url: `${site.url}${path}` })),
     ...bikes.map((b) => ({ url: `${site.url}/used-bikes/${b.slug}` })),
