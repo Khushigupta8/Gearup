@@ -27,7 +27,7 @@ export default async function DashboardPage() {
     { label: 'Stock value (retail)', value: `£${value.toLocaleString('en-GB')}`, href: '/admin/stock' },
     { label: 'New enquiries', value: leads, href: '/admin/leads?view=new' },
     { label: 'Follow-ups due', value: due, href: '/admin/leads?view=due' },
-    { label: 'Paid reservations', value: reserved },
+    { label: 'Paid reservations', value: reserved, href: '/admin/sales' },
   ];
 
   return (

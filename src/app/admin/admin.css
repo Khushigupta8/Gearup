@@ -199,3 +199,25 @@ label.adm-btn{cursor:pointer}
 .adm-act.k-email{background:#e6eefb;color:var(--a-blue)}.adm-act.k-note{background:#fbf0de;color:var(--a-amber)}
 .adm-btn-wa{background:#25D366;border-color:#25D366}.adm-btn-wa:hover{background:#1faa53}
 .adm-list{margin:0;padding-left:18px;display:grid;gap:6px}
+
+/* sales & shop */
+.adm-stages{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.adm-stages.is-busy{opacity:.6;pointer-events:none}
+.adm-stages label{display:flex;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--a-line);border-radius:10px;cursor:pointer}
+.adm-stages label:has(input:checked){background:#ecf8f0;border-color:#bfe6cd}
+.adm-stages b{display:block}
+.adm-stages small{color:var(--a-mut)}
+.adm-flow{display:flex;flex-wrap:wrap;gap:6px}
+.adm-flow button{height:36px;padding:0 14px;border-radius:999px;border:1.5px solid var(--a-line);background:#fff;font:inherit;font-weight:600;font-size:13px;cursor:pointer}
+.adm-flow button.on{background:var(--a-ink);border-color:var(--a-ink);color:#fff;cursor:default}
+.adm-flow button:hover:not(:disabled){border-color:var(--a-ink)}
+.adm-confirm{background:#fdf6ec;border:1px solid #f1d9ad;border-radius:10px;padding:10px 12px;margin:0;font-size:14px}
+.adm-stage.os-reserved,.adm-stage.os-in_preparation{background:#fbf0de;color:var(--a-amber)}
+.adm-stage.os-ready,.adm-stage.os-out_for_delivery{background:#e6eefb;color:var(--a-blue)}
+.adm-stage.os-completed{background:#e3f4ea;color:var(--a-green)}
+.adm-stage.os-pending_payment,.adm-stage.os-cancelled,.adm-stage.os-refunded{background:#ececea;color:var(--a-mut)}
+.adm-prodtop{display:flex;gap:18px;align-items:flex-start}
+.adm-prodimg{flex:none;width:150px;display:grid;gap:6px;cursor:pointer;text-align:center}
+.adm-prodimg img,.adm-prodimg > span{width:150px;height:150px;object-fit:contain;border:1.5px dashed var(--a-line);border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;color:var(--a-mut);font-weight:600}
+.adm-prodimg small{color:var(--a-mut);font-size:12px}
+@media (max-width:700px){.adm-prodtop{flex-direction:column}}

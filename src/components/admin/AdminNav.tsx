@@ -11,7 +11,7 @@ const sections: { title: string; items: Item[] }[] = [
     title: 'DMS',
     items: [
       { href: '/admin/stock', label: 'Stock' },
-      { href: '/admin/sales', label: 'Sales & reservations', soon: 'M3' },
+      { href: '/admin/sales', label: 'Sales & reservations' },
       { href: '/admin/valuations', label: 'Part-ex & valuations' },
       { href: '/admin/prep', label: 'Prep & delivery', soon: 'Phase 2' },
     ],
@@ -26,7 +26,7 @@ const sections: { title: string; items: Item[] }[] = [
   {
     title: 'Shop & website',
     items: [
-      { href: '/admin/accessories', label: 'Accessories', soon: 'M3' },
+      { href: '/admin/accessories', label: 'Accessories' },
       { href: '/admin/website', label: 'Website (CMS)', soon: 'M4' },
     ],
   },

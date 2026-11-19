@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       onBeforeGenerateToken: async (pathname) => {
         const user = await getUser();
         if (!user || !STAFF_ROLES.includes(user.role)) throw new Error('Not allowed');
-        if (!pathname.startsWith('bikes/')) throw new Error('Bad path');
+        if (!pathname.startsWith('bikes/') && !pathname.startsWith('products/')) throw new Error('Bad path');
         return {
           allowedContentTypes: ['image/webp', 'image/jpeg', 'image/png'],
           maximumSizeInBytes: 8 * 1024 * 1024,
