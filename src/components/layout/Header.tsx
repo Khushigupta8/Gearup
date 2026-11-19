@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Icon } from '@/components/ui/Icon';
 import { mainNav } from '@/lib/navigation';
 import { site } from '@/lib/site';
+import { BasketCount } from './BasketCount';
 import { MenuButton } from './MenuButton';
 import { NavLink } from './NavLink';
 
@@ -54,7 +55,8 @@ export function Header() {
               </Link>
               <Link href="/basket" className="bsk">
                 <Icon name="bag" />
-                Basket<i>2</i>
+                Basket
+                <BasketCount />
               </Link>
             </div>
             <MenuButton />

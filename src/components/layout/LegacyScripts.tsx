@@ -10,7 +10,7 @@ export function LegacyScripts() {
   useEffect(() => {
     const stamp = Date.now();
     // Module scripts with a fresh URL run again on every page visit, each in its own scope.
-    const tags = ['ui.js', 'sort-filter.js', 'lead-capture.js'].map((name) => {
+    const tags = ['ui.js', 'lead-capture.js'].map((name) => {
       const s = document.createElement('script');
       s.type = 'module';
       s.src = `/legacy-js/${name}?v=${stamp}`;
