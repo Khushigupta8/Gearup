@@ -78,7 +78,8 @@ export async function Footer() {
               © {new Date().getFullYear()} {site.name}.{biz.legalLine ? ` ${biz.legalLine}` : ''}
             </span>
             <span>
-              <Link href="/terms">Terms</Link> · <Link href="/privacy">Privacy</Link>
+              <Link href="/terms">Terms</Link> · <Link href="/privacy">Privacy</Link> · <Link href="/cookies">Cookies</Link> ·{' '}
+              <Link href="/complaints">Complaints</Link>
             </span>
           </div>
         </div>

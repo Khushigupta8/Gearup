@@ -4,10 +4,10 @@ import { getLegalPage, pageMetadata } from '@/server/services/cms';
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getLegalPage('terms');
-  // Not indexed until the real text is added in the CMS.
-  return pageMetadata('/terms', { title: 'Terms and conditions', description: 'The terms for buying a bike, reserving online and shopping with GearUp Motorcycles.', robots: page.body ? undefined : { index: false } });
+  // Kept out of Google until the text is published in the CMS.
+  return pageMetadata('/terms', { title: 'Terms and conditions', description: 'The terms for buying a bike, reserving online and shopping with GearUp Motorcycles.', robots: page.published ? undefined : { index: false } });
 }
 
-export default function TermsPage() {
-  return <LegalPage slug="terms" />;
+export default async function TermsPage({ searchParams }: { searchParams: Promise<{ preview?: string }> }) {
+  return <LegalPage slug="terms" preview={(await searchParams).preview === '1'} />;
 }

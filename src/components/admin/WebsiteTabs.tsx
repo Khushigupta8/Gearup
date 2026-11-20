@@ -9,7 +9,7 @@ const tabs = [
   { href: '/admin/website/reviews', label: 'Reviews' },
   { href: '/admin/website/faqs', label: 'FAQs' },
   { href: '/admin/website/seo', label: 'SEO' },
-  { href: '/admin/website/pages', label: 'Terms & privacy' },
+  { href: '/admin/website/pages', label: 'Legal pages' },
 ];
 
 export function WebsiteTabs() {

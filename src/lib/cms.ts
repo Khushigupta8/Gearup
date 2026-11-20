@@ -75,6 +75,8 @@ export const seoPages: { path: string; label: string }[] = [
   { path: '/contact', label: 'Contact' },
   { path: '/terms', label: 'Terms & conditions' },
   { path: '/privacy', label: 'Privacy policy' },
+  { path: '/cookies', label: 'Cookie policy' },
+  { path: '/complaints', label: 'Complaints' },
 ];
 export type SeoEntry = { title?: string; description?: string };
 
@@ -82,8 +84,14 @@ export type SeoEntry = { title?: string; description?: string };
 export const legalPages = {
   terms: { title: 'Terms & conditions', path: '/terms' },
   privacy: { title: 'Privacy policy', path: '/privacy' },
+  cookies: { title: 'Cookie policy', path: '/cookies' },
+  complaints: { title: 'Complaints', path: '/complaints' },
 } as const;
 export type LegalSlug = keyof typeof legalPages;
-export type LegalPage = { title: string; body: string; updatedAt?: string };
+/** Not shown on the website until published is ticked in the CMS. */
+export type LegalPage = { title: string; body: string; published?: boolean; updatedAt?: string };
+
+/** [Bracketed placeholders] still to fill in. Markdown links ([text](url)) don't count. */
+export const placeholders = (text: string) => [...text.matchAll(/\[([^\]]+)\](?!\()/g)].map((m) => m[1]);
 
 export type HeroSlideRow = { id: string; title: string; subtitle: string | null; imageUrl: string | null; linkUrl: string | null };

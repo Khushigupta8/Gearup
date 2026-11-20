@@ -7,5 +7,5 @@ export const metadata: Metadata = { title: 'Website · Business details' };
 
 export default async function WebsiteBusinessPage() {
   await requireStaff(['manager', 'admin']);
-  return <BusinessForm biz={await getBusiness()} />;
+  return <BusinessForm biz={await getBusiness(true)} />;
 }

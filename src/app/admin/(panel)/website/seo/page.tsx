@@ -13,7 +13,7 @@ export default async function WebsiteSeoPage() {
       <p className="adm-muted" style={{ margin: '0 0 12px' }}>
         Each bike&apos;s Google title and description are set on the bike itself (Stock → bike → Search engines).
       </p>
-      <SeoForm pages={seoPages} seo={await getSeo()} />
+      <SeoForm pages={seoPages} seo={await getSeo(true)} />
     </>
   );
 }

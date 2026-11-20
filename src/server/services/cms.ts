@@ -10,12 +10,14 @@ const KEY = ['cms', process.env.VERCEL_DEPLOYMENT_ID ?? 'local'];
 
 const settingsRows = unstable_cache(() => db.setting.findMany(), [...KEY, 'settings'], { tags: [CMS_TAG] });
 
-async function setting<T>(key: string): Promise<T | undefined> {
+/** fresh: read straight from the database (admin screens), not the website cache. */
+async function setting<T>(key: string, fresh = false): Promise<T | undefined> {
+  if (fresh) return (await db.setting.findUnique({ where: { key } }))?.value as T | undefined;
   return (await settingsRows()).find((s) => s.key === key)?.value as T | undefined;
 }
 
-export async function getBusiness(): Promise<Business> {
-  const saved = (await setting<Partial<Business>>('business')) ?? {};
+export async function getBusiness(fresh = false): Promise<Business> {
+  const saved = (await setting<Partial<Business>>('business', fresh)) ?? {};
   return {
     ...defaultBusiness,
     ...saved,
@@ -24,12 +26,12 @@ export async function getBusiness(): Promise<Business> {
   };
 }
 
-export async function getSeo(): Promise<Record<string, SeoEntry>> {
-  return (await setting<Record<string, SeoEntry>>('seo')) ?? {};
+export async function getSeo(fresh = false): Promise<Record<string, SeoEntry>> {
+  return (await setting<Record<string, SeoEntry>>('seo', fresh)) ?? {};
 }
 
-export async function getLegalPage(slug: LegalSlug): Promise<LegalPage> {
-  return (await setting<LegalPage>(`page:${slug}`)) ?? { title: legalPages[slug].title, body: '' };
+export async function getLegalPage(slug: LegalSlug, fresh = false): Promise<LegalPage> {
+  return (await setting<LegalPage>(`page:${slug}`, fresh)) ?? { title: legalPages[slug].title, body: '', published: false };
 }
 
 /**

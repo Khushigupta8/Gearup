@@ -4,10 +4,10 @@ import { getLegalPage, pageMetadata } from '@/server/services/cms';
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getLegalPage('privacy');
-  // Not indexed until the real text is added in the CMS.
-  return pageMetadata('/privacy', { title: 'Privacy policy', description: 'How GearUp Motorcycles collects, uses and protects your personal data.', robots: page.body ? undefined : { index: false } });
+  // Kept out of Google until the text is published in the CMS.
+  return pageMetadata('/privacy', { title: 'Privacy policy', description: 'How GearUp Motorcycles collects, uses and protects your personal data.', robots: page.published ? undefined : { index: false } });
 }
 
-export default function PrivacyPage() {
-  return <LegalPage slug="privacy" />;
+export default async function PrivacyPage({ searchParams }: { searchParams: Promise<{ preview?: string }> }) {
+  return <LegalPage slug="privacy" preview={(await searchParams).preview === '1'} />;
 }

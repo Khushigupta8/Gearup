@@ -1,5 +1,6 @@
 /**
- * Fills the CMS tables with the website's current content (FAQs, reviews, home hero slides), so staff
+ * Fills the CMS tables with the website's current content (FAQs, reviews, home hero slides) and the
+ * draft legal pages (prisma/legal-drafts/*.md, saved unpublished), so staff
  * start from what is live. Safe to run again: it only fills sections/tables that are empty.
  *   npx tsx scripts/seed-cms.ts
  */
@@ -38,6 +39,18 @@ async function main() {
   if (!(await db.banner.count({ where: { placement: 'home_hero' } }))) {
     await db.banner.createMany({ data: hero.map((h, i) => ({ ...h, placement: 'home_hero', sortOrder: i })) });
     console.log('hero slides added:', hero.length);
+  }
+  for (const [slug, title] of [
+    ['terms', 'Terms & conditions'],
+    ['privacy', 'Privacy policy'],
+    ['cookies', 'Cookie policy'],
+    ['complaints', 'Complaints'],
+  ] as const) {
+    const key = `page:${slug}`;
+    if (await db.setting.findUnique({ where: { key } })) continue;
+    const body = readFileSync(`prisma/legal-drafts/${slug}.md`, 'utf8');
+    await db.setting.create({ data: { key, value: { title, body, published: false, updatedAt: new Date().toISOString() } } });
+    console.log('legal draft added:', slug);
   }
   await db.$disconnect();
 }

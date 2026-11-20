@@ -1,11 +1,16 @@
 import Link from 'next/link';
 import { RichText } from '@/components/cms/RichText';
 import { legalPages, type LegalSlug } from '@/lib/cms';
+import { getUser, STAFF_ROLES } from '@/server/auth';
 import { getBusiness, getLegalPage } from '@/server/services/cms';
 
-/** Terms / privacy: text edited in Admin → Website → Pages. */
-export async function LegalPage({ slug }: { slug: LegalSlug }) {
-  const [page, biz] = await Promise.all([getLegalPage(slug), getBusiness()]);
+/** Terms, privacy, cookies, complaints: text edited in Admin → Website → Terms & privacy. Hidden until published. */
+export async function LegalPage({ slug, preview = false }: { slug: LegalSlug; preview?: boolean }) {
+  // Staff can see an unpublished draft with ?preview=1 (link in the CMS).
+  const user = preview ? await getUser() : null;
+  const draft = Boolean(user && STAFF_ROLES.includes(user.role));
+  const [page, biz] = await Promise.all([getLegalPage(slug, draft), getBusiness()]);
+  const show = (page.published || draft) && page.body;
   return (
     <>
       <section className="phero">
@@ -18,13 +23,14 @@ export async function LegalPage({ slug }: { slug: LegalSlug }) {
               <span>{legalPages[slug].title}</span>
             </div>
             <h1 className="disp">{page.title || legalPages[slug].title}</h1>
-            {page.updatedAt && <p className="lede">Last updated {new Date(page.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>}
+            {page.published && page.updatedAt && <p className="lede">Last updated {new Date(page.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>}
           </div>
         </div>
       </section>
       <section className="sec">
         <div className="wrap prose legal-body">
-          {page.body ? (
+          {draft && !page.published && <div className="notice" style={{ marginBottom: 24 }}>Draft preview. Only staff can see this until it is published in the CMS.</div>}
+          {show ? (
             <RichText text={page.body} />
           ) : (
             <p>

@@ -51,7 +51,7 @@
   {
    "section": "warranty",
    "question": "Can I see the inspection report?",
-   "answer": "Yes. Every bike's 120-point report is on its bike page and in your account once you reserve.",
+   "answer": "Yes. Every bike's 120-point report is on its bike page.",
    "sortOrder": 4
   },
   {
@@ -213,7 +213,7 @@
   {
    "section": "faq-buying",
    "question": "How does reserving online work?",
-   "answer": "Pay the £99 deposit on the bike's page. The bike comes off sale straight away and the £99 comes off the price. An account is made for you so you can follow the prep.",
+   "answer": "Pay the £99 deposit on the bike's page. The bike comes off sale straight away and the £99 comes off the price. An account is made for you so you can see your reservation.",
    "sortOrder": 0
   },
   {
@@ -225,7 +225,7 @@
   {
    "section": "faq-buying",
    "question": "What checks has every bike had?",
-   "answer": "An HPI check, our 120-point inspection, an MOT where needed and a full valet. You can see each stage tick off in your account.",
+   "answer": "An HPI check, our 120-point inspection, an MOT where needed and a full valet.",
    "sortOrder": 2
   },
   {
@@ -393,7 +393,7 @@
   {
    "section": "faq-warranty",
    "question": "How do I make a warranty claim?",
-   "answer": "Call or message us with your order number. Your warranty documents are saved in your account.",
+   "answer": "Call or message us with your order number and we will take it from there.",
    "sortOrder": 5
   },
   {

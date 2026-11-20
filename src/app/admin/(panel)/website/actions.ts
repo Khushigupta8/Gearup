@@ -4,7 +4,7 @@ import { del } from '@vercel/blob';
 import { updateTag } from 'next/cache';
 import { z } from 'zod';
 import type { Prisma } from '@/generated/prisma/client';
-import { faqSections, legalPages, seoPages, type Business, type LegalSlug } from '@/lib/cms';
+import { faqSections, legalPages, placeholders, seoPages, type Business, type LegalSlug } from '@/lib/cms';
 import { requireStaff } from '@/server/auth';
 import { db } from '@/server/db';
 import { CMS_TAG, getBusiness, getSeo } from '@/server/services/cms';
@@ -59,7 +59,7 @@ export async function saveBusiness(_prev: CmsResult, form: FormData): Promise<Cm
     });
   if (!parsed.success) return { ok: false, error: parsed.error.issues[0]?.message ?? 'Please check the fields.' };
   if (!hours.length) return { ok: false, error: 'Add at least one line of opening hours, e.g. "Mon to Fri | 9:00 to 17:30".' };
-  const value: Business = { ...(await getBusiness()), ...parsed.data, whatsapp: parsed.data.whatsapp.replace(/\D/g, ''), hours };
+  const value: Business = { ...(await getBusiness(true)), ...parsed.data, whatsapp: parsed.data.whatsapp.replace(/\D/g, ''), hours };
   await saveSetting('business', value as unknown as Prisma.InputJsonValue);
   return done(user.id, 'cms.business', 'business');
 }
@@ -68,7 +68,7 @@ export async function saveBusiness(_prev: CmsResult, form: FormData): Promise<Cm
 
 export async function saveSeo(_prev: CmsResult, form: FormData): Promise<CmsResult> {
   const user = await requireStaff(['manager', 'admin']);
-  const seo = await getSeo();
+  const seo = await getSeo(true);
   for (const p of seoPages) {
     const title = s(form, `t:${p.path}`).slice(0, 70);
     const description = s(form, `d:${p.path}`).slice(0, 170);
@@ -87,8 +87,14 @@ export async function saveLegalPage(_prev: CmsResult, form: FormData): Promise<C
   if (!(slug in legalPages)) return { ok: false, error: 'Unknown page.' };
   const title = s(form, 'title').slice(0, 120) || legalPages[slug].title;
   const body = String(form.get('body') ?? '').slice(0, 60000);
-  await saveSetting(`page:${slug}`, { title, body, updatedAt: new Date().toISOString() });
-  return done(user.id, 'cms.page', slug);
+  const published = form.get('published') === 'on';
+  const todo = placeholders(body);
+  if (published && !body.trim()) return { ok: false, error: 'Add the text before publishing.' };
+  if (published && todo.length) {
+    return { ok: false, error: `Fill in the [bracketed] details before publishing: ${todo.slice(0, 3).join('; ')}${todo.length > 3 ? ` and ${todo.length - 3} more` : ''}.` };
+  }
+  await saveSetting(`page:${slug}`, { title, body, published, updatedAt: new Date().toISOString() });
+  return done(user.id, published ? 'cms.page_publish' : 'cms.page_draft', slug);
 }
 
 // ───────────── FAQs ─────────────

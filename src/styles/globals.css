@@ -1443,3 +1443,5 @@ form[aria-busy=true]{opacity:.7;pointer-events:none}
 .legal-body h2{font-family:var(--disp);font-weight:400;text-transform:uppercase;font-size:30px;margin:28px 0 8px}
 .legal-body p{margin:0 0 14px;line-height:1.65}
 .legal-body a{color:var(--red);text-decoration:underline}
+.legal-body ul{margin:0 0 14px;padding-left:22px;display:grid;gap:6px;line-height:1.6}
+.legal-body strong{font-weight:700}

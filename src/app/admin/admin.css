@@ -301,3 +301,6 @@ label.adm-btn{cursor:pointer}
 .adm-counted small{position:absolute;right:8px;bottom:-16px;font-size:11px;color:var(--a-mut)}
 .adm-counted small.warn{color:var(--a-amber)}
 @media (max-width:900px){.adm-split,.adm-seo-row{grid-template-columns:1fr}}
+.adm-todo{margin-top:12px;background:#fbf0de;border:1px solid #f1d6a6;border-radius:10px;padding:10px 14px;font-size:13.5px}
+.adm-todo ul{margin:6px 0;padding-left:18px;columns:2;column-gap:24px}
+.adm-todo small{color:#7a5208}

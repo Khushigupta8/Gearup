@@ -20,7 +20,7 @@ import {
   setReviewActive,
   type CmsResult,
 } from '@/app/admin/(panel)/website/actions';
-import type { Business, LegalPage, SeoEntry } from '@/lib/cms';
+import { placeholders, type Business, type LegalPage, type SeoEntry } from '@/lib/cms';
 import { resizeImage } from '@/lib/resize-image';
 
 type Action = (prev: CmsResult, form: FormData) => Promise<CmsResult>;
@@ -199,16 +199,23 @@ export function SeoForm({ pages, seo }: { pages: { path: string; label: string }
   );
 }
 
-// ───────────── terms / privacy ─────────────
+// ───────────── terms / privacy / cookies / complaints ─────────────
 
 export function LegalForm({ slug, page, path }: { slug: string; page: LegalPage; path: string }) {
+  const [body, setBody] = useState(page.body);
+  const todo = placeholders(body);
   return (
     <CmsForm action={saveLegalPage}>
       <input type="hidden" name="slug" value={slug} />
       <div className="adm-sec-head">
-        <h2>{page.title}</h2>
-        <a href={path} target="_blank" rel="noopener" className="adm-link">
-          View page ↗
+        <div>
+          <h2>
+            {page.title} {page.published ? <span className="adm-pill s-available">Published</span> : <span className="adm-pill">Draft, not on the website</span>}
+          </h2>
+          {page.updatedAt && <p className="adm-muted">Last saved {new Date(page.updatedAt).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}</p>}
+        </div>
+        <a href={`${path}?preview=1`} target="_blank" rel="noopener" className="adm-link">
+          {page.published ? 'View page ↗' : 'Preview draft ↗'}
         </a>
       </div>
       <label className="adm-field wide">
@@ -217,11 +224,24 @@ export function LegalForm({ slug, page, path }: { slug: string; page: LegalPage;
       </label>
       <label className="adm-field wide" style={{ marginTop: 12 }}>
         Text
-        <textarea name="body" rows={16} defaultValue={page.body} placeholder={'## 1. About us\n\nGearUp Motorcycles Ltd is…\n\n## 2. Reserving a bike\n\n…'} />
+        <textarea name="body" rows={18} value={body} onChange={(e) => setBody(e.target.value)} />
         <small className="adm-muted">
-          Leave a blank line between paragraphs. Start a line with ## for a heading. Links: [text](https://example.com). Until text is added, the page shows a short
-          “being updated” note and Google is told not to list it.
+          Blank line = new paragraph. ## Heading. - bullet. **bold**. Links: [text](/page) or [text](https://…).
         </small>
+      </label>
+      {todo.length > 0 && (
+        <div className="adm-todo">
+          <b>Still to fill in ({todo.length}):</b>
+          <ul>
+            {todo.map((t, n) => (
+              <li key={n}>[{t}]</li>
+            ))}
+          </ul>
+          <small>Replace each [bracketed] note with the real detail, or delete it. The page can&apos;t be published until they are all done.</small>
+        </div>
+      )}
+      <label className="adm-check" style={{ marginTop: 12 }}>
+        <input type="checkbox" name="published" defaultChecked={page.published} /> Published (show this page on the website)
       </label>
     </CmsForm>
   );
