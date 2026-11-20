@@ -1,0 +1,119 @@
+/* workshop page (ported from legacy/pages/workshop.html) */
+.pg-workshop .wphoto{position:relative;align-self:stretch;min-height:340px}
+.pg-workshop .wphoto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:polygon(8% 0,100% 0,100% 100%,0 100%)}
+.pg-workshop .wphoto .big{position:absolute;left:0;bottom:22px;background:var(--red);color:#fff;padding:14px 20px;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+.pg-workshop .wphoto .big b{font-family:var(--disp);font-weight:400;font-size:44px;line-height:.95;display:block}
+.pg-workshop .wphoto .big small{font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+.pg-workshop .phero.ws .wrap{align-items:stretch;padding-bottom:0}
+.pg-workshop .phero.ws .wrap>div:first-child{padding-bottom:46px}
+.pg-workshop .wfacts{display:flex;gap:10px 22px;flex-wrap:wrap;margin-top:26px;font-size:15px;color:#cfcfd5}
+.pg-workshop .wfacts span{display:flex;gap:8px;align-items:center}
+.pg-workshop .wfacts svg{color:var(--red);stroke-width:3}
+.pg-workshop .ptable td.pr{white-space:nowrap;text-align:right}
+.pg-workshop .ptable th.pr{text-align:right}
+.pg-workshop .ptable td.pr small{text-align:right}
+.pg-workshop .ptable tr.hl td{background:#fff5f5}
+.pg-workshop .ptable td:first-child b{font-family:var(--narrow);font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:.04em;display:block}
+.pg-workshop .from{font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;color:var(--mut);display:block}
+.pg-workshop .samp{display:inline-block;background:var(--plate);color:var(--ink);font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;padding:3px 8px;vertical-align:middle}
+.pg-workshop .formcard .plate{height:64px;border-width:2px}
+.pg-workshop .formcard .plate input{font-size:30px}
+.pg-workshop .formcard .plate span{width:48px;font-size:13px}
+.pg-workshop .bsec{margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.pg-workshop .bsec .h4{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.pg-workshop .bsec .h4 i{font-style:normal;width:26px;height:26px;background:var(--ink);color:#fff;font-family:var(--disp);font-weight:400;font-size:15px;display:flex;align-items:center;justify-content:center}
+.pg-workshop .slots{display:flex;gap:8px;flex-wrap:wrap}
+.pg-workshop .slots label{position:relative;cursor:pointer}
+.pg-workshop .slots input{position:absolute;opacity:0}
+.pg-workshop .slots span{display:block;border:1.5px solid var(--line);background:#fff;padding:10px 16px;font-weight:600;font-size:15px}
+.pg-workshop .slots input:checked+span{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pg-workshop .slots s{color:#b0b0b6}
+.pg-workshop .success[hidden]{display:none}
+.pg-workshop .fl textarea{font:inherit}
+.pg-workshop #book .radios{grid-template-columns:repeat(3,1fr)}
+.pg-workshop .hours{width:100%;border-collapse:collapse;font-size:16px}
+.pg-workshop .hours td{padding:12px 0;border-bottom:1px solid var(--char3)}
+.pg-workshop .hours td:last-child{text-align:right;font-weight:700;color:#fff}
+.pg-workshop .hours tr.c td:last-child{color:#8f8f97}
+.pg-workshop .tyre{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--ink);color:#fff}
+.pg-workshop .tyre .ti{position:relative;min-height:380px}
+.pg-workshop .tyre .ti img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pg-workshop .tyre .tb{padding:44px 40px}
+.pg-workshop .tyre .tb p{color:#c3c3ca;margin-top:12px}
+.pg-workshop .tyre .clist{margin-top:20px}
+@media (max-width:1024px){.pg-workshop .wphoto{min-height:260px}
+.pg-workshop .wphoto img{clip-path:none}
+.pg-workshop .phero.ws .wrap>div:first-child{padding-bottom:0}
+.pg-workshop .phero.ws .wrap{padding-bottom:34px}
+.pg-workshop .tyre{grid-template-columns:1fr}
+.pg-workshop .tyre .ti{min-height:260px}}
+@media (max-width:640px){.pg-workshop #book .radios{grid-template-columns:1fr 1fr}
+.pg-workshop #prices .ptable thead{display:none}
+.pg-workshop #prices .ptable tr{display:grid;grid-template-columns:1fr auto;border-bottom:1px solid var(--line)}
+.pg-workshop #prices .ptable td{border:0;padding:14px 12px 0}
+.pg-workshop #prices .ptable td:nth-child(2){grid-column:1/-1;grid-row:2;padding:4px 12px 14px;font-size:14px}
+.pg-workshop #prices .ptable td.pr{grid-row:1;grid-column:2}
+.pg-workshop .tyre .tb{padding:28px 20px}
+.pg-workshop .ptable td:first-child b{font-size:16px}
+.pg-workshop .formcard .plate input{font-size:24px}
+.pg-workshop .wphoto .big b{font-size:34px}}
+.pg-workshop .wphoto{position:relative;align-self:stretch;min-height:340px}
+.pg-workshop .wphoto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;clip-path:polygon(8% 0,100% 0,100% 100%,0 100%)}
+.pg-workshop .wphoto .big{position:absolute;left:0;bottom:22px;background:var(--red);color:#fff;padding:14px 20px;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+.pg-workshop .wphoto .big b{font-family:var(--disp);font-weight:400;font-size:44px;line-height:.95;display:block}
+.pg-workshop .wphoto .big small{font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px}
+.pg-workshop .phero.ws .wrap{align-items:stretch;padding-bottom:0}
+.pg-workshop .phero.ws .wrap>div:first-child{padding-bottom:46px}
+.pg-workshop .wfacts{display:flex;gap:10px 22px;flex-wrap:wrap;margin-top:26px;font-size:15px;color:#cfcfd5}
+.pg-workshop .wfacts span{display:flex;gap:8px;align-items:center}
+.pg-workshop .wfacts svg{color:var(--red);stroke-width:3}
+.pg-workshop .ptable td.pr{white-space:nowrap;text-align:right}
+.pg-workshop .ptable th.pr{text-align:right}
+.pg-workshop .ptable td.pr small{text-align:right}
+.pg-workshop .ptable tr.hl td{background:#fff5f5}
+.pg-workshop .ptable td:first-child b{font-family:var(--narrow);font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:.04em;display:block}
+.pg-workshop .from{font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;color:var(--mut);display:block}
+.pg-workshop .samp{display:inline-block;background:var(--plate);color:var(--ink);font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;padding:3px 8px;vertical-align:middle}
+.pg-workshop .formcard .plate{height:64px;border-width:2px}
+.pg-workshop .formcard .plate input{font-size:30px}
+.pg-workshop .formcard .plate span{width:48px;font-size:13px}
+.pg-workshop .bsec{margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.pg-workshop .bsec .h4{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.pg-workshop .bsec .h4 i{font-style:normal;width:26px;height:26px;background:var(--ink);color:#fff;font-family:var(--disp);font-weight:400;font-size:15px;display:flex;align-items:center;justify-content:center}
+.pg-workshop .slots{display:flex;gap:8px;flex-wrap:wrap}
+.pg-workshop .slots label{position:relative;cursor:pointer}
+.pg-workshop .slots input{position:absolute;opacity:0}
+.pg-workshop .slots span{display:block;border:1.5px solid var(--line);background:#fff;padding:10px 16px;font-weight:600;font-size:15px}
+.pg-workshop .slots input:checked+span{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pg-workshop .slots s{color:#b0b0b6}
+.pg-workshop .success[hidden]{display:none}
+.pg-workshop .fl textarea{font:inherit}
+.pg-workshop #book .radios{grid-template-columns:repeat(3,1fr)}
+.pg-workshop .hours{width:100%;border-collapse:collapse;font-size:16px}
+.pg-workshop .hours td{padding:12px 0;border-bottom:1px solid var(--char3)}
+.pg-workshop .hours td:last-child{text-align:right;font-weight:700;color:#fff}
+.pg-workshop .hours tr.c td:last-child{color:#8f8f97}
+.pg-workshop .tyre{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--ink);color:#fff}
+.pg-workshop .tyre .ti{position:relative;min-height:380px}
+.pg-workshop .tyre .ti img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pg-workshop .tyre .tb{padding:44px 40px}
+.pg-workshop .tyre .tb p{color:#c3c3ca;margin-top:12px}
+.pg-workshop .tyre .clist{margin-top:20px}
+@media (max-width:1024px){.pg-workshop .wphoto{min-height:260px}
+.pg-workshop .wphoto img{clip-path:none}
+.pg-workshop .phero.ws .wrap>div:first-child{padding-bottom:0}
+.pg-workshop .phero.ws .wrap{padding-bottom:34px}
+.pg-workshop .tyre{grid-template-columns:1fr}
+.pg-workshop .tyre .ti{min-height:260px}}
+@media (max-width:640px){.pg-workshop #book .radios{grid-template-columns:1fr 1fr}
+.pg-workshop #prices .ptable thead{display:none}
+.pg-workshop #prices .ptable tr{display:grid;grid-template-columns:1fr auto;border-bottom:1px solid var(--line)}
+.pg-workshop #prices .ptable td{border:0;padding:14px 12px 0}
+.pg-workshop #prices .ptable td:nth-child(2){grid-column:1/-1;grid-row:2;padding:4px 12px 14px;font-size:14px}
+.pg-workshop #prices .ptable td.pr{grid-row:1;grid-column:2}
+.pg-workshop .tyre .tb{padding:28px 20px}
+.pg-workshop .ptable td:first-child b{font-size:16px}
+.pg-workshop .formcard .plate input{font-size:24px}
+.pg-workshop .wphoto .big b{font-size:34px}}
+
+

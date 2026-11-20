@@ -38,7 +38,7 @@ export default async function SalesPage({ searchParams }: { searchParams: Promis
       <header className="adm-head">
         <div>
           <h1>Sales & reservations</h1>
-          <p className="adm-muted">£99 reservations and kit orders paid online. Open one to tick prep stages, complete the sale or cancel.</p>
+          <p className="adm-muted">£99 reservations and kit orders paid online. Open one to complete the sale or cancel.</p>
         </div>
       </header>
       <div className="adm-tabs">

@@ -106,3 +106,4 @@
   .acct>.aside a{position:relative}
   .acct>.aside a.on{border-bottom-color:var(--red);background:var(--char2)}
 }
+.amid.solo{grid-template-columns:minmax(0,680px)}

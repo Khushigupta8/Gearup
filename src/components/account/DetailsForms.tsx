@@ -29,7 +29,7 @@ export function DetailsForm({ c }: { c: Values }) {
         <div className="fl">
           <label htmlFor="dph">Mobile</label>
           <input id="dph" name="phone" defaultValue={c.phone} autoComplete="tel" placeholder="07..." />
-          <small>We text your tracking updates here.</small>
+          <small>We text your order updates here.</small>
         </div>
         <div className="fl">
           <label htmlFor="dpc">Postcode</label>

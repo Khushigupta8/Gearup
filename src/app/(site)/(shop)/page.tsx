@@ -113,7 +113,7 @@ const reviews = [
 
 const faqs = [
   ['How does reserving online work?', 'Pay the £99 deposit on the bike page and it comes off sale straight away. The deposit is taken off the price, and you can follow the prep from your account.'],
-  ['Do you deliver, and how much is it?', 'Yes, we deliver nationwide. Enter your postcode for an instant price per mile and pay it with your deposit. On delivery day you get a live tracking link.'],
+  ['Do you deliver, and how much is it?', 'Yes, we deliver nationwide, priced per mile from our showroom. Tell us your postcode when you reserve and we will confirm the price before booking.'],
   ['Can I part-exchange my bike?', 'Yes. Enter your reg on any bike page or in the search bar for a valuation, then use your bike as the deposit.'],
   ['Can I get finance with poor credit?', 'Often, yes. Apply online and we will look at the options available to you. Finance is subject to status and affordability.'],
   ['What does the warranty cover?', "Every bike comes with 30 days' warranty. Bikes with the red badge include longer cover free, and you can extend any bike to 12 or 24 months."],

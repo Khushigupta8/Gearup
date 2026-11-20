@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import { AccountPage } from '@/components/account/AccountPage';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { getAccount } from '@/server/account';
+import { redirect } from 'next/navigation';
 import { db } from '@/server/db';
+import { PHASE2 } from '@/lib/features';
 
 export const metadata: Metadata = {
   title: 'Documents · My account',
@@ -11,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function DocumentsPage() {
+  if (!PHASE2) redirect('/account/orders'); // documents and invoices are Phase 2
   const { customer } = await getAccount();
   const payments = await db.payment.findMany({
     where: { order: { customerId: customer.id }, status: 'succeeded' },

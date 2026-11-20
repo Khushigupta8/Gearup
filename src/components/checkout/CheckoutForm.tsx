@@ -115,7 +115,7 @@ export function CheckoutForm({ bike, me, deposit }: { bike?: CheckoutBike; me: M
             <div className="fl">
               <label htmlFor="mb">Mobile</label>
               <input id="mb" name="phone" defaultValue={me.phone} placeholder="07..." required autoComplete="tel" />
-              <small>We will text your {bike ? 'tracking' : 'order'} updates here.</small>
+              <small>We will text your order updates here.</small>
             </div>
           </div>
         </div>

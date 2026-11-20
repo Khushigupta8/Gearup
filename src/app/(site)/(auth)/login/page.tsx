@@ -7,7 +7,7 @@ import { getUser } from '@/server/auth';
 
 export const metadata: Metadata = {
   title: 'Sign in · My account',
-  description: 'Sign in to your GearUp account to track your bike, pay the balance and see your documents.',
+  description: 'Sign in to your GearUp account to see your reservation, orders and saved bikes.',
   robots: { index: false },
 };
 

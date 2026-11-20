@@ -1,4 +1,5 @@
 import type { IconName } from '@/components/ui/Icon';
+import { PHASE2 } from '@/lib/features';
 
 export type NavItem = { href: string; label: string; icon?: IconName };
 
@@ -15,9 +16,9 @@ export const mainNav: NavItem[] = [
 export const mobileNav: NavItem[] = [
   ...mainNav,
   { href: '/basket', label: 'Basket' },
-  { href: '/delivery', label: 'Delivery' },
+  ...(PHASE2 ? [{ href: '/delivery', label: 'Delivery' }] : []),
   { href: '/warranty', label: 'Warranty' },
-  { href: '/account', label: 'Track my bike' },
+  { href: '/account', label: PHASE2 ? 'Track my bike' : 'My account' },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -37,21 +38,21 @@ export const footerNav: { title: string; links: NavItem[] }[] = [
   {
     title: 'Help',
     links: [
-      { href: '/delivery', label: 'Delivery & tracking' },
+      ...(PHASE2 ? [{ href: '/delivery', label: 'Delivery & tracking' }] : []),
       { href: '/warranty', label: 'Warranty' },
       { href: '/workshop', label: 'Workshop & MOT' },
       { href: '/faq', label: 'FAQs' },
-      { href: '/account', label: 'Track my bike' },
+      { href: '/account', label: PHASE2 ? 'Track my bike' : 'My account' },
       { href: '/contact', label: 'Contact us' },
     ],
   },
 ];
 
 export const accountNav: NavItem[] = [
-  { href: '/account', label: 'Track my bike', icon: 'pin' },
+  { href: '/account', label: PHASE2 ? 'Track my bike' : 'My reservation', icon: PHASE2 ? 'pin' : 'key' },
   { href: '/account/orders', label: 'My orders', icon: 'bag' },
   { href: '/account/saved', label: 'Saved bikes', icon: 'heart' },
-  { href: '/account/documents', label: 'Documents', icon: 'doc' },
+  ...(PHASE2 ? [{ href: '/account/documents', label: 'Documents', icon: 'doc' as const }] : []),
   { href: '/account/part-exchange', label: 'Part-exchange', icon: 'key' },
   { href: '/account/details', label: 'Details', icon: 'user' },
 ];

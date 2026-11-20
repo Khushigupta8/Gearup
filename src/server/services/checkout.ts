@@ -170,10 +170,10 @@ export async function markOrderPaid(orderId: string, payment: { amount: number; 
   const customerMail = renderEmail({
     heading: bikeName ? 'Your bike is reserved' : 'Thanks for your order',
     paragraphs: bikeName
-      ? [`Thanks ${order.customer.firstName}. The ${bikeName} is off sale and reserved for you.`, 'We will text you within the hour, then you can follow the full PDI in your account.']
+      ? [`Thanks ${order.customer.firstName}. The ${bikeName} is off sale and reserved for you.`, 'We will text you within the hour to arrange the next steps.']
       : [`Thanks ${order.customer.firstName}. We are getting your kit ready and will let you know when it’s on its way.`],
     rows,
-    cta: { label: bikeName ? 'Track my bike' : 'View my order', href: `${siteUrl()}${bikeName ? '/account' : '/account/orders'}` },
+    cta: { label: bikeName ? 'View my reservation' : 'View my order', href: `${siteUrl()}${bikeName ? '/account' : '/account/orders'}` },
   });
   const staffMail = renderEmail({
     heading: bikeName ? `Reserved: ${bikeName}` : `New kit order ${order.reference}`,

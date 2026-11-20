@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { PHASE2 } from '@/lib/features';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { OrderNotes, StageList, StatusControls } from '@/components/admin/OrderControls';
@@ -43,7 +44,7 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
             <StatusControls orderId={order.id} status={order.status} hasBike={Boolean(order.bike)} />
           </section>
 
-          {order.bike && (
+          {PHASE2 && order.bike && (
             <section className="adm-card adm-sec">
               <div className="adm-sec-head">
                 <div>

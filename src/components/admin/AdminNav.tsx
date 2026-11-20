@@ -14,7 +14,6 @@ const sections: { title: string; items: Item[] }[] = [
       { href: '/admin/promos', label: 'Promo library' },
       { href: '/admin/sales', label: 'Sales & reservations' },
       { href: '/admin/valuations', label: 'Part-ex & valuations' },
-      { href: '/admin/prep', label: 'Prep & delivery', soon: 'Phase 2' },
     ],
   },
   {

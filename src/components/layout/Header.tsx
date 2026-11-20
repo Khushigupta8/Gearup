@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { PHASE2 } from '@/lib/features';
 import { Icon } from '@/components/ui/Icon';
 import { mainNav } from '@/lib/navigation';
 import { site } from '@/lib/site';
@@ -41,10 +42,12 @@ export function Header() {
                   Call the showroom<b>{site.phone.display}</b>
                 </span>
               </a>
-              <Link href="/account">
-                <Icon name="pin" />
-                Track my bike
-              </Link>
+              {PHASE2 && (
+                <Link href="/account">
+                  <Icon name="pin" />
+                  Track my bike
+                </Link>
+              )}
               <Link href="/account/saved">
                 <Icon name="heart" />
                 Saved

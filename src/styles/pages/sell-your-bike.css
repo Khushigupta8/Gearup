@@ -1,0 +1,83 @@
+/* sell-your-bike page (ported from legacy/pages/sell-your-bike.html) */
+.pg-sell-your-bike .sxh .wrap{align-items:center}
+.pg-sell-your-bike .sxh .wrap>*{min-width:0}
+.pg-sell-your-bike .sxh .plate input{width:100%}
+@media (max-width:1024px){.pg-sell-your-bike .sxh .wrap{grid-template-columns:minmax(0,1fr)}}
+.pg-sell-your-bike .sxh .valbox{position:relative;z-index:1}
+.pg-sell-your-bike .sxh .valbox .plate{height:88px}
+.pg-sell-your-bike .sxh .valbox .plate span{width:60px;font-size:15px}
+.pg-sell-your-bike .sxh .valbox .plate input{font-size:44px}
+.pg-sell-your-bike .sxh .valbox .sel input,.pg-sell-your-bike .sxh .valbox .sel select{height:52px}
+.pg-sell-your-bike .sxh .mini{display:grid;width:max-content;max-width:100%;grid-template-columns:repeat(3,auto);justify-content:start;gap:0;margin-top:28px;border:1px solid var(--char3);background:var(--char2)}
+.pg-sell-your-bike .sxh .mini div{padding:14px 20px;border-left:1px solid var(--char3)}
+.pg-sell-your-bike .sxh .mini div:first-child{border-left:0}
+.pg-sell-your-bike .sxh .mini b{display:block;font-family:var(--disp);font-weight:400;font-size:30px;line-height:1;color:#fff}
+.pg-sell-your-bike .sxh .mini small{font-family:var(--narrow);font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#a9a9b1;font-size:13px}
+.pg-sell-your-bike .sec.dark .rq{border:1px solid var(--char3)}
+.pg-sell-your-bike .sec.dark .tpbar{color:#d6d6dc}
+.pg-sell-your-bike .buy{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px;align-items:stretch}
+.pg-sell-your-bike .buy .ph{position:relative;min-height:420px;overflow:hidden}
+.pg-sell-your-bike .buy .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pg-sell-your-bike .buy .ph .big{position:absolute;left:22px;bottom:22px;background:var(--red);color:#fff;padding:14px 20px;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+.pg-sell-your-bike .buy .ph .big b{font-family:var(--disp);font-weight:400;font-size:34px;line-height:1;display:block;text-transform:uppercase}
+.pg-sell-your-bike .buy .ph .big small{font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.pg-sell-your-bike .wtypes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.pg-sell-your-bike .wtypes a{background:#fff;border:1px solid var(--line);padding:12px 10px 10px;text-align:center;transition:border-color .15s}
+.pg-sell-your-bike .wtypes a:hover{border-color:var(--ink)}
+.pg-sell-your-bike .wtypes img{height:64px;width:auto;margin:0 auto;object-fit:contain}
+.pg-sell-your-bike .wtypes b{display:block;font-family:var(--narrow);font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:14px;margin-top:6px}
+.pg-sell-your-bike .notbuy{margin-top:20px;font-size:15px;color:var(--mut)}
+.pg-sell-your-bike .notbuy b{color:var(--ink)}
+@media (max-width:1024px){.pg-sell-your-bike .buy{grid-template-columns:1fr}
+.pg-sell-your-bike .buy .ph{min-height:300px}}
+@media (max-width:640px){.pg-sell-your-bike .sxh .mini{grid-template-columns:1fr 1fr 1fr}
+.pg-sell-your-bike .sxh .mini{width:100%}
+.pg-sell-your-bike .sxh .mini div{padding:12px 10px}
+.pg-sell-your-bike .sxh .mini b{font-size:21px;white-space:nowrap}
+.pg-sell-your-bike .sxh .mini small{font-size:11px}
+.pg-sell-your-bike .sxh .valbox .plate{height:72px}
+.pg-sell-your-bike .sxh .valbox .plate input{font-size:30px}
+.pg-sell-your-bike .sxh .valbox .row{grid-template-columns:1fr}
+.pg-sell-your-bike .wtypes{grid-template-columns:1fr 1fr}}
+.pg-sell-your-bike .sxh .wrap{align-items:center}
+.pg-sell-your-bike .sxh .wrap>*{min-width:0}
+.pg-sell-your-bike .sxh .plate input{width:100%}
+@media (max-width:1024px){.pg-sell-your-bike .sxh .wrap{grid-template-columns:minmax(0,1fr)}}
+.pg-sell-your-bike .sxh .valbox{position:relative;z-index:1}
+.pg-sell-your-bike .sxh .valbox .plate{height:88px}
+.pg-sell-your-bike .sxh .valbox .plate span{width:60px;font-size:15px}
+.pg-sell-your-bike .sxh .valbox .plate input{font-size:44px}
+.pg-sell-your-bike .sxh .valbox .sel input,.pg-sell-your-bike .sxh .valbox .sel select{height:52px}
+.pg-sell-your-bike .sxh .mini{display:grid;width:max-content;max-width:100%;grid-template-columns:repeat(3,auto);justify-content:start;gap:0;margin-top:28px;border:1px solid var(--char3);background:var(--char2)}
+.pg-sell-your-bike .sxh .mini div{padding:14px 20px;border-left:1px solid var(--char3)}
+.pg-sell-your-bike .sxh .mini div:first-child{border-left:0}
+.pg-sell-your-bike .sxh .mini b{display:block;font-family:var(--disp);font-weight:400;font-size:30px;line-height:1;color:#fff}
+.pg-sell-your-bike .sxh .mini small{font-family:var(--narrow);font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#a9a9b1;font-size:13px}
+.pg-sell-your-bike .sec.dark .rq{border:1px solid var(--char3)}
+.pg-sell-your-bike .sec.dark .tpbar{color:#d6d6dc}
+.pg-sell-your-bike .buy{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px;align-items:stretch}
+.pg-sell-your-bike .buy .ph{position:relative;min-height:420px;overflow:hidden}
+.pg-sell-your-bike .buy .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pg-sell-your-bike .buy .ph .big{position:absolute;left:22px;bottom:22px;background:var(--red);color:#fff;padding:14px 20px;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+.pg-sell-your-bike .buy .ph .big b{font-family:var(--disp);font-weight:400;font-size:34px;line-height:1;display:block;text-transform:uppercase}
+.pg-sell-your-bike .buy .ph .big small{font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.pg-sell-your-bike .wtypes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.pg-sell-your-bike .wtypes a{background:#fff;border:1px solid var(--line);padding:12px 10px 10px;text-align:center;transition:border-color .15s}
+.pg-sell-your-bike .wtypes a:hover{border-color:var(--ink)}
+.pg-sell-your-bike .wtypes img{height:64px;width:auto;margin:0 auto;object-fit:contain}
+.pg-sell-your-bike .wtypes b{display:block;font-family:var(--narrow);font-weight:700;letter-spacing:.07em;text-transform:uppercase;font-size:14px;margin-top:6px}
+.pg-sell-your-bike .notbuy{margin-top:20px;font-size:15px;color:var(--mut)}
+.pg-sell-your-bike .notbuy b{color:var(--ink)}
+@media (max-width:1024px){.pg-sell-your-bike .buy{grid-template-columns:1fr}
+.pg-sell-your-bike .buy .ph{min-height:300px}}
+@media (max-width:640px){.pg-sell-your-bike .sxh .mini{grid-template-columns:1fr 1fr 1fr}
+.pg-sell-your-bike .sxh .mini{width:100%}
+.pg-sell-your-bike .sxh .mini div{padding:12px 10px}
+.pg-sell-your-bike .sxh .mini b{font-size:21px;white-space:nowrap}
+.pg-sell-your-bike .sxh .mini small{font-size:11px}
+.pg-sell-your-bike .sxh .valbox .plate{height:72px}
+.pg-sell-your-bike .sxh .valbox .plate input{font-size:30px}
+.pg-sell-your-bike .sxh .valbox .row{grid-template-columns:1fr}
+.pg-sell-your-bike .wtypes{grid-template-columns:1fr 1fr}}
+
+

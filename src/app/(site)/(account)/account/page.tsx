@@ -6,10 +6,13 @@ import { monthlyPayment } from '@/lib/format';
 import { money, orderStatus, shortDate } from '@/lib/orders';
 import { getAccount } from '@/server/account';
 import { db } from '@/server/db';
+import { PHASE2 } from '@/lib/features';
 
 export const metadata: Metadata = {
-  title: 'Track my bike · My account',
-  description: 'Follow your bike through its pre-delivery inspection, pay the balance and track the delivery van live.',
+  title: PHASE2 ? 'Track my bike · My account' : 'My reservation · My account',
+  description: PHASE2
+    ? 'Follow your bike through its pre-delivery inspection, pay the balance and track the delivery van live.'
+    : 'Your reserved bike, deposit and balance.',
   robots: { index: false },
 };
 
@@ -30,7 +33,7 @@ export default async function TrackPage({ searchParams }: { searchParams: Promis
   const templates = await db.prepStageTemplate.findMany({ where: { active: true }, orderBy: { sortOrder: 'asc' } });
 
   return (
-    <AccountPage crumb="Track my bike" title="Track" em="my bike">
+    <AccountPage crumb={PHASE2 ? 'Track my bike' : 'My reservation'} title={PHASE2 ? 'Track' : 'My'} em={PHASE2 ? 'my bike' : 'reservation'}>
       {paid && (
         <div className="success">
           <Icon name="check" />
@@ -42,7 +45,11 @@ export default async function TrackPage({ searchParams }: { searchParams: Promis
           <div className="ph">
             <h3>No bike reserved yet</h3>
           </div>
-          <p className="muted">When you reserve a bike for £99, you can follow its full PDI, 120-point inspection and delivery right here.</p>
+          <p className="muted">
+            {PHASE2
+              ? 'When you reserve a bike for £99, you can follow its full PDI, 120-point inspection and delivery right here.'
+              : 'When you reserve a bike for £99, your reservation, deposit and balance show here.'}
+          </p>
           <Link href="/used-bikes" className="btn btn-red mt2">
             Find a bike <Icon name="right" />
           </Link>
@@ -69,10 +76,12 @@ export default async function TrackPage({ searchParams }: { searchParams: Promis
                     <h2>{name}</h2>
                   </div>
                   <div className="st">
-                    <span>{templates[current]?.name ?? orderStatus[order.status].label}</span>
-                    <small>
-                      Stage {Math.min(current + 1, templates.length)} of {templates.length}
-                    </small>
+                    <span>{PHASE2 ? (templates[current]?.name ?? orderStatus[order.status].label) : orderStatus[order.status].label}</span>
+                    {PHASE2 && (
+                      <small>
+                        Stage {Math.min(current + 1, templates.length)} of {templates.length}
+                      </small>
+                    )}
                   </div>
                 </div>
                 <div className="ostat mt1">
@@ -100,7 +109,9 @@ export default async function TrackPage({ searchParams }: { searchParams: Promis
                 </div>
               </div>
 
-              <div className="amid">
+              <div className={PHASE2 ? 'amid' : 'amid solo'}>
+                {/* Prep-stage progress is Phase 2 */}
+                {PHASE2 && (
                 <div className="apanel">
                   <div className="ph">
                     <h3>Your bike&apos;s progress</h3>
@@ -125,6 +136,7 @@ export default async function TrackPage({ searchParams }: { searchParams: Promis
                     })}
                   </ol>
                 </div>
+                )}
 
                 <div style={{ display: 'grid', gap: 22 }}>
                   <div className="apanel pay">

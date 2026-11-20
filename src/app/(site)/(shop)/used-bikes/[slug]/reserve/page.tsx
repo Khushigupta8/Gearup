@@ -52,7 +52,7 @@ export default async function ReservePage({ params }: { params: Promise<{ slug: 
             <b>03</b>Pay deposit
           </div>
           <div>
-            <b>04</b>Track your bike
+            <b>04</b>Collect or delivery
           </div>
         </div>
         <div className="howwrap">

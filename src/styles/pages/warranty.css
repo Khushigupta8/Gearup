@@ -1,0 +1,141 @@
+/* warranty page (ported from legacy/pages/warranty.html) */
+.pg-warranty .tiers{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.pg-warranty .tier{background:#fff;border:1px solid var(--line);padding:24px 20px 22px;position:relative;display:flex;flex-direction:column}
+.pg-warranty .tier .n{font-family:var(--disp);font-weight:400;font-size:84px;line-height:.9}
+.pg-warranty .tier .u{font-family:var(--narrow);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:16px;margin-top:2px}
+.pg-warranty .tier .who{display:inline-block;align-self:flex-start;margin-top:16px;font-family:var(--narrow);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:#fff;padding:4px 12px 4px 8px;clip-path:polygon(0 0,100% 0,calc(100% - 7px) 100%,0 100%)}
+.pg-warranty .tier p{color:var(--mut);font-size:15px;margin-top:10px}
+.pg-warranty .tier .ft{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:14px;font-weight:600}
+.pg-warranty .tier p+.ft{margin-top:16px}
+.pg-warranty .tier.std{background:var(--red);border-color:var(--red);color:#fff}
+.pg-warranty .tier.std .who{background:#fff;color:var(--ink)}
+.pg-warranty .tier.std p{color:#ffe3e4}
+.pg-warranty .tier.std .ft{border-color:rgba(255,255,255,.35)}
+.pg-warranty .tier .who.r{background:var(--red)}
+.pg-warranty .cov{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.pg-warranty .cov .icard{padding:30px}
+.pg-warranty .cov h3{display:flex;gap:12px;align-items:center;margin-top:0!important}
+.pg-warranty .cov .clist{margin-top:18px}
+.pg-warranty .xlist{list-style:none;display:grid;gap:10px;margin-top:18px}
+.pg-warranty .xlist li{display:flex;gap:10px;align-items:flex-start}
+.pg-warranty .xlist svg{width:20px;height:20px;color:#fff;background:#8a8a92;border-radius:50%;padding:4px;stroke-width:3.5;margin-top:2px;flex:none}
+.pg-warranty .badge{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:50px;align-items:center}
+.pg-warranty .badge .demo{max-width:420px;width:100%;justify-self:center;position:relative}
+.pg-warranty .badge .demo .bc{color:var(--txt)}
+.pg-warranty .badge .arrow{position:absolute;left:-14px;top:-40px;background:#fff;color:var(--ink);font-family:var(--narrow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px;padding:6px 12px;transform:rotate(-4deg);z-index:2;box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.pg-warranty .badge ol{list-style:none;display:grid;gap:16px;margin-top:26px}
+.pg-warranty .badge ol li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start}
+.pg-warranty .badge ol li span{width:44px;height:44px;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:22px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+.pg-warranty .badge ol li b{display:block;font-family:var(--narrow);text-transform:uppercase;letter-spacing:.06em;font-size:17px}
+.pg-warranty .badge ol li p{color:#b9b9c0;font-size:15px;margin-top:2px}
+.pg-warranty .ibar{display:grid;grid-template-columns:repeat(6,1fr);gap:0;background:var(--ink);color:#fff;margin-bottom:26px}
+.pg-warranty .ibar a{padding:16px 18px;border-left:1px solid var(--char3);display:block}
+.pg-warranty .ibar a:first-child{border-left:0}
+.pg-warranty .ibar a:hover{background:var(--char2)}
+.pg-warranty .ibar b{font-family:var(--disp);font-weight:400;font-size:36px;color:var(--red);line-height:1;display:block}
+.pg-warranty .ibar small{font-family:var(--narrow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px;color:#d0d0d6;line-height:1.2;display:block;margin-top:4px}
+.pg-warranty .clgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+.pg-warranty .cgrp{background:#fff;border:1px solid var(--line)}
+.pg-warranty .cgrp.wide{grid-column:1/-1}
+.pg-warranty .cgh{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:3px solid var(--red);background:var(--ink);color:#fff}
+.pg-warranty .cgh .ci{width:36px;height:36px;background:var(--red);display:flex;align-items:center;justify-content:center;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.pg-warranty .cgh .ci svg{width:18px;height:18px}
+.pg-warranty .cgh b{font-family:var(--disp);font-weight:400;font-size:24px;text-transform:uppercase;line-height:1}
+.pg-warranty .cgh em{margin-left:auto;font-style:normal;font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:#c9c9cf;white-space:nowrap}
+.pg-warranty .cgrp ol{list-style:none;columns:2;column-gap:0;padding:8px 0}
+.pg-warranty .cgrp.wide ol{columns:3}
+.pg-warranty .cgrp li{break-inside:avoid;display:flex;gap:10px;align-items:baseline;padding:7px 18px;font-size:14.5px;line-height:1.35}
+.pg-warranty .cgrp li i{font-style:normal;font-family:var(--narrow);font-weight:700;font-size:12px;color:var(--red);min-width:26px}
+.pg-warranty .claim .how li p a{color:var(--ink);text-decoration:underline}
+@media (max-width:1200px){.pg-warranty .tiers{grid-template-columns:repeat(3,1fr)}
+.pg-warranty .tier.std{grid-column:span 1}}
+@media (max-width:1024px){.pg-warranty .cov,.pg-warranty .badge,.pg-warranty .clgrid{grid-template-columns:1fr}
+.pg-warranty .ibar{grid-template-columns:repeat(3,1fr)}
+.pg-warranty .ibar a:nth-child(4){border-left:0}
+.pg-warranty .ibar a:nth-child(n+4){border-top:1px solid var(--char3)}
+.pg-warranty .cgrp.wide ol{columns:2}
+.pg-warranty .badge .demo{margin-top:40px}}
+@media (max-width:640px){.pg-warranty .tiers{grid-template-columns:1fr 1fr}
+.pg-warranty .tier.std{grid-column:1/-1}
+.pg-warranty .tier .n{font-size:64px}
+.pg-warranty .tier{padding:18px 16px}
+.pg-warranty .cov .icard{padding:22px}
+.pg-warranty .ibar{grid-template-columns:1fr 1fr}
+.pg-warranty .ibar a{border-left:1px solid var(--char3)!important;border-top:1px solid var(--char3)}
+.pg-warranty .ibar a:nth-child(odd){border-left:0!important}
+.pg-warranty .ibar a:nth-child(-n+2){border-top:0}
+.pg-warranty .ibar b{font-size:30px}
+.pg-warranty .cgrp ol,.pg-warranty .cgrp.wide ol{columns:1}
+.pg-warranty .cgh b{font-size:20px}
+.pg-warranty .badge .arrow{left:0}}
+.pg-warranty .tiers{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.pg-warranty .tier{background:#fff;border:1px solid var(--line);padding:24px 20px 22px;position:relative;display:flex;flex-direction:column}
+.pg-warranty .tier .n{font-family:var(--disp);font-weight:400;font-size:84px;line-height:.9}
+.pg-warranty .tier .u{font-family:var(--narrow);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:16px;margin-top:2px}
+.pg-warranty .tier .who{display:inline-block;align-self:flex-start;margin-top:16px;font-family:var(--narrow);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:#fff;padding:4px 12px 4px 8px;clip-path:polygon(0 0,100% 0,calc(100% - 7px) 100%,0 100%)}
+.pg-warranty .tier p{color:var(--mut);font-size:15px;margin-top:10px}
+.pg-warranty .tier .ft{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:14px;font-weight:600}
+.pg-warranty .tier p+.ft{margin-top:16px}
+.pg-warranty .tier.std{background:var(--red);border-color:var(--red);color:#fff}
+.pg-warranty .tier.std .who{background:#fff;color:var(--ink)}
+.pg-warranty .tier.std p{color:#ffe3e4}
+.pg-warranty .tier.std .ft{border-color:rgba(255,255,255,.35)}
+.pg-warranty .tier .who.r{background:var(--red)}
+.pg-warranty .cov{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.pg-warranty .cov .icard{padding:30px}
+.pg-warranty .cov h3{display:flex;gap:12px;align-items:center;margin-top:0!important}
+.pg-warranty .cov .clist{margin-top:18px}
+.pg-warranty .xlist{list-style:none;display:grid;gap:10px;margin-top:18px}
+.pg-warranty .xlist li{display:flex;gap:10px;align-items:flex-start}
+.pg-warranty .xlist svg{width:20px;height:20px;color:#fff;background:#8a8a92;border-radius:50%;padding:4px;stroke-width:3.5;margin-top:2px;flex:none}
+.pg-warranty .badge{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:50px;align-items:center}
+.pg-warranty .badge .demo{max-width:420px;width:100%;justify-self:center;position:relative}
+.pg-warranty .badge .demo .bc{color:var(--txt)}
+.pg-warranty .badge .arrow{position:absolute;left:-14px;top:-40px;background:#fff;color:var(--ink);font-family:var(--narrow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px;padding:6px 12px;transform:rotate(-4deg);z-index:2;box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.pg-warranty .badge ol{list-style:none;display:grid;gap:16px;margin-top:26px}
+.pg-warranty .badge ol li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start}
+.pg-warranty .badge ol li span{width:44px;height:44px;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:22px;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+.pg-warranty .badge ol li b{display:block;font-family:var(--narrow);text-transform:uppercase;letter-spacing:.06em;font-size:17px}
+.pg-warranty .badge ol li p{color:#b9b9c0;font-size:15px;margin-top:2px}
+.pg-warranty .ibar{display:grid;grid-template-columns:repeat(6,1fr);gap:0;background:var(--ink);color:#fff;margin-bottom:26px}
+.pg-warranty .ibar a{padding:16px 18px;border-left:1px solid var(--char3);display:block}
+.pg-warranty .ibar a:first-child{border-left:0}
+.pg-warranty .ibar a:hover{background:var(--char2)}
+.pg-warranty .ibar b{font-family:var(--disp);font-weight:400;font-size:36px;color:var(--red);line-height:1;display:block}
+.pg-warranty .ibar small{font-family:var(--narrow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:13px;color:#d0d0d6;line-height:1.2;display:block;margin-top:4px}
+.pg-warranty .clgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+.pg-warranty .cgrp{background:#fff;border:1px solid var(--line)}
+.pg-warranty .cgrp.wide{grid-column:1/-1}
+.pg-warranty .cgh{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:3px solid var(--red);background:var(--ink);color:#fff}
+.pg-warranty .cgh .ci{width:36px;height:36px;background:var(--red);display:flex;align-items:center;justify-content:center;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%)}
+.pg-warranty .cgh .ci svg{width:18px;height:18px}
+.pg-warranty .cgh b{font-family:var(--disp);font-weight:400;font-size:24px;text-transform:uppercase;line-height:1}
+.pg-warranty .cgh em{margin-left:auto;font-style:normal;font-family:var(--narrow);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:#c9c9cf;white-space:nowrap}
+.pg-warranty .cgrp ol{list-style:none;columns:2;column-gap:0;padding:8px 0}
+.pg-warranty .cgrp.wide ol{columns:3}
+.pg-warranty .cgrp li{break-inside:avoid;display:flex;gap:10px;align-items:baseline;padding:7px 18px;font-size:14.5px;line-height:1.35}
+.pg-warranty .cgrp li i{font-style:normal;font-family:var(--narrow);font-weight:700;font-size:12px;color:var(--red);min-width:26px}
+.pg-warranty .claim .how li p a{color:var(--ink);text-decoration:underline}
+@media (max-width:1200px){.pg-warranty .tiers{grid-template-columns:repeat(3,1fr)}
+.pg-warranty .tier.std{grid-column:span 1}}
+@media (max-width:1024px){.pg-warranty .cov,.pg-warranty .badge,.pg-warranty .clgrid{grid-template-columns:1fr}
+.pg-warranty .ibar{grid-template-columns:repeat(3,1fr)}
+.pg-warranty .ibar a:nth-child(4){border-left:0}
+.pg-warranty .ibar a:nth-child(n+4){border-top:1px solid var(--char3)}
+.pg-warranty .cgrp.wide ol{columns:2}
+.pg-warranty .badge .demo{margin-top:40px}}
+@media (max-width:640px){.pg-warranty .tiers{grid-template-columns:1fr 1fr}
+.pg-warranty .tier.std{grid-column:1/-1}
+.pg-warranty .tier .n{font-size:64px}
+.pg-warranty .tier{padding:18px 16px}
+.pg-warranty .cov .icard{padding:22px}
+.pg-warranty .ibar{grid-template-columns:1fr 1fr}
+.pg-warranty .ibar a{border-left:1px solid var(--char3)!important;border-top:1px solid var(--char3)}
+.pg-warranty .ibar a:nth-child(odd){border-left:0!important}
+.pg-warranty .ibar a:nth-child(-n+2){border-top:0}
+.pg-warranty .ibar b{font-size:30px}
+.pg-warranty .cgrp ol,.pg-warranty .cgrp.wide ol{columns:1}
+.pg-warranty .cgh b{font-size:20px}
+.pg-warranty .badge .arrow{left:0}}
+
+

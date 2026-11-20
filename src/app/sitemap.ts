@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getPublicBikes } from '@/server/services/bikes';
+import { PHASE2 } from '@/lib/features';
 import { site } from '@/lib/site';
 
 const pages = [
@@ -11,7 +12,7 @@ const pages = [
   '/sell-your-bike',
   '/insurance',
   '/workshop',
-  '/delivery',
+  ...(PHASE2 ? ['/delivery'] : []),
   '/warranty',
   '/faq',
   '/about',

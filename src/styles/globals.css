@@ -1426,3 +1426,8 @@ a.chip{display:inline-flex;align-items:center;text-decoration:none}
 .nofee b{display:block;font-family:var(--disp);font-weight:400;font-size:28px;line-height:1;letter-spacing:.02em;text-transform:uppercase;color:#fff}
 .nofee small{display:block;margin-top:3px;font-size:15px;font-weight:600;color:#e7e7ea}
 @media (max-width:640px){.nofee{display:flex}.nofee b{font-size:24px}}
+
+/* Website enquiry forms (LeadForm) */
+.hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
+.ferr{margin-top:12px;color:var(--red);font-weight:600;font-size:14px}
+form[aria-busy=true]{opacity:.7;pointer-events:none}

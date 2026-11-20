@@ -11,6 +11,7 @@ import { Tabs } from '@/components/ui/Tabs';
 import { bikeName, similarBikes, styleLabels } from '@/lib/bikes';
 import { getPublicBike, getPublicBikes } from '@/server/services/bikes';
 import { gbp, monthlyPayment } from '@/lib/format';
+import { PHASE2 } from '@/lib/features';
 import { site } from '@/lib/site';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -316,11 +317,14 @@ export default async function BikePage({ params }: Props) {
                   <ShareButton title={name} />
                 </div>
               </div>
-              <div className="qbox mt1">
-                <h4>Delivered to your door</h4>
-                <p>Enter your postcode for an instant delivery price.</p>
-                <DeliveryQuote />
-              </div>
+              {/* Delivery price calculator is Phase 2 */}
+              {PHASE2 && (
+                <div className="qbox mt1">
+                  <h4>Delivered to your door</h4>
+                  <p>Enter your postcode for an instant delivery price.</p>
+                  <DeliveryQuote />
+                </div>
+              )}
               <ul className="usp">
                 {usps.map(([icon, text]) => (
                   <li key={text}>
