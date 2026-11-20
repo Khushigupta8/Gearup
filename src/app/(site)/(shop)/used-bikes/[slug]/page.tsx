@@ -12,7 +12,8 @@ import { bikeName, similarBikes, styleLabels } from '@/lib/bikes';
 import { getPublicBike, getPublicBikes } from '@/server/services/bikes';
 import { gbp, monthlyPayment } from '@/lib/format';
 import { PHASE2 } from '@/lib/features';
-import { site } from '@/lib/site';
+import { telHref, waHref } from '@/lib/cms';
+import { getBusiness } from '@/server/services/cms';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -42,6 +43,7 @@ const usps: [IconName, string][] = [
 const TERM = 48;
 
 export default async function BikePage({ params }: Props) {
+  const biz = await getBusiness();
   const bike = await getPublicBike((await params).slug);
   if (!bike) notFound();
   const allBikes = await getPublicBikes();
@@ -306,11 +308,11 @@ export default async function BikePage({ params }: Props) {
                   </Link>
                 </div>
                 <div className="contact">
-                  <a href={site.phone.href} className="ph">
+                  <a href={telHref(biz.phone)} className="ph">
                     <Icon name="phone" />
-                    {site.phone.display}
+                    {biz.phone}
                   </a>
-                  <a href={site.whatsapp} className="wa" target="_blank" rel="noopener">
+                  <a href={waHref(biz.whatsapp)} className="wa" target="_blank" rel="noopener">
                     <Icon name="wa" />
                     WhatsApp
                   </a>

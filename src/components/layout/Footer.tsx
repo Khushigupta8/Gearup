@@ -3,8 +3,13 @@ import { Fragment } from 'react';
 import { Icon } from '@/components/ui/Icon';
 import { footerNav, mobileNav } from '@/lib/navigation';
 import { site } from '@/lib/site';
+import { telHref, waHref } from '@/lib/cms';
+import { getBusiness } from '@/server/services/cms';
+import { SocialLinks } from './SocialLinks';
 
-export function Footer() {
+export async function Footer() {
+  const biz = await getBusiness();
+  const wa = waHref(biz.whatsapp);
   return (
     <>
       <footer className="ftr">
@@ -19,20 +24,26 @@ export function Footer() {
             </span>
             <p className="blurb">{site.description}</p>
             <div className="ftr-acts">
-              <a href={site.phone.href} className="btn btn-red">
+              <a href={telHref(biz.phone)} className="btn btn-red">
                 <Icon name="phone" />
-                {site.phone.display}
+                {biz.phone}
               </a>
-              <a href={site.whatsapp} className="btn btn-wa" target="_blank" rel="noopener">
+              <a href={wa} className="btn btn-wa" target="_blank" rel="noopener">
                 <Icon name="wa" />
                 WhatsApp us
               </a>
             </div>
             <p className="blurb">
-              {site.email}
-              <br />
-              Showroom address here
+              <a href={`mailto:${biz.email}`}>{biz.email}</a>
+              {biz.address &&
+                biz.address.split(/\r?\n/).map((line) => (
+                  <Fragment key={line}>
+                    <br />
+                    {line}
+                  </Fragment>
+                ))}
             </p>
+            <SocialLinks socials={biz.socials} />
           </div>
           {footerNav.map((col) => (
             <div key={col.title}>
@@ -49,7 +60,7 @@ export function Footer() {
           <div>
             <h5>Opening hours</h5>
             <div className="hours">
-              {site.hours.map(([day, time]) => (
+              {biz.hours.map(([day, time]) => (
                 <Fragment key={day}>
                   <span>{day}</span>
                   <span>{time}</span>
@@ -63,8 +74,12 @@ export function Footer() {
         </div>
         <div className="legal">
           <div className="wrap">
-            <span>© 2026 GearUp Motorcycles. Company no. and FCA details here.</span>
-            <span>Terms · Privacy · Cookies · Complaints</span>
+            <span>
+              © {new Date().getFullYear()} {site.name}.{biz.legalLine ? ` ${biz.legalLine}` : ''}
+            </span>
+            <span>
+              <Link href="/terms">Terms</Link> · <Link href="/privacy">Privacy</Link>
+            </span>
           </div>
         </div>
       </footer>
@@ -73,7 +88,7 @@ export function Footer() {
           <Icon name="phone" />
           Call
         </Link>
-        <a href={site.whatsapp} className="mwa">
+        <a href={wa} className="mwa">
           <Icon name="wa" />
           WhatsApp
         </a>

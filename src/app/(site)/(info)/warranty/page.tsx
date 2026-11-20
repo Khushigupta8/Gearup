@@ -1,13 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/server/services/cms';
+import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
 import { Icon } from '@/components/ui/Icon';
 import '@/styles/pages/warranty.css';
 
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/warranty', {
   title: 'Warranty and 120-Point Inspection',
   description: 'Every GearUp bike comes with 30 days warranty and a 120-point inspection. Selected bikes include 3, 6, 12 or 24 months cover free.',
-};
+});
+}
 
 export default function WarrantyPage() {
   return (
@@ -141,13 +145,7 @@ export default function WarrantyPage() {
 <section className="sec">
 <div className="wrap" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,.8fr) minmax(0,1.2fr)', gap: '50px' }} id="faqgrid">
 <div><span className="sh"><span className="tag">Warranty FAQs</span></span><h2 className="disp" style={{ fontSize: '64px', marginTop: '12px' }}>Cover, <em style={{ fontStyle: 'normal', color: 'var(--red)' }}>explained</em></h2><p className="muted" style={{ marginTop: '12px', fontSize: '17px' }}>Questions about a particular bike? Ask us before you reserve.</p><Link href="/faq" className="btn btn-ink mt2">All FAQs <Icon name="right" /></Link></div>
-<div className="faq">
-<details open><summary>When does my warranty start?</summary><p>On the day you collect the bike or we deliver it to you.</p></details>
-<details><summary>Can I extend the warranty?</summary><p>Yes, on most bikes, to 12 or 24 months. The price depends on the bike. Ask us when you reserve.</p></details>
-<details><summary>Does the warranty cover delivered bikes?</summary><p>Yes. The cover is the same whether you collect or we deliver nationwide.</p></details>
-<details><summary>Do I have to service the bike with you?</summary><p>No, but it must be serviced on time by a qualified garage, and you need to keep the receipts. Our <Link href="/workshop" style={{ textDecoration: 'underline' }}>workshop</Link> can do it for you.</p></details>
-<details><summary>Can I see the inspection report?</summary><p>Yes. Every bike&apos;s 120-point report is on its bike page and in your account once you reserve.</p></details>
-</div>
+<FaqList section="warranty" openFirst />
 </div>
 </section>
 

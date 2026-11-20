@@ -1,13 +1,17 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/server/services/cms';
+import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
 import { LeadForm } from '@/components/forms/LeadForm';
 import { Icon } from '@/components/ui/Icon';
 import '@/styles/pages/contact.css';
 
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/contact', {
   title: 'Contact GearUp Motorcycles · Call, WhatsApp or visit',
   description: 'Call 0744 072 1478, WhatsApp or email us. Book a viewing or video walkaround, and find our showroom and opening hours.',
-};
+});
+}
 
 export default function ContactPage() {
   return (
@@ -119,12 +123,7 @@ export default function ContactPage() {
 <section className="sec paper">
 <div className="wrap" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,.8fr) minmax(0,1.2fr)', gap: '50px' }} id="faqgrid">
 <div><span className="sh"><span className="tag">FAQs</span></span><h2 className="disp" style={{ fontSize: '64px', marginTop: '12px' }}>Before you <em style={{ fontStyle: 'normal', color: 'var(--red)' }}>get in touch</em></h2><p className="muted" style={{ marginTop: '12px', fontSize: '17px' }}>Quick answers to what people ask us most.</p><Link href="/faq" className="btn btn-ink mt2">All FAQs <Icon name="right" /></Link></div>
-<div className="faq">
-<details open><summary>Do I need to book a viewing?</summary><p>It helps. Book a time and we will have the bike out and ready. You are welcome to drop in during opening hours too.</p></details>
-<details><summary>Can I test ride a bike?</summary><p>Yes, by appointment. Bring your licence and your own kit. Call or use the form above to book.</p></details>
-<details><summary>I live a long way away. Can I still buy?</summary><p>Yes. Watch the video, book a live walkaround, reserve online for £99 and we deliver nationwide.</p></details>
-<details><summary>Can I sell my bike to you without buying one?</summary><p>Yes. Get a valuation on our <Link href="/sell-your-bike" style={{ color: 'var(--red)', fontWeight: 600 }}>sell your bike</Link> page and we will make you an offer.</p></details>
-</div>
+<FaqList section="contact" openFirst />
 </div>
 </section>
 

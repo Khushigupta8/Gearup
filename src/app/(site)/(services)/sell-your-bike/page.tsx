@@ -1,14 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/server/services/cms';
+import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
 import { LeadForm } from '@/components/forms/LeadForm';
 import { Icon } from '@/components/ui/Icon';
 import '@/styles/pages/sell-your-bike.css';
 
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/sell-your-bike', {
   title: 'Sell Your Motorbike',
   description: 'Sell your motorbike to GearUp. Free valuation, we inspect it, pay you by bank transfer and can collect from your door. Outstanding finance settled.',
-};
+});
+}
 
 export default function SellYourBikePage() {
   return (
@@ -125,14 +129,7 @@ export default function SellYourBikePage() {
 <section className="sec">
 <div className="wrap" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,.8fr) minmax(0,1.2fr)', gap: '50px' }} id="faqgrid">
 <div><span className="sh"><span className="tag">Selling FAQs</span></span><h2 className="disp" style={{ fontSize: '64px', marginTop: '12px' }}>Before <em style={{ fontStyle: 'normal', color: 'var(--red)' }}>you sell</em></h2><p className="muted" style={{ marginTop: '12px', fontSize: '17px' }}>Questions about your bike? WhatsApp us a few photos.</p><Link href="/contact" className="btn btn-ink mt2">Contact us <Icon name="right" /></Link></div>
-<div className="faq">
-<details open><summary>How do I get paid?</summary><p>By bank transfer once we have agreed the price and checked the bike and paperwork. If there is finance owing, we pay the lender first and send you the rest.</p></details>
-<details><summary>Will the price change when you see the bike?</summary><p>Only if the bike is not as described. Be honest about marks and faults, add photos, and the figure we quote is the figure you get.</p></details>
-<details><summary>What paperwork do I need?</summary><p>The V5C logbook in your name, photo ID, all keys, and any service history you have. We take care of telling the DVLA.</p></details>
-<details><summary>Can you collect the bike?</summary><p>Yes, from anywhere in the UK, nationwide. We will agree a collection time with you when we agree the price.</p></details>
-<details><summary>Do you buy bikes with outstanding finance?</summary><p>Yes. Get a settlement figure from your lender. We pay it off and send you any balance.</p></details>
-<details><summary>Would I get more by part-exchanging?</summary><p>If you are buying from us too, <Link href="/part-exchange" style={{ textDecoration: 'underline' }}>part-exchange</Link> can be simpler, and your bike becomes the deposit on your next one.</p></details>
-</div>
+<FaqList section="sell-your-bike" openFirst />
 </div>
 </section>
 

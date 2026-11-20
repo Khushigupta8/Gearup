@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
 import { DeliveryQuote } from '@/components/forms/DeliveryQuote';
 import { Icon } from '@/components/ui/Icon';
@@ -184,14 +185,7 @@ export default function DeliveryPage() {
 <section className="sec">
 <div className="wrap" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,.8fr) minmax(0,1.2fr)', gap: '50px' }} id="faqgrid">
 <div><span className="sh"><span className="tag">FAQs</span></span><h2 className="disp" style={{ fontSize: '64px', marginTop: '12px' }}>Delivery <em style={{ fontStyle: 'normal', color: 'var(--red)' }}>questions</em></h2><p className="muted" style={{ marginTop: '12px', fontSize: '17px' }}>The ones we get asked most. More answers on our help page.</p><Link href="/faq#delivery" className="lnk mt2">All delivery FAQs <Icon name="right" /></Link></div>
-<div className="faq">
-<details open><summary>Where do you deliver?</summary><p>We deliver nationwide. For islands, call us before you reserve.</p></details>
-<details><summary>How is the delivery price worked out?</summary><p>We take the road miles from our showroom to your postcode and multiply by our rate per mile, with a minimum charge. Enter your postcode above to see your price.</p></details>
-<details><summary>When do I pay for delivery?</summary><p>At checkout, with your £99 reservation deposit. The price is fixed once you have paid.</p></details>
-<details><summary>How does the live tracking work?</summary><p>Our driver shares their phone&apos;s GPS while they drive. On delivery day a link appears in your account and by text, showing the van on a map and an updated arrival time.</p></details>
-<details><summary>What if I am not happy at the handover?</summary><p>Tell the driver before you sign. Every bike also comes with 30 days&apos; warranty and our 14-day money back.</p></details>
-<details><summary>Can I collect instead?</summary><p>Yes. Collection from the showroom is free. Change your choice any time before your bike is ready by calling us.</p></details>
-</div>
+<FaqList section="delivery" openFirst />
 </div>
 </section>
 

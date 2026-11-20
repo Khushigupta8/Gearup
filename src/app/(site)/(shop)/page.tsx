@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- images are sized by the existing CSS */
 import type { Metadata } from 'next';
+import { getBanners, getBusiness, getReviews, pageMetadata } from '@/server/services/cms';
+import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
 import { BikeCard } from '@/components/bikes/BikeCard';
 import { FinanceSlider } from '@/components/finance/FinanceSlider';
@@ -11,19 +13,16 @@ import { Icon } from '@/components/ui/Icon';
 import { RideIn, ScrollReveal } from '@/components/ui/ScrollReveal';
 import { Stars } from '@/components/ui/Stars';
 import { getPublicBikes } from '@/server/services/bikes';
+import { gbp, monthlyPayment } from '@/lib/format';
 
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/', {
   title: { absolute: 'GearUp Motorcycles · Quality Used Motorbikes, Delivered UK-Wide' },
   description:
     'Quality used motorbikes, inspected and warranted. Reserve online for £99, finance and part-exchange welcome, with nationwide delivery.',
-};
+});
+}
 
-const heroSlides: HeroSlide[] = [
-  { href: '/used-bikes/2018-triumph-street-triple-rs', image: '/assets/images/hero/triumph-street-triple-rs.webp', name: '2018 Triumph Street Triple RS', kicker: 'Naked roadster', price: '£6,495', monthly: '£191.77' },
-  { href: '/used-bikes', image: '/assets/images/hero/lexmoto-lxr-125.webp', name: '2023 Lexmoto LXR 125', kicker: 'Learner legal', price: '£1,795', monthly: '£52.98' },
-  { href: '/used-bikes/2020-kawasaki-ninja-zx6r', image: '/assets/images/hero/kawasaki-ninja-zx6r.webp', name: '2020 Kawasaki Ninja ZX-6R', kicker: 'Supersport', price: '£7,995', monthly: '£236.05' },
-  { href: '/used-bikes/2019-bmw-r1250gs', image: '/assets/images/hero/bmw-r1250gs.webp', name: '2019 BMW R 1250 GS', kicker: 'Adventure', price: '£11,495', monthly: '£339.39' },
-];
 
 
 const brands: { key: string; name: string; logo?: string }[] = [
@@ -105,19 +104,7 @@ const videos = [
   { img: '/assets/images/bikes/honda-cmx500-rebel.webp', dur: '2:20', title: 'CMX500 Rebel', note: 'A2-friendly cruiser', slug: '2021-honda-cmx500-rebel' },
 ];
 
-const reviews = [
-  { name: 'David L.', date: '13 Mar 2025', text: 'I was looking for a 125cc sporty style bike and I came across a Lexmoto LXR they had for sale but I was over 200 miles away from them, they offered to deliver the bike the same day I bought it which I was so thrilled about…' },
-  { name: 'Adeeb R.', date: '17 Apr 2025', text: 'Amazing service and people they really made me feel at ease when purchasing my first vehicle they explained in depth everything I need to do and everything about the vehicle…' },
-  { name: 'Sharon A.', date: '24 May 2024', text: 'Very professional, friendly, helpful. Answered my questions about mopeds as I have never bought one before. Sorted all the paperwork out for me. Delivered the same day for me…' },
-];
 
-const faqs = [
-  ['How does reserving online work?', 'Pay the £99 deposit on the bike page and it comes off sale straight away. The deposit is taken off the price, and you can follow the prep from your account.'],
-  ['Do you deliver, and how much is it?', 'Yes, we deliver nationwide, priced per mile from our showroom. Tell us your postcode when you reserve and we will confirm the price before booking.'],
-  ['Can I part-exchange my bike?', 'Yes. Enter your reg on any bike page or in the search bar for a valuation, then use your bike as the deposit.'],
-  ['Can I get finance with poor credit?', 'Often, yes. Apply online and we will look at the options available to you. Finance is subject to status and affordability.'],
-  ['What does the warranty cover?', "Every bike comes with 30 days' warranty. Bikes with the red badge include longer cover free, and you can extend any bike to 12 or 24 months."],
-];
 
 function Tick({ value }: { value: string | boolean }) {
   if (typeof value === 'string') return <>{value}</>;
@@ -140,8 +127,27 @@ function BrandLink({ brand, hidden = false }: { brand: (typeof brands)[number]; 
   );
 }
 
+const tpWord = (r: number) => (r >= 4.5 ? 'Excellent' : r >= 4 ? 'Great' : r >= 3 ? 'Good' : 'Average');
+const reviewDate = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
 export default async function HomePage() {
-  const bikes = await getPublicBikes();
+  const [bikes, biz, banners, reviews] = await Promise.all([getPublicBikes(), getBusiness(), getBanners('home_hero'), getReviews()]);
+  // Hero slides come from the CMS. A slide linked to a bike in stock shows that bike's live price.
+  const heroSlides: HeroSlide[] = banners
+    .filter((b) => b.imageUrl)
+    .map((b) => {
+      const bike = b.linkUrl?.startsWith('/used-bikes/') ? bikes.find((x) => `/used-bikes/${x.slug}` === b.linkUrl) : undefined;
+      return {
+        href: b.linkUrl || '/used-bikes',
+        image: b.imageUrl!,
+        name: b.title,
+        kicker: b.subtitle ?? '',
+        price: bike ? gbp(bike.price) : undefined,
+        monthly: bike ? gbp(monthlyPayment(bike.price, 48), 2) : undefined,
+      };
+    });
+  const tp = biz.trustpilot;
+  const tpStars = { full: Math.floor(tp.rating), half: tp.rating % 1 >= 0.5 };
   const featured = bikes.filter((b) => b.featured).slice(0, 5);
 
   return (
@@ -170,9 +176,9 @@ export default async function HomePage() {
             </div>
             <div className="trust">
               <span className="tp">
-                <Stars full={4} half />
+                <Stars {...tpStars} />
                 <span>
-                  <b>4.2</b> on Trustpilot
+                  <b>{tp.rating}</b> on Trustpilot
                 </span>
               </span>
               <span className="sep"></span>
@@ -587,9 +593,9 @@ export default async function HomePage() {
                 Don&apos;t take <em>our word</em> for it
               </h2>
               <div className="tpbar">
-                <Stars full={4} half />
+                <Stars {...tpStars} />
                 <span>
-                  <b>Great</b> · 4.2 out of 5 from 22 reviews on Trustpilot
+                  <b>{tpWord(tp.rating)}</b> · {tp.rating} out of 5 from {tp.count} reviews on Trustpilot
                 </span>
               </div>
             </div>
@@ -597,26 +603,28 @@ export default async function HomePage() {
               Read every review <Icon name="right" />
             </Link>
           </div>
-          <div className="revs">
-            <article className="rq">
-              <Stars full={5} />
-              <p>{reviews[0].text}</p>
-              <footer>
-                <b>{reviews[0].name}</b> · {reviews[0].date} · Trustpilot
-              </footer>
-            </article>
-            <div className="rsm">
-              {reviews.slice(1).map((r) => (
-                <article key={r.name} className="rs">
-                  <Stars full={5} />
-                  <p>{r.text}</p>
-                  <footer>
-                    <b>{r.name}</b> · {r.date} · Trustpilot
-                  </footer>
-                </article>
-              ))}
+          {reviews.length > 0 && (
+            <div className="revs">
+              <article className="rq">
+                <Stars full={reviews[0].rating} />
+                <p>{reviews[0].body}</p>
+                <footer>
+                  <b>{reviews[0].author}</b> · {reviewDate(reviews[0].date)} · {reviews[0].source}
+                </footer>
+              </article>
+              <div className="rsm">
+                {reviews.slice(1, 3).map((r) => (
+                  <article key={r.id} className="rs">
+                    <Stars full={r.rating} />
+                    <p>{r.body}</p>
+                    <footer>
+                      <b>{r.author}</b> · {reviewDate(r.date)} · {r.source}
+                    </footer>
+                  </article>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -667,14 +675,7 @@ export default async function HomePage() {
               All FAQs <Icon name="right" />
             </Link>
           </div>
-          <div className="faq">
-            {faqs.map(([q, a], i) => (
-              <details key={q} open={i === 0}>
-                <summary>{q}</summary>
-                <p>{a}</p>
-              </details>
-            ))}
-          </div>
+          <FaqList section="home" openFirst />
         </div>
       </section>
 

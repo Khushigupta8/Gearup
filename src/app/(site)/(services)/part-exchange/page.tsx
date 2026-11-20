@@ -1,15 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/server/services/cms';
+import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
 import { LeadForm } from '@/components/forms/LeadForm';
 import { JumpForm } from '@/components/info/JumpForm';
 import { Icon } from '@/components/ui/Icon';
 import '@/styles/pages/part-exchange.css';
 
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/part-exchange', {
   title: 'Part-Exchange Your Motorbike',
   description: 'Get a free part-exchange valuation on your motorbike. Use it as the deposit on any bike in stock. Outstanding finance settled for you.',
-};
+});
+}
 
 export default function PartExchangePage() {
   return (
@@ -182,13 +186,7 @@ export default function PartExchangePage() {
 <section className="sec paper">
 <div className="wrap" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,.8fr) minmax(0,1.2fr)', gap: '50px' }} id="faqgrid">
 <div><span className="sh"><span className="tag">Part-ex FAQs</span></span><h2 className="disp" style={{ fontSize: '64px', marginTop: '12px' }}>Quick <em style={{ fontStyle: 'normal', color: 'var(--red)' }}>answers</em></h2><p className="muted" style={{ marginTop: '12px', fontSize: '17px' }}>Not sure about something? WhatsApp us a few photos and we will help.</p><Link href="/faq" className="btn btn-ink mt2">All FAQs <Icon name="right" /></Link></div>
-<div className="faq">
-<details open><summary>Is the online valuation the final price?</summary><p>It is a guide based on what you tell us. We confirm the figure when we see the bike. If it matches your description and photos, the figure stays the same.</p></details>
-<details><summary>Can I part-ex a bike with finance on it?</summary><p>Yes. We get a settlement figure from your lender and pay it off as part of the deal. If you owe more than the bike is worth, the difference is added to what you pay.</p></details>
-<details><summary>Do you take bikes that need work?</summary><p>Yes, including non-runners. Tell us what is wrong and we will price it fairly.</p></details>
-<details><summary>Can you collect my old bike?</summary><p>Yes. If we are delivering your new bike, we can take your part-ex away on the same trip.</p></details>
-<details><summary>What if I just want cash?</summary><p>We buy bikes outright too. See <Link href="/sell-your-bike" style={{ textDecoration: 'underline' }}>sell your bike</Link>.</p></details>
-</div>
+<FaqList section="part-exchange" openFirst />
 </div>
 </section>
 

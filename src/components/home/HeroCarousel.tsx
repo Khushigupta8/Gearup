@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export type HeroSlide = { href: string; image: string; name: string; kicker: string; price: string; monthly: string };
+export type HeroSlide = { href: string; image: string; name: string; kicker: string; price?: string; monthly?: string };
 
 /** Home hero: bike cut-outs that rotate every 2s, pause on hover, and stop for reduced-motion users. */
 export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
@@ -31,10 +31,12 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
           <span className="spot">
             <small>{s.kicker}</small>
             <strong>{s.name}</strong>
-            <span className="pp">
-              <b>{s.price}</b>
-              <span>or {s.monthly}/mo</span>
-            </span>
+            {s.price && (
+              <span className="pp">
+                <b>{s.price}</b>
+                {s.monthly && <span>or {s.monthly}/mo</span>}
+              </span>
+            )}
           </span>
         </Link>
       ))}

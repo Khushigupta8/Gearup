@@ -3,21 +3,24 @@ import { PHASE2 } from '@/lib/features';
 import { Icon } from '@/components/ui/Icon';
 import { mainNav } from '@/lib/navigation';
 import { site } from '@/lib/site';
+import { telHref, waHref } from '@/lib/cms';
+import { getBusiness } from '@/server/services/cms';
 import { BasketCount } from './BasketCount';
 import { MenuButton } from './MenuButton';
 import { NavLink } from './NavLink';
 
-export function Header() {
+export async function Header() {
+  const biz = await getBusiness();
   return (
     <>
       <div className="promo">
         <div className="wrap">
           <ul>
-            {site.promos.map((p) => (
+            {biz.promos.map((p) => (
               <li key={p}>{p}</li>
             ))}
           </ul>
-          <a href={site.whatsapp} className="wa-pill" target="_blank" rel="noopener">
+          <a href={waHref(biz.whatsapp)} className="wa-pill" target="_blank" rel="noopener">
             <Icon name="wa" />
             <span>
               WhatsApp<span className="wa-us"> us</span>
@@ -36,10 +39,10 @@ export function Header() {
               </sup>
             </Link>
             <div className="hd-act">
-              <a href={site.phone.href} className="call">
+              <a href={telHref(biz.phone)} className="call">
                 <Icon name="phone" />
                 <span>
-                  Call the showroom<b>{site.phone.display}</b>
+                  Call the showroom<b>{biz.phone}</b>
                 </span>
               </a>
               {PHASE2 && (

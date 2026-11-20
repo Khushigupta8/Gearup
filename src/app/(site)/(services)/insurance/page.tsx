@@ -1,12 +1,16 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/server/services/cms';
+import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
 import { LeadForm } from '@/components/forms/LeadForm';
 import { Icon } from '@/components/ui/Icon';
 
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/insurance', {
   title: 'Motorbike Insurance Quotes',
   description: "Compare motorbike insurance quotes through GearUp's insurance partner and get covered before you collect your bike.",
-};
+});
+}
 
 export default function InsurancePage() {
   return (
@@ -63,11 +67,7 @@ export default function InsurancePage() {
 <section className="sec paper">
 <div className="wrap">
 <div className="sh"><div><span className="tag">Good to know</span><h2 className="disp">Insurance <em>FAQs</em></h2></div></div>
-<div className="faq">
-<details open><summary>Do I need insurance before I collect my bike?</summary><p>Yes. You must be insured to ride away or have the bike delivered to the road. Get a quote here and set the start date to your collection or delivery day.</p></details>
-<details><summary>Can I insure a 125cc on a CBT?</summary><p>Yes. Most insurers cover learner riders on a valid CBT. Make sure the L plates are on until you pass your test.</p></details>
-<details><summary>Does the price depend on where I keep the bike?</summary><p>It does. Postcode, security (garage, ground anchor, alarm) and your riding history all affect the price.</p></details>
-</div>
+<FaqList section="insurance" openFirst />
 </div>
 </section>
 

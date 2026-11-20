@@ -1,13 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/server/services/cms';
 import Link from 'next/link';
 import { Icon } from '@/components/ui/Icon';
 import '@/styles/pages/about.css';
 
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/about', {
   title: 'About GearUp Motorcycles · Independent used bike dealer',
   description: 'A small independent dealer. Every bike hand-picked, prepped in our own workshop and sold UK-wide with delivery and warranty.',
-};
+});
+}
 
 export default function AboutPage() {
   return (

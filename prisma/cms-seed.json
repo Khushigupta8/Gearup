@@ -1,0 +1,501 @@
+{
+ "faqs": [
+  {
+   "section": "contact",
+   "question": "Do I need to book a viewing?",
+   "answer": "It helps. Book a time and we will have the bike out and ready. You are welcome to drop in during opening hours too.",
+   "sortOrder": 0
+  },
+  {
+   "section": "contact",
+   "question": "Can I test ride a bike?",
+   "answer": "Yes, by appointment. Bring your licence and your own kit. Call or use the form above to book.",
+   "sortOrder": 1
+  },
+  {
+   "section": "contact",
+   "question": "I live a long way away. Can I still buy?",
+   "answer": "Yes. Watch the video, book a live walkaround, reserve online for £99 and we deliver nationwide.",
+   "sortOrder": 2
+  },
+  {
+   "section": "contact",
+   "question": "Can I sell my bike to you without buying one?",
+   "answer": "Yes. Get a valuation on our [sell your bike](/sell-your-bike) page and we will make you an offer.",
+   "sortOrder": 3
+  },
+  {
+   "section": "warranty",
+   "question": "When does my warranty start?",
+   "answer": "On the day you collect the bike or we deliver it to you.",
+   "sortOrder": 0
+  },
+  {
+   "section": "warranty",
+   "question": "Can I extend the warranty?",
+   "answer": "Yes, on most bikes, to 12 or 24 months. The price depends on the bike. Ask us when you reserve.",
+   "sortOrder": 1
+  },
+  {
+   "section": "warranty",
+   "question": "Does the warranty cover delivered bikes?",
+   "answer": "Yes. The cover is the same whether you collect or we deliver nationwide.",
+   "sortOrder": 2
+  },
+  {
+   "section": "warranty",
+   "question": "Do I have to service the bike with you?",
+   "answer": "No, but it must be serviced on time by a qualified garage, and you need to keep the receipts. Our [workshop](/workshop) can do it for you.",
+   "sortOrder": 3
+  },
+  {
+   "section": "warranty",
+   "question": "Can I see the inspection report?",
+   "answer": "Yes. Every bike's 120-point report is on its bike page and in your account once you reserve.",
+   "sortOrder": 4
+  },
+  {
+   "section": "delivery",
+   "question": "Where do you deliver?",
+   "answer": "We deliver nationwide. For islands, call us before you reserve.",
+   "sortOrder": 0
+  },
+  {
+   "section": "delivery",
+   "question": "How is the delivery price worked out?",
+   "answer": "We take the road miles from our showroom to your postcode and multiply by our rate per mile, with a minimum charge. Enter your postcode above to see your price.",
+   "sortOrder": 1
+  },
+  {
+   "section": "delivery",
+   "question": "When do I pay for delivery?",
+   "answer": "At checkout, with your £99 reservation deposit. The price is fixed once you have paid.",
+   "sortOrder": 2
+  },
+  {
+   "section": "delivery",
+   "question": "How does the live tracking work?",
+   "answer": "Our driver shares their phone's GPS while they drive. On delivery day a link appears in your account and by text, showing the van on a map and an updated arrival time.",
+   "sortOrder": 3
+  },
+  {
+   "section": "delivery",
+   "question": "What if I am not happy at the handover?",
+   "answer": "Tell the driver before you sign. Every bike also comes with 30 days' warranty and our 14-day money back.",
+   "sortOrder": 4
+  },
+  {
+   "section": "delivery",
+   "question": "Can I collect instead?",
+   "answer": "Yes. Collection from the showroom is free. Change your choice any time before your bike is ready by calling us.",
+   "sortOrder": 5
+  },
+  {
+   "section": "finance",
+   "question": "Will checking my eligibility affect my credit score?",
+   "answer": "Checking your eligibility uses a soft search where the lender offers one. Soft searches are not visible to other lenders. A full credit check only happens if you choose to go ahead with an application, and we will tell you before it does.",
+   "sortOrder": 0
+  },
+  {
+   "section": "finance",
+   "question": "Can I get finance with bad credit?",
+   "answer": "Often, yes. Apply and we will look at the options available to you. Finance is always subject to status and affordability.",
+   "sortOrder": 1
+  },
+  {
+   "section": "finance",
+   "question": "Do I need a deposit?",
+   "answer": "Not always. Many riders pay £0 deposit. A deposit or part-exchange lowers your monthly payment and the total interest you pay.",
+   "sortOrder": 2
+  },
+  {
+   "section": "finance",
+   "question": "Can I use my old bike as the deposit?",
+   "answer": "Yes. Get a part-exchange valuation and the agreed value goes towards your deposit. If there is finance outstanding on your old bike, tell us and we can settle it as part of the deal.",
+   "sortOrder": 3
+  },
+  {
+   "section": "finance",
+   "question": "Can I pay it off early?",
+   "answer": "Yes. You can settle a finance agreement early at any time. The lender will give you a settlement figure, which usually includes a reduction in interest.",
+   "sortOrder": 4
+  },
+  {
+   "section": "finance",
+   "question": "Can I reserve the bike while finance is checked?",
+   "answer": "Yes. Pay the £99 reservation deposit and the bike comes off sale. The £99 comes off the price of the bike.",
+   "sortOrder": 5
+  },
+  {
+   "section": "insurance",
+   "question": "Do I need insurance before I collect my bike?",
+   "answer": "Yes. You must be insured to ride away or have the bike delivered to the road. Get a quote here and set the start date to your collection or delivery day.",
+   "sortOrder": 0
+  },
+  {
+   "section": "insurance",
+   "question": "Can I insure a 125cc on a CBT?",
+   "answer": "Yes. Most insurers cover learner riders on a valid CBT. Make sure the L plates are on until you pass your test.",
+   "sortOrder": 1
+  },
+  {
+   "section": "insurance",
+   "question": "Does the price depend on where I keep the bike?",
+   "answer": "It does. Postcode, security (garage, ground anchor, alarm) and your riding history all affect the price.",
+   "sortOrder": 2
+  },
+  {
+   "section": "part-exchange",
+   "question": "Is the online valuation the final price?",
+   "answer": "It is a guide based on what you tell us. We confirm the figure when we see the bike. If it matches your description and photos, the figure stays the same.",
+   "sortOrder": 0
+  },
+  {
+   "section": "part-exchange",
+   "question": "Can I part-ex a bike with finance on it?",
+   "answer": "Yes. We get a settlement figure from your lender and pay it off as part of the deal. If you owe more than the bike is worth, the difference is added to what you pay.",
+   "sortOrder": 1
+  },
+  {
+   "section": "part-exchange",
+   "question": "Do you take bikes that need work?",
+   "answer": "Yes, including non-runners. Tell us what is wrong and we will price it fairly.",
+   "sortOrder": 2
+  },
+  {
+   "section": "part-exchange",
+   "question": "Can you collect my old bike?",
+   "answer": "Yes. If we are delivering your new bike, we can take your part-ex away on the same trip.",
+   "sortOrder": 3
+  },
+  {
+   "section": "part-exchange",
+   "question": "What if I just want cash?",
+   "answer": "We buy bikes outright too. See [sell your bike](/sell-your-bike).",
+   "sortOrder": 4
+  },
+  {
+   "section": "sell-your-bike",
+   "question": "How do I get paid?",
+   "answer": "By bank transfer once we have agreed the price and checked the bike and paperwork. If there is finance owing, we pay the lender first and send you the rest.",
+   "sortOrder": 0
+  },
+  {
+   "section": "sell-your-bike",
+   "question": "Will the price change when you see the bike?",
+   "answer": "Only if the bike is not as described. Be honest about marks and faults, add photos, and the figure we quote is the figure you get.",
+   "sortOrder": 1
+  },
+  {
+   "section": "sell-your-bike",
+   "question": "What paperwork do I need?",
+   "answer": "The V5C logbook in your name, photo ID, all keys, and any service history you have. We take care of telling the DVLA.",
+   "sortOrder": 2
+  },
+  {
+   "section": "sell-your-bike",
+   "question": "Can you collect the bike?",
+   "answer": "Yes, from anywhere in the UK, nationwide. We will agree a collection time with you when we agree the price.",
+   "sortOrder": 3
+  },
+  {
+   "section": "sell-your-bike",
+   "question": "Do you buy bikes with outstanding finance?",
+   "answer": "Yes. Get a settlement figure from your lender. We pay it off and send you any balance.",
+   "sortOrder": 4
+  },
+  {
+   "section": "sell-your-bike",
+   "question": "Would I get more by part-exchanging?",
+   "answer": "If you are buying from us too, [part-exchange](/part-exchange) can be simpler, and your bike becomes the deposit on your next one.",
+   "sortOrder": 5
+  },
+  {
+   "section": "faq-buying",
+   "question": "How does reserving online work?",
+   "answer": "Pay the £99 deposit on the bike's page. The bike comes off sale straight away and the £99 comes off the price. An account is made for you so you can follow the prep.",
+   "sortOrder": 0
+  },
+  {
+   "section": "faq-buying",
+   "question": "Is the £99 deposit refundable?",
+   "answer": "Yes, if the bike fails its pre-sale checks. The full reservation terms are shown before you pay.",
+   "sortOrder": 1
+  },
+  {
+   "section": "faq-buying",
+   "question": "What checks has every bike had?",
+   "answer": "An HPI check, our 120-point inspection, an MOT where needed and a full valet. You can see each stage tick off in your account.",
+   "sortOrder": 2
+  },
+  {
+   "section": "faq-buying",
+   "question": "Can I see the bike before I buy?",
+   "answer": "Yes. Visit the showroom, watch the walkaround video on the bike's page, or ask us for a live video call.",
+   "sortOrder": 3
+  },
+  {
+   "section": "faq-buying",
+   "question": "How do I pay the balance?",
+   "answer": "By bank transfer, card or finance, less any part-exchange. The balance is due before collection or delivery.",
+   "sortOrder": 4
+  },
+  {
+   "section": "faq-buying",
+   "question": "Do you sell 125cc and learner bikes?",
+   "answer": "Yes. Use the 125cc and learner filter on our [motorbikes](/used-bikes) page to see what is in stock.",
+   "sortOrder": 5
+  },
+  {
+   "section": "faq-finance",
+   "question": "What is the representative APR?",
+   "answer": "19.9% APR representative. For example, a £6,495 bike over 48 months with no deposit is £191.77 a month, £9,204.73 in total. Finance is subject to status and affordability.",
+   "sortOrder": 0
+  },
+  {
+   "section": "faq-finance",
+   "question": "Can I get finance with poor credit?",
+   "answer": "Often, yes. Apply online and we will look at the options available to you. Every application is subject to status.",
+   "sortOrder": 1
+  },
+  {
+   "section": "faq-finance",
+   "question": "How long can I spread the cost?",
+   "answer": "Usually 2 to 5 years. Use the calculator on the [finance page](/finance) to see monthly figures.",
+   "sortOrder": 2
+  },
+  {
+   "section": "faq-finance",
+   "question": "Do I need a deposit for finance?",
+   "answer": "Not always. You can put down cash or use your part-exchange as a deposit to lower the monthly payment.",
+   "sortOrder": 3
+  },
+  {
+   "section": "faq-finance",
+   "question": "Can I reserve first and apply later?",
+   "answer": "Yes. Reserve for £99, then apply from your account before your collection or delivery date.",
+   "sortOrder": 4
+  },
+  {
+   "section": "faq-px",
+   "question": "How do I get a part-exchange valuation?",
+   "answer": "Enter your registration and mileage on the [part-exchange page](/part-exchange) or on any bike page. We confirm the figure when we see the bike.",
+   "sortOrder": 0
+  },
+  {
+   "section": "faq-px",
+   "question": "Can I part-exchange if I still owe finance?",
+   "answer": "Usually, yes. Tell us when you ask for a valuation and we will talk you through it.",
+   "sortOrder": 1
+  },
+  {
+   "section": "faq-px",
+   "question": "Can I sell you my bike without buying one?",
+   "answer": "Yes. Use [sell your bike](/sell-your-bike) for a valuation. We buy bikes outright.",
+   "sortOrder": 2
+  },
+  {
+   "section": "faq-px",
+   "question": "What happens to my part-exchange on delivery day?",
+   "answer": "Tell us when you reserve and we will agree the handover of your old bike with you.",
+   "sortOrder": 3
+  },
+  {
+   "section": "faq-px",
+   "question": "What do I need to bring?",
+   "answer": "All keys, the V5C logbook, the service history and any MOT certificates you have.",
+   "sortOrder": 4
+  },
+  {
+   "section": "faq-delivery",
+   "question": "Where do you deliver?",
+   "answer": "We deliver nationwide. For islands, call us before you reserve.",
+   "sortOrder": 0
+  },
+  {
+   "section": "faq-delivery",
+   "question": "How much is delivery?",
+   "answer": "It is priced per mile from our showroom by road. Tell us your postcode when you reserve, or [ask us](/contact), and we will confirm the price before booking.",
+   "sortOrder": 1
+  },
+  {
+   "section": "faq-delivery",
+   "question": "When do I pay for delivery?",
+   "answer": "With the balance, before your bike is delivered. We confirm the price with you first.",
+   "sortOrder": 2
+  },
+  {
+   "section": "faq-delivery",
+   "question": "Is collection free?",
+   "answer": "Yes. Collect from the showroom at a time we agree. We call you to book it in.",
+   "sortOrder": 3
+  },
+  {
+   "section": "faq-delivery",
+   "question": "Do I need to be in?",
+   "answer": "Yes, or someone you trust. The handover checklist has to be signed and we hand over the keys and paperwork in person.",
+   "sortOrder": 4
+  },
+  {
+   "section": "faq-delivery",
+   "question": "Can I switch between collection and delivery?",
+   "answer": "Yes, any time before your bike is ready. Just call us.",
+   "sortOrder": 5
+  },
+  {
+   "section": "faq-account",
+   "question": "What can I see in my account?",
+   "answer": "Your reserved bike with the deposit paid and balance left, your accessories orders, your saved bikes and your part-exchange details.",
+   "sortOrder": 0
+  },
+  {
+   "section": "faq-account",
+   "question": "I collected my bike. Can I still use my account?",
+   "answer": "Yes. Your orders and saved bikes stay in your account.",
+   "sortOrder": 1
+  },
+  {
+   "section": "faq-account",
+   "question": "I cannot log in. What do I do?",
+   "answer": "Use \"Forgot password\" on the [sign-in page](/login), or call us and we will sort it.",
+   "sortOrder": 2
+  },
+  {
+   "section": "faq-warranty",
+   "question": "What warranty comes with every bike?",
+   "answer": "Every bike comes with 30 days' warranty as standard.",
+   "sortOrder": 0
+  },
+  {
+   "section": "faq-warranty",
+   "question": "What does the red warranty badge mean?",
+   "answer": "Bikes with the red badge include longer cover free: 3, 6, 12 or 24 months, as shown on the badge.",
+   "sortOrder": 1
+  },
+  {
+   "section": "faq-warranty",
+   "question": "Can I extend my warranty?",
+   "answer": "Yes. You can add longer cover to any bike at checkout. See the [warranty page](/warranty) for options.",
+   "sortOrder": 2
+  },
+  {
+   "section": "faq-warranty",
+   "question": "What is the 14-day money back?",
+   "answer": "If the bike is not right for you, you have 14 days to tell us. Call us first and we will explain how the return works.",
+   "sortOrder": 3
+  },
+  {
+   "section": "faq-warranty",
+   "question": "What is the 120-point inspection?",
+   "answer": "Our technicians check engine, brakes, suspension, wheels, electrics and frame, then road test the bike. See the [full checklist](/warranty#inspection).",
+   "sortOrder": 4
+  },
+  {
+   "section": "faq-warranty",
+   "question": "How do I make a warranty claim?",
+   "answer": "Call or message us with your order number. Your warranty documents are saved in your account.",
+   "sortOrder": 5
+  },
+  {
+   "section": "faq-workshop",
+   "question": "Do you work on bikes not bought from you?",
+   "answer": "Yes. We service, MOT and repair all makes, bought from us or not.",
+   "sortOrder": 0
+  },
+  {
+   "section": "faq-workshop",
+   "question": "How do I book an MOT?",
+   "answer": "Use the booking form on the [workshop page](/workshop#book). Enter your reg, pick a slot and we text to confirm.",
+   "sortOrder": 1
+  },
+  {
+   "section": "faq-workshop",
+   "question": "Will you do extra work without asking?",
+   "answer": "No. If we find something beyond what you booked, we call you with a price first.",
+   "sortOrder": 2
+  },
+  {
+   "section": "faq-workshop",
+   "question": "Do you fit tyres?",
+   "answer": "Yes. Bring your own or we order the right pair for you.",
+   "sortOrder": 3
+  },
+  {
+   "section": "faq-workshop",
+   "question": "Will you stamp my service book?",
+   "answer": "Yes, and you get a written note of the work done.",
+   "sortOrder": 4
+  },
+  {
+   "section": "faq-accessories",
+   "question": "Do you post accessories?",
+   "answer": "Yes, anywhere in the UK. Or pick your order up from the showroom.",
+   "sortOrder": 0
+  },
+  {
+   "section": "faq-accessories",
+   "question": "Can I try on a helmet first?",
+   "answer": "Yes. Visit the showroom and our team will help you find the right size and fit.",
+   "sortOrder": 1
+  },
+  {
+   "section": "faq-accessories",
+   "question": "Can I return something?",
+   "answer": "Unused items in their original packaging can be returned. Call us first and quote your order number.",
+   "sortOrder": 2
+  },
+  {
+   "section": "faq-accessories",
+   "question": "Where do I see my accessories order?",
+   "answer": "In your [account](/account/orders), under My orders.",
+   "sortOrder": 3
+  },
+  {
+   "section": "home",
+   "question": "How does reserving online work?",
+   "answer": "Pay the £99 deposit on the bike page and it comes off sale straight away. The deposit is taken off the price, and we confirm the next steps with you.",
+   "sortOrder": 0
+  },
+  {
+   "section": "home",
+   "question": "Do you deliver, and how much is it?",
+   "answer": "Yes, we deliver nationwide, priced per mile from our showroom. Tell us your postcode when you reserve and we will confirm the price before booking.",
+   "sortOrder": 1
+  },
+  {
+   "section": "home",
+   "question": "Can I part-exchange my bike?",
+   "answer": "Yes. Enter your reg on any bike page or in the search bar for a valuation, then use your bike as the deposit.",
+   "sortOrder": 2
+  },
+  {
+   "section": "home",
+   "question": "Can I get finance with poor credit?",
+   "answer": "Often, yes. Apply online and we will look at the options available to you. Finance is subject to status and affordability.",
+   "sortOrder": 3
+  },
+  {
+   "section": "home",
+   "question": "What does the warranty cover?",
+   "answer": "Every bike comes with 30 days' warranty. Bikes with the red badge include longer cover free, and you can extend any bike to 12 or 24 months.",
+   "sortOrder": 4
+  }
+ ],
+ "reviews": [
+  {
+   "author": "David L.",
+   "date": "13 Mar 2025",
+   "body": "I was looking for a 125cc sporty style bike and I came across a Lexmoto LXR they had for sale but I was over 200 miles away from them, they offered to deliver the bike the same day I bought it which I was so thrilled about…"
+  },
+  {
+   "author": "Adeeb R.",
+   "date": "17 Apr 2025",
+   "body": "Amazing service and people they really made me feel at ease when purchasing my first vehicle they explained in depth everything I need to do and everything about the vehicle…"
+  },
+  {
+   "author": "Sharon A.",
+   "date": "24 May 2024",
+   "body": "Very professional, friendly, helpful. Answered my questions about mopeds as I have never bought one before. Sorted all the paperwork out for me. Delivered the same day for me…"
+  }
+ ]
+}

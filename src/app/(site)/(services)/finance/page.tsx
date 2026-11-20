@@ -1,14 +1,18 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/server/services/cms';
+import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
 import { LeadForm } from '@/components/forms/LeadForm';
-import { FinanceSlider } from '@/components/info/FinanceSlider';
+import { FinanceCalculator } from '@/components/finance/FinanceCalculator';
 import { Icon } from '@/components/ui/Icon';
 import '@/styles/pages/finance.css';
 
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/finance', {
   title: 'Motorbike Finance',
   description: 'Spread the cost of your next used motorbike. Check your eligibility, work out your monthly payments and apply online. 19.9% APR representative, subject to status.',
-};
+});
+}
 
 export default function FinancePage() {
   return (
@@ -72,7 +76,7 @@ export default function FinancePage() {
 <div className="sh"><div><span className="tag">Finance calculator</span><h2 className="disp">What will it <em>cost a month?</em></h2><p>Move the sliders. Figures are a guide based on HP at 19.9% APR representative. Your actual rate depends on your circumstances.</p></div></div>
 <div className="fx-calc">
 <div>
-<FinanceSlider />
+<FinanceCalculator />
 <p className="rep">Calculator figures are for illustration only and are not an offer of credit. Finance subject to status and affordability. Over 18s and UK residents only.</p>
 </div>
 <div className="fx-side">
@@ -207,14 +211,7 @@ export default function FinancePage() {
 <section className="sec paper" id="faq">
 <div className="wrap" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,.8fr) minmax(0,1.2fr)', gap: '50px' }} id="faqgrid">
 <div><span className="sh"><span className="tag">Finance FAQs</span></span><h2 className="disp" style={{ fontSize: '64px', marginTop: '12px' }}>Finance, <em style={{ fontStyle: 'normal', color: 'var(--red)' }}>answered</em></h2><p className="muted" style={{ marginTop: '12px', fontSize: '17px' }}>Anything not covered here, call or WhatsApp us and we will talk you through it.</p><Link href="/faq" className="btn btn-ink mt2">All FAQs <Icon name="right" /></Link></div>
-<div className="faq">
-<details open><summary>Will checking my eligibility affect my credit score?</summary><p>Checking your eligibility uses a soft search where the lender offers one. Soft searches are not visible to other lenders. A full credit check only happens if you choose to go ahead with an application, and we will tell you before it does.</p></details>
-<details><summary>Can I get finance with bad credit?</summary><p>Often, yes. Apply and we will look at the options available to you. Finance is always subject to status and affordability.</p></details>
-<details><summary>Do I need a deposit?</summary><p>Not always. Many riders pay £0 deposit. A deposit or part-exchange lowers your monthly payment and the total interest you pay.</p></details>
-<details><summary>Can I use my old bike as the deposit?</summary><p>Yes. Get a part-exchange valuation and the agreed value goes towards your deposit. If there is finance outstanding on your old bike, tell us and we can settle it as part of the deal.</p></details>
-<details><summary>Can I pay it off early?</summary><p>Yes. You can settle a finance agreement early at any time. The lender will give you a settlement figure, which usually includes a reduction in interest.</p></details>
-<details><summary>Can I reserve the bike while finance is checked?</summary><p>Yes. Pay the £99 reservation deposit and the bike comes off sale. The £99 comes off the price of the bike.</p></details>
-</div>
+<FaqList section="finance" openFirst />
 </div>
 </section>
 

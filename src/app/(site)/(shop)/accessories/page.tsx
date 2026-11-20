@@ -1,15 +1,18 @@
 /* eslint-disable @next/next/no-img-element -- images sized by the page CSS */
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/server/services/cms';
 import Link from 'next/link';
 import { ShopGrid, type ShopProduct } from '@/components/shop/ShopGrid';
 import { Icon } from '@/components/ui/Icon';
 import { loadShop } from '@/server/services/shop';
 import '@/styles/pages/accessories.css';
 
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/accessories', {
   title: 'Motorcycle Accessories',
   description: 'Helmets, gloves, boots, jackets, luggage and security for your bike. Posted UK-wide or collect from our showroom.',
-};
+});
+}
 
 export default async function AccessoriesPage() {
   const { products, categories } = await loadShop();

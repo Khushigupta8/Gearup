@@ -1,14 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/server/services/cms';
 import Link from 'next/link';
 import { LeadForm } from '@/components/forms/LeadForm';
 import { Icon } from '@/components/ui/Icon';
 import '@/styles/pages/workshop.css';
 
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/workshop', {
   title: 'Motorcycle Servicing, MOT and Repairs',
   description: 'Motorcycle MOTs, servicing, tyres and repairs on all makes, by the team that preps every GearUp bike. Book online.',
-};
+});
+}
 
 export default function WorkshopPage() {
   return (

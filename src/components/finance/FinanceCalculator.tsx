@@ -8,7 +8,7 @@ const gbp = (v: number, d = 0) => '£' + v.toLocaleString('en-GB', { minimumFrac
 const terms = [24, 36, 48, 60];
 
 /** Finance page calculator: price and deposit sliders, term buttons, monthly and total payable (19.9% APR rep). */
-export function FinanceSlider() {
+export function FinanceCalculator() {
   const [price, setPrice] = useState(6495);
   const [deposit, setDeposit] = useState(650);
   const [months, setMonths] = useState(48);

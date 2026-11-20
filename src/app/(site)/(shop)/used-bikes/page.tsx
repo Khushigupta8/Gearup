@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMetadata } from '@/server/services/cms';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { BikeListing } from '@/components/bikes/BikeListing';
@@ -24,10 +25,12 @@ import { gbp, monthlyPayment } from '@/lib/format';
 import { getPublicBikes } from '@/server/services/bikes';
 import type { Bike } from '@/types';
 
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return pageMetadata('/used-bikes', {
   title: 'Motorbikes for Sale',
   description: 'Browse quality used motorbikes. Every bike HPI checked, inspected and warranted, with finance, part-exchange and UK delivery.',
-};
+});
+}
 
 type Props = { searchParams: Promise<SearchParams> };
 
