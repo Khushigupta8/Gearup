@@ -1,4 +1,5 @@
 import 'server-only';
+import { cache } from 'react';
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { nextCookies } from 'better-auth/next-js';
@@ -42,6 +43,8 @@ export const auth = betterAuth({
   session: {
     expiresIn: 60 * 60 * 24 * 30, // 30 days
     updateAge: 60 * 60 * 24,
+    // Signed cookie copy of the session: most page loads skip the database lookup (re-checked every 5 min).
+    cookieCache: { enabled: true, maxAge: 5 * 60 },
   },
   plugins: [nextCookies()],
 });
@@ -50,13 +53,13 @@ export type SessionUser = { id: string; name: string; email: string; role: Role 
 
 export const STAFF_ROLES: Role[] = ['sales', 'manager', 'admin'];
 
-/** Current signed-in user, or null. Use in server components, actions and route handlers. */
-export async function getUser(): Promise<SessionUser | null> {
+/** Current signed-in user, or null. Use in server components, actions and route handlers. Looked up once per request. */
+export const getUser = cache(async (): Promise<SessionUser | null> => {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session) return null;
   const { id, name, email, role } = session.user as typeof session.user & { role: Role };
   return { id, name, email, role };
-}
+});
 
 /** For /admin pages and actions: must be staff, optionally with one of the given roles. */
 export async function requireStaff(roles: Role[] = STAFF_ROLES): Promise<SessionUser> {
