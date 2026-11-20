@@ -3,7 +3,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { BikeForm, type BikeFormValues } from '@/components/admin/BikeForm';
 import { BikeMoneyPanels } from '@/components/admin/BikeMoneyPanels';
+import { MediaGuide } from '@/components/admin/MediaGuide';
 import { PhotoManager } from '@/components/admin/PhotoManager';
+import { VideoManager } from '@/components/admin/VideoManager';
 import { db } from '@/server/db';
 
 export const metadata: Metadata = { title: 'Edit bike' };
@@ -107,7 +109,9 @@ export default async function EditBikePage({ params, searchParams }: { params: P
 
       <div className="adm-edit">
         <div className="adm-edit-main">
+          <MediaGuide open={Boolean(created)} />
           <PhotoManager bikeId={bike.id} kind="main" photos={photos('main')} />
+          <VideoManager bikeId={bike.id} videoUrl={bike.videoUrl} />
           <PhotoManager bikeId={bike.id} kind="detail" photos={photos('detail')} />
           <PhotoManager bikeId={bike.id} kind="receipt" photos={photos('receipt')} />
           <BikeForm mode="edit" values={values} />

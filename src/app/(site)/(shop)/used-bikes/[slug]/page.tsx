@@ -30,12 +30,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const usps: [IconName, string][] = [
-  ['undo', '14-day money back guarantee'],
-  ['swap', 'Part exchange welcome'],
-  ['truck', 'Nationwide UK delivery'],
-  ['bolt', 'Quick finance decision'],
-  ['shieldcheck', 'Good or poor credit considered'],
-  ['wrench', 'Full PDI & 120-point inspection'],
+  ['undo', '14-Day Money Back Guarantee'],
+  ['swap', 'Part Exchange Welcome'],
+  ['truck', 'Nationwide UK Delivery'],
+  ['bolt', 'Quick Finance Decision'],
+  ['shieldcheck', 'Good Or Poor Credit Considered'],
+  ['wrench', 'Full PDI & 120-Point Inspection'],
 ];
 
 const TERM = 48;
@@ -220,7 +220,7 @@ export default async function BikePage({ params }: Props) {
           </div>
           <div className="pdp">
             <div className="pdp-gal">
-              <BikeGallery photos={photos} alt={name} badge={<BikeBadge bike={bike} />} />
+              <BikeGallery photos={photos} alt={name} badge={<BikeBadge bike={bike} />} video={d?.video} />
               <div className="kspecs" aria-label="Key details">
                 {keySpecs.map(([icon, label, value]) => (
                   <div key={label}>
@@ -234,15 +234,6 @@ export default async function BikePage({ params }: Props) {
                   </div>
                 ))}
               </div>
-              {d && d.detailPhotos.length > 0 && (
-                <section className="dpics" aria-labelledby="dpics-h">
-                  <h2 id="dpics-h">Detailed pictures</h2>
-                  <p className="muted">
-                    Close-ups of every mark, scratch and sign of wear, so you know exactly what you are buying.
-                  </p>
-                  <PhotoGrid photos={d.detailPhotos} />
-                </section>
-              )}
             </div>
 
             <aside className="stick pdp-buy">
@@ -282,16 +273,11 @@ export default async function BikePage({ params }: Props) {
                   </div>
                 </div>
                 {bike.badge?.kind === 'warranty' && (
-                  <div className="wbanner">
-                    <Icon name="shield" />
+                  <div className="wbadge" role="note">
+                    <Icon name="shieldcheck" />
                     <span>
                       <b>{bike.badge.months} months warranty free</b>
-                      {d?.warrantyWorth && (
-                        <>
-                          <br />
-                          <small>Worth £{d.warrantyWorth}, included with this bike</small>
-                        </>
-                      )}
+                      {d?.warrantyWorth && <small>Worth £{d.warrantyWorth}, included with this bike</small>}
                     </span>
                   </div>
                 )}
@@ -351,6 +337,17 @@ export default async function BikePage({ params }: Props) {
               <div className="mt3">
                 <Tabs tabs={tabs} />
               </div>
+              {/* Under the description (client, 19 Nov) */}
+              {d && d.detailPhotos.length > 0 && (
+                <section className="dpics" aria-labelledby="dpics-h">
+                  <h2 id="dpics-h">Detailed pictures</h2>
+                  <p className="muted">
+                    Close-ups of every mark, scratch and sign of wear, so you know exactly what you are buying.
+                  </p>
+                  <PhotoGrid photos={d.detailPhotos} />
+                </section>
+              )}
+
             </div>
           </div>
         </div>

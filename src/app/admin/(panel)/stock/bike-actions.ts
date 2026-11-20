@@ -166,9 +166,45 @@ export async function movePhoto(photoId: string, direction: -1 | 1) {
 export async function deletePhoto(photoId: string) {
   const user = await requireStaff();
   const photo = await db.bikePhoto.delete({ where: { id: photoId } });
-  if (photo.url.includes('.blob.vercel-storage.com')) await del(photo.url).catch(() => undefined);
+  // Promo banners are shared with the library and other bikes: only delete files nothing else uses.
+  const shared =
+    (await db.promoAsset.count({ where: { url: photo.url } })) + (await db.bikePhoto.count({ where: { url: photo.url } }));
+  if (!shared && photo.url.includes('.blob.vercel-storage.com')) await del(photo.url).catch(() => undefined);
   await audit(user.id, 'bike.photo_delete', photo.bikeId, { url: photo.url });
   updateTag(BIKES_TAG);
+}
+
+/** Copy promo banners from the library into a bike's main photos (added at the end of the gallery). */
+export async function addPromosToBike(bikeId: string, promoIds: string[]) {
+  const user = await requireStaff();
+  const ids = z.array(z.string().min(1)).min(1).max(20).parse(promoIds);
+  // Keep the order staff ticked them in.
+  const promos = (await db.promoAsset.findMany({ where: { id: { in: ids } } })).sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id));
+  if (!promos.length) return;
+  const last = await db.bikePhoto.aggregate({ where: { bikeId, kind: 'main' }, _max: { sortOrder: true } });
+  let order = (last._max.sortOrder ?? -1) + 1;
+  await db.bikePhoto.createMany({
+    data: promos.map((p) => ({ bikeId, kind: 'main' as const, url: p.url, caption: p.title, sortOrder: order++ })),
+  });
+  await audit(user.id, 'bike.promos_add', bikeId, { promoIds: promos.map((p) => p.id) });
+  updateTag(BIKES_TAG);
+}
+
+/** Set or clear the walkaround video (an uploaded file URL or a YouTube / Vimeo link). */
+export async function setBikeVideo(bikeId: string, url: string | null): Promise<FormResult> {
+  const user = await requireStaff();
+  const clean = url?.trim() || null;
+  if (clean && !z.url().safeParse(clean).success) return { ok: false, error: 'That does not look like a link. Paste the full address, starting https://' };
+  const before = await db.bike.findUnique({ where: { id: bikeId }, select: { videoUrl: true } });
+  await db.bike.update({ where: { id: bikeId }, data: { videoUrl: clean } });
+  // Remove the old file from storage, but never a promo/library asset or an external link.
+  const old = before?.videoUrl;
+  if (old && old !== clean && old.includes('.blob.vercel-storage.com') && old.includes(`/bikes/${bikeId}/video/`)) {
+    await del(old).catch(() => undefined);
+  }
+  await audit(user.id, clean ? 'bike.video_set' : 'bike.video_remove', bikeId, { url: clean });
+  updateTag(BIKES_TAG);
+  return { ok: true };
 }
 
 // ───────────── purchase & costs ─────────────

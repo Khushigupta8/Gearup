@@ -178,11 +178,20 @@ export default async function HomePage() {
               <span className="sep"></span>
               <span className="ck">
                 <Icon name="check" />
-                HPI clear
+                HPI Clear
               </span>
               <span className="ck">
                 <Icon name="check" />
-                14-day money back
+                14-Day Money Back
+              </span>
+            </div>
+            <div className="nofee">
+              <span className="nf-ic" aria-hidden="true">
+                <Icon name="tag" />
+              </span>
+              <span>
+                <b>No Admin Fees</b>
+                <small>What You See Is What You Pay!</small>
               </span>
             </div>
           </div>

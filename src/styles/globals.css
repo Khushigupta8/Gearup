@@ -1392,3 +1392,37 @@ a.chip{display:inline-flex;align-items:center;text-decoration:none}
 .qty span{border-left:1px solid var(--line);border-right:1px solid var(--line);font-weight:700}
 .bkline .pr .linkbtn{display:block;font-family:var(--sans);font-size:12px;color:var(--mut);margin:8px 0 0 auto}
 .inline-btns{display:flex;gap:10px;flex-wrap:wrap}
+
+/* Client changes, 19 Nov chat */
+/* Bike page gallery: tap the main photo to open it full size */
+.gal-main .gal-open{display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:zoom-in}
+.gal-zoom{position:absolute;left:14px;bottom:14px;width:38px;height:38px;border-radius:50%;background:rgba(9,9,11,.75);color:#fff;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
+.gal-zoom svg{width:18px;height:18px}
+.gal-main:hover .gal-zoom,.gal-open:focus-visible .gal-zoom{opacity:1}
+.lbox figure.is-video{width:min(1100px,100%)}
+.lbox video,.lbox iframe{display:block;width:100%;aspect-ratio:16/9;max-height:calc(100vh - 170px);border:0;border-radius:var(--r-sm);background:#000}
+
+/* Buy box: drop shadow round the whole box, rounded secondary buttons */
+.buybox{box-shadow:0 18px 44px rgba(9,9,11,.14),0 2px 8px rgba(9,9,11,.06)}
+.buybox .acts .row .btn,.buybox .acts>.btn-line{clip-path:none;border-radius:var(--r-sm)}
+/* Free warranty: a badge, not a button (client's design + red neon glow) */
+.wbadge{display:flex;gap:14px;align-items:center;margin-top:12px;padding:12px 16px;background:#fdecec;border:1.5px solid rgba(225,20,27,.55);border-radius:var(--r);color:var(--ink);cursor:default;box-shadow:0 0 0 1px rgba(225,20,27,.15),0 0 14px rgba(225,20,27,.35),0 0 30px rgba(225,20,27,.18);animation:wglow 2.8s ease-in-out infinite}
+.wbadge svg{width:30px;height:30px;flex:none;color:var(--red);stroke-width:1.8;filter:drop-shadow(0 0 4px rgba(225,20,27,.45))}
+.wbadge b{display:block;font-family:var(--narrow);font-weight:700;font-size:17px;letter-spacing:.06em;text-transform:uppercase;color:var(--red);line-height:1.2}
+.wbadge small{display:block;font-size:14px;font-weight:500;color:#3c3c41;margin-top:2px}
+@keyframes wglow{50%{box-shadow:0 0 0 1px rgba(225,20,27,.25),0 0 20px rgba(225,20,27,.5),0 0 42px rgba(225,20,27,.25)}}
+@media (prefers-reduced-motion:reduce){.wbadge{animation:none}}
+/* Delivery box: rounded Get Price button */
+.qbox form{gap:8px}
+.qbox input{border-right:1.5px solid var(--line)}
+.qbox .btn{border-radius:var(--r-sm);padding:0 22px}
+/* Detailed pictures now sit under the description */
+.pdp-tabs .dpics{margin-top:28px}
+
+/* Home hero: no admin fees */
+.nofee{display:inline-flex;align-items:center;gap:14px;margin-top:22px;padding:12px 20px 12px 12px;border:1.5px solid var(--red);border-radius:var(--r);background:rgba(225,20,27,.12)}
+.nofee .nf-ic{width:42px;height:42px;flex:none;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center}
+.nofee .nf-ic svg{width:20px;height:20px}
+.nofee b{display:block;font-family:var(--disp);font-weight:400;font-size:28px;line-height:1;letter-spacing:.02em;text-transform:uppercase;color:#fff}
+.nofee small{display:block;margin-top:3px;font-size:15px;font-weight:600;color:#e7e7ea}
+@media (max-width:640px){.nofee{display:flex}.nofee b{font-size:24px}}

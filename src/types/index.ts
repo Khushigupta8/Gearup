@@ -20,6 +20,8 @@ export type BikeDetail = {
   detailPhotos: Photo[];
   /** Photos of service receipts and invoices, shown under History. */
   receipts: Photo[];
+  /** Walkaround video: a file URL or a YouTube / Vimeo link. */
+  video?: string;
   headline: string;
   overview: string[];
   features: string[];

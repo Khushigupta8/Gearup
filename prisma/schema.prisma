@@ -251,6 +251,7 @@ model Bike {
   specRows         Json? // [[label, value], ...]
   highlights       String[]
   inspectionReport Json? // { date, results: [[area, result]] } until the PDI checklist (Phase 2)
+  videoUrl         String? // walkaround video: an uploaded file (Vercel Blob) or a YouTube / Vimeo link
   seoTitle         String?
   seoDescription   String?
 
@@ -296,6 +297,22 @@ model BikePhoto {
 
   @@index([bikeId, kind, sortOrder])
   @@map("bike_photo")
+}
+
+/// Promotional banners kept in the DMS library (client, 19 Nov). Staff add them to any bike's
+/// main photos; each use is copied into BikePhoto, so editing the library never changes live listings.
+model PromoAsset {
+  id        String   @id @default(cuid())
+  title     String
+  url       String
+  width     Int?
+  height    Int?
+  active    Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([active, sortOrder])
+  @@map("promo_asset")
 }
 
 model BikeHistoryEntry {

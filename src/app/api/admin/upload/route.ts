@@ -16,7 +16,15 @@ export async function POST(request: Request) {
       onBeforeGenerateToken: async (pathname) => {
         const user = await getUser();
         if (!user || !STAFF_ROLES.includes(user.role)) throw new Error('Not allowed');
-        if (!pathname.startsWith('bikes/') && !pathname.startsWith('products/')) throw new Error('Bad path');
+        if (!['bikes/', 'products/', 'promos/'].some((p) => pathname.startsWith(p))) throw new Error('Bad path');
+        // Walkaround videos: bikes/<id>/video/<file>. See VIDEO_LIMITS in src/lib/media-guide.ts.
+        if (/^bikes\/[^/]+\/video\//.test(pathname)) {
+          return {
+            allowedContentTypes: ['video/mp4', 'video/quicktime', 'video/webm'],
+            maximumSizeInBytes: 500 * 1024 * 1024,
+            addRandomSuffix: true,
+          };
+        }
         return {
           allowedContentTypes: ['image/webp', 'image/jpeg', 'image/png'],
           maximumSizeInBytes: 8 * 1024 * 1024,

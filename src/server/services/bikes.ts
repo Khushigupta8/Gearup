@@ -49,6 +49,7 @@ function toBike(b: BikeRow): Bike {
         gallery,
         detailPhotos: photosOf(b, 'detail'),
         receipts: photosOf(b, 'receipt'),
+        video: b.videoUrl ?? undefined,
         headline: b.headline ?? '',
         overview: (b.description ?? '').split(/\n\s*\n/).filter(Boolean),
         features: b.features,
