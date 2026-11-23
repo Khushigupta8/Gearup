@@ -1468,3 +1468,15 @@ form[aria-busy=true]{opacity:.7;pointer-events:none}
 /* Hero slide using a real bike photo instead of a cut-out */
 .hslide img.photo{max-height:340px;max-width:88%;border-radius:16px;border:5px solid #fff;object-fit:cover;aspect-ratio:4/3;filter:drop-shadow(0 26px 30px rgba(0,0,0,.45))}
 @media (max-width:640px){.hslide img.photo{max-height:220px}}
+
+/* Stock photos are 4:3 with the GearUp frame (logo top right, finance bar at the bottom): show them whole */
+.bc .im{aspect-ratio:4/3}
+.bc.big .im{flex:1.35;aspect-ratio:4/3;min-height:0;align-self:flex-start}
+@media (max-width:1024px){.bc.big .im{aspect-ratio:4/3}}
+
+/* Showroom tiles with bike cut-outs (no background) */
+.vid.cut{background:radial-gradient(120% 90% at 50% 35%,#2b2b31 0%,#0b0b0d 70%);border-bottom:4px solid var(--red)}
+.vid.cut img{inset:6% 6% 26% 6%;width:88%;height:68%;object-fit:contain;filter:drop-shadow(0 18px 18px rgba(0,0,0,.55));transition:transform .4s var(--ease)}
+.vid.cut:hover img{transform:translateX(-6px) scale(1.02)}
+.vid.cut::after{background:linear-gradient(transparent 55%,rgba(0,0,0,.75))}
+.vids .vid.cut:first-child img{inset:10% 4% 24% 4%;width:92%;height:66%}

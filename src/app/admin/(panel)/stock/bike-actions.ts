@@ -272,3 +272,15 @@ export async function setArchived(bikeId: string, archived: boolean) {
   await audit(user.id, archived ? 'bike.archive' : 'bike.unarchive', bikeId);
   updateTag(BIKES_TAG);
 }
+
+/** Cut-out (bike on a transparent background) used on the home page hero and showroom tiles. */
+export async function setBikeCutout(bikeId: string, url: string | null) {
+  const user = await requireStaff();
+  const clean = url?.trim() || null;
+  if (clean) z.url().parse(clean);
+  const before = await db.bike.findUnique({ where: { id: bikeId }, select: { cutoutUrl: true } });
+  await db.bike.update({ where: { id: bikeId }, data: { cutoutUrl: clean } });
+  if (before?.cutoutUrl && before.cutoutUrl !== clean && before.cutoutUrl.includes(`/bikes/${bikeId}/cutout/`)) await del(before.cutoutUrl).catch(() => undefined);
+  await audit(user.id, clean ? 'bike.cutout_set' : 'bike.cutout_remove', bikeId);
+  updateTag(BIKES_TAG);
+}

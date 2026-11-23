@@ -132,8 +132,9 @@ export default async function HomePage() {
       const bike = b.linkUrl?.startsWith('/used-bikes/') ? bikes.find((x) => `/used-bikes/${x.slug}` === b.linkUrl) : undefined;
       return {
         href: b.linkUrl || '/used-bikes',
-        image: b.imageUrl!,
-        photo: b.imageUrl!.includes('/bikes/'),
+        // A slide linked to a bike with a cut-out shows the cut-out (no background), like the original design.
+        image: bike?.cutout ?? b.imageUrl!,
+        photo: !bike?.cutout && b.imageUrl!.includes('/bikes/'),
         name: b.title,
         kicker: b.subtitle ?? '',
         price: bike ? gbp(bike.price) : undefined,
@@ -525,11 +526,11 @@ export default async function HomePage() {
         <div className="wrap">
           <div className="sh">
             <div>
-              <span className="tag">Walkaround videos</span>
+              <span className="tag">In the showroom</span>
               <h2 className="disp">
                 See it <em>before</em> you buy
               </h2>
-              <p>Every bike gets a video: cold start, walkaround and close-ups of any marks. Ask for a live video call any time.</p>
+              <p>Every bike is photographed in detail, with close-ups of any marks. Ask for a live video call any time.</p>
             </div>
             <Link href="/contact" className="btn btn-ink">
               <Icon name="chat" />
@@ -538,12 +539,14 @@ export default async function HomePage() {
           </div>
           <div className="vids">
             {bikes.slice(0, 5).map((b) => (
-              <Link key={b.slug} href={`/used-bikes/${b.slug}`} className="vid">
-                <img src={b.image} alt="" />
+              <Link key={b.slug} href={`/used-bikes/${b.slug}`} className={b.cutout ? 'vid cut' : 'vid'}>
+                <img src={b.cutout ?? b.image} alt="" />
                 <span className="dur">{b.detail?.video ? 'Video' : `${b.detail?.gallery.length ?? 1} photos`}</span>
-                <span className="pl">
-                  <Icon name="play" />
-                </span>
+                {b.detail?.video && (
+                  <span className="pl">
+                    <Icon name="play" />
+                  </span>
+                )}
                 <span>
                   <b>
                     {b.year} {b.make} {b.model}

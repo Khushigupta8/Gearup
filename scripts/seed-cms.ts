@@ -41,7 +41,7 @@ async function main() {
     console.log('hero slides added:', hero.length);
   }
   for (const [slug, title] of [
-    ['terms', 'Terms & conditions of sale'],
+    ['terms', 'Terms & Conditions of Sale'],
     ['privacy', 'Privacy policy'],
     ['cookies', 'Cookie policy'],
     ['returns', 'Returns, refunds & cancellations'],

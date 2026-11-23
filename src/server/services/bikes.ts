@@ -74,6 +74,7 @@ function toBike(b: BikeRow): Bike {
     status: b.status === 'reserved' ? 'reserved' : b.status === 'sold' ? 'sold' : 'available',
     registration: b.registration ?? undefined,
     featured: b.featured,
+    cutout: b.cutoutUrl ?? undefined,
     condition: b.condition,
     licence: b.licence ?? undefined,
     seoTitle: b.seoTitle ?? undefined,

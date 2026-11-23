@@ -45,6 +45,8 @@ export type Bike = {
   status: 'available' | 'reserved' | 'sold';
   /** Shown in "Fresh on the forecourt" on the home page. */
   featured?: boolean;
+  /** Bike on a transparent background (home hero, showcase). */
+  cutout?: string;
   condition?: 'new' | 'used';
   licence?: 'cbt' | 'a2' | 'full_a';
   seoTitle?: string;

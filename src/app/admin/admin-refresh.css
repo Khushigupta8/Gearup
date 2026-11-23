@@ -201,3 +201,5 @@ a.adm-tile:hover { border-color: var(--a-line); box-shadow: var(--a-sh-h); trans
 .adm-dashgrid .adm-table-wrap { overflow-x: visible }
 
 .adm-tabs { overflow-y: hidden }
+.adm-cutout { display: flex; align-items: center; gap: 16px }
+.adm-cutout img { width: 220px; aspect-ratio: 16 / 10; object-fit: contain; background: repeating-conic-gradient(#eee 0 25%, #fff 0 50%) 0 0 / 14px 14px; border: 1px solid var(--a-line); border-radius: var(--a-r) }

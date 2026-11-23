@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { BikeForm, type BikeFormValues } from '@/components/admin/BikeForm';
 import { BikeMoneyPanels } from '@/components/admin/BikeMoneyPanels';
+import { CutoutManager } from '@/components/admin/CutoutManager';
 import { MediaGuide } from '@/components/admin/MediaGuide';
 import { PhotoManager } from '@/components/admin/PhotoManager';
 import { VideoManager } from '@/components/admin/VideoManager';
@@ -117,6 +118,7 @@ export default async function EditBikePage({ params, searchParams }: { params: P
           <MediaGuide open={Boolean(created)} />
           <PhotoManager bikeId={bike.id} kind="main" photos={photos('main')} />
           <VideoManager bikeId={bike.id} videoUrl={bike.videoUrl} />
+          <CutoutManager bikeId={bike.id} url={bike.cutoutUrl} />
           <PhotoManager bikeId={bike.id} kind="detail" photos={photos('detail')} />
           <PhotoManager bikeId={bike.id} kind="receipt" photos={photos('receipt')} />
           <BikeForm mode="edit" values={values} />
