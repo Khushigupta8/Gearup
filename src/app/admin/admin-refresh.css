@@ -266,3 +266,23 @@ a.adm-tile:hover { border-color: var(--a-line); box-shadow: var(--a-sh-h); trans
 }
 .adm-tabs { scrollbar-width: none !important; -ms-overflow-style: none }
 .adm-tabs::-webkit-scrollbar { display: none !important; height: 0 !important }
+
+/* Phone cards: label in a fixed left column, the value (one or more lines) stacked on the right */
+@media (max-width: 700px) {
+  .adm-table td[data-label] { display: grid; grid-template-columns: 96px minmax(0, 1fr); column-gap: 12px; align-items: center; justify-items: end; text-align: right }
+  .adm-table td[data-label]::before { grid-row: 1 / span 3; align-self: center; justify-self: start }
+  .adm-table td[data-label] > * { grid-column: 2; max-width: 100%; overflow-wrap: anywhere }
+  .adm-table td[data-label] .adm-sub { display: block; margin-top: 2px }
+  .adm-table td:first-child { display: block }
+  .adm-table .adm-actions { display: flex }
+}
+@media (max-width: 700px) {
+  .adm-table td[data-label] { align-items: start; row-gap: 2px; padding: 6px 0; min-height: 0 }
+  .adm-table td[data-label]::before { grid-row: 1; align-self: start; line-height: 1.6 }
+  .adm-table td[data-label] > :first-child { grid-row: 1 }
+  .adm-table td[data-label]:empty { display: none }
+  .adm-table tbody td:first-child { display: block; text-align: left; justify-items: start }
+  .adm-table tbody td:first-child > * { justify-self: start }
+  .adm-table .adm-bike { justify-content: flex-start }
+  .adm-table .adm-money input { width: 110px }
+}
