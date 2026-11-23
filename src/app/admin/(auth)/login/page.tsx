@@ -1,10 +1,14 @@
 import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 import { AdminLoginForm } from '@/components/admin/AdminLoginForm';
+import { getUser, STAFF_ROLES } from '@/server/auth';
 
 export const metadata: Metadata = { title: 'Staff sign in' };
 
 export default async function AdminLoginPage({ searchParams }: { searchParams: Promise<{ next?: string; denied?: string }> }) {
   const { next, denied } = await searchParams;
+  const user = await getUser();
+  if (user && STAFF_ROLES.includes(user.role) && !denied) redirect(next?.startsWith('/admin') ? next : '/admin');
   return (
     <div className="adm-login">
       <div className="adm-login-card">
