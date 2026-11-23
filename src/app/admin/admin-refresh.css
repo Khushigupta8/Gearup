@@ -258,3 +258,11 @@ a.adm-tile:hover { border-color: var(--a-line); box-shadow: var(--a-sh-h); trans
   .adm-table tr.is-new { box-shadow: inset 3px 0 0 var(--a-red) }
   .adm-dashgrid .adm-table td { display: flex }
 }
+
+/* Phone: keep the top bar its natural height on short pages (grid was stretching it), hide tab scrollbars */
+@media (max-width: 900px) {
+  .adm-shell { grid-template-rows: auto 1fr; align-items: start }
+  .adm-side { align-self: start; min-height: 0 }
+}
+.adm-tabs { scrollbar-width: none !important; -ms-overflow-style: none }
+.adm-tabs::-webkit-scrollbar { display: none !important; height: 0 !important }
