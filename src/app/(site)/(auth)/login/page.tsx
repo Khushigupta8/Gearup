@@ -43,7 +43,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
               </span>
               <h3>Reserving a bike?</h3>
               <p>
-                Create an account when you reserve for £99. Use it to follow your bike&apos;s prep, pay the balance and keep your documents in one place.
+                Create an account when you reserve for £99. Use it to see your reservation, orders and saved bikes in one place.
               </p>
               <Link href="/used-bikes" className="btn btn-red mt2" style={{ alignSelf: 'flex-start' }}>
                 Find a bike <Icon name="right" />

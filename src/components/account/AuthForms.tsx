@@ -54,7 +54,7 @@ export function AuthCard({ next, initial = 'signin' }: { next?: string; initial?
       <p className="muted" style={{ marginTop: 6 }}>
         {mode === 'signin'
           ? 'Sign in to see your reservation, orders and saved bikes.'
-          : 'Reserve bikes, save favourites and follow your bike’s prep.'}
+          : 'Reserve bikes, save favourites and see your reservation and orders.'}
       </p>
       <form className="form mt2" onSubmit={submit}>
         {mode === 'register' && (

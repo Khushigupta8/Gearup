@@ -313,7 +313,7 @@ export function CheckoutForm({ bike, me, deposit }: { bike?: CheckoutBike; me: M
                 </li>
                 <li>
                   <Icon name="check" />
-                  Full PDI and 120-point check, live in your account
+                  Full PDI and 120-point check before handover
                 </li>
                 <li>
                   <Icon name="check" />

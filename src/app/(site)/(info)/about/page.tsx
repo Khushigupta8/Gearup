@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
-import { pageMetadata } from '@/server/services/cms';
+import { getBusiness, pageMetadata } from '@/server/services/cms';
+import { getPublicBikes } from '@/server/services/bikes';
 import Link from 'next/link';
 import { Icon } from '@/components/ui/Icon';
 import '@/styles/pages/about.css';
@@ -12,7 +13,12 @@ export function generateMetadata(): Promise<Metadata> {
 });
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const biz = await getBusiness();
+  const addr = biz.address.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  const addrMain = addr[0] ?? 'Leeds, West Yorkshire';
+  const addrRest = addr.slice(1).join(', ') || 'Viewings by appointment';
+  const inStock = (await getPublicBikes()).length;
   return (
     <div className="pg-about" style={{ display: 'contents' }}>
 
@@ -24,8 +30,8 @@ export default function AboutPage() {
 <div className="crumbs"><Link href="/">Home</Link><span className="s">/</span><span>About us</span></div>
 <h1 className="disp">Small dealer. <em>Proper bikes.</em></h1>
 <p className="lede">GearUp is an independent used motorbike dealer. We hand-pick every bike, prep it in our own workshop and sell it with a warranty. Then we deliver it nationwide.</p>
-<div className="ctas"><Link href="/used-bikes" className="btn btn-red">See the 24 bikes in stock <Icon name="right" /></Link><a href="#reviews" className="btn btn-ghost">Read our reviews</a></div>
-<span className="stamp">Founded in 20XX · Independent</span>
+<div className="ctas"><Link href="/used-bikes" className="btn btn-red">See the {inStock} bikes in stock <Icon name="right" /></Link><a href="#reviews" className="btn btn-ghost">Read our reviews</a></div>
+<span className="stamp">Independent · Leeds based</span>
 </div>
 </div>
 </section>
@@ -36,7 +42,7 @@ export default function AboutPage() {
 <div className="sh" style={{ marginBottom: '6px' }}><div><span className="tag">Our story</span><h2 className="disp">Riders <em>selling bikes</em> to riders</h2></div></div>
 <div className="prose">
 <p>We started GearUp because buying a used bike should not feel like a gamble.</p>
-<p>We are a small team, and we keep stock small on purpose. Around 24 bikes at a time means we know every one of them. We know where it came from, what we have done to it and how it rides.</p>
+<p>We are a small team, and we keep stock small on purpose. Around 20 bikes at a time means we know every one of them. We know where it came from, what we have done to it and how it rides.</p>
 <p>Every bike goes through our own workshop before it goes on sale. It gets an HPI check, a 120-point inspection and any work it needs. If a bike does not meet our standard, we do not sell it.</p>
 <p>You do not have to live nearby. We film a walkaround of every bike, take a £99 reservation online and deliver nationwide.</p>
 </div>
@@ -50,7 +56,7 @@ export default function AboutPage() {
 </div>
 </div>
 <div className="numbers">
-<div><b>24</b><small>Bikes in stock<span>Hand-picked, not bought in bulk</span></small></div>
+<div><b>{inStock}</b><small>Bikes in stock<span>Hand-picked, not bought in bulk</span></small></div>
 <div><b>120</b><small>Point inspection<span>On every bike before sale</span></small></div>
 <div><b>30</b><small>Day warranty<span>Included on every bike</span></small></div>
 <div><b>4.2</b><small>On Trustpilot<span>Rated Great from 22 reviews</span></small></div>
@@ -65,7 +71,7 @@ export default function AboutPage() {
 <div className="icard"><div className="ic red"><Icon name="wrench" /></div><h3>Prepped in our workshop</h3><p>Our own technicians inspect, service and fix each bike. You get the report.</p></div>
 <div className="icard"><div className="ic red"><Icon name="shield" /></div><h3>Warranty as standard</h3><p>30 days on every bike. Free extended warranty on selected bikes, marked in red.</p></div>
 <div className="icard"><div className="ic"><Icon name="doc" /></div><h3>HPI checked</h3><p>No outstanding finance, not stolen, not written off. Checked before it goes on sale.</p></div>
-<div className="icard"><div className="ic"><Icon name="truck" /></div><h3>Delivered UK-wide</h3><p>Mainland UK delivery priced per mile from our showroom. Ask us for a price.<br /><Link href="/contact" className="lnk">Get a delivery price <Icon name="right" /></Link></p></div>
+<div className="icard"><div className="ic"><Icon name="truck" /></div><h3>Delivered UK-wide</h3><p>Nationwide delivery priced per mile from our showroom. Ask us for a price.<br /><Link href="/contact" className="lnk">Get a delivery price <Icon name="right" /></Link></p></div>
 <div className="icard"><div className="ic"><Icon name="left" /></div><h3>14-day money back</h3><p>Bought online and it is not right? Return the bike within 14 days for your money back.</p></div>
 </div>
 </div>
@@ -110,7 +116,7 @@ export default function AboutPage() {
 <div className="visit">
 <div>
 <div className="sh" style={{ marginBottom: 0 }}><div><span className="tag">Visit us</span><h2 className="disp">Come and see <em>the bikes</em></h2><p>Book a viewing or test ride and we will have the bike out, warmed up and ready. Or just drop in for a look round.</p></div></div>
-<div className="addr"><Icon name="pin" /><span><b style={{ color: '#fff' }}>GearUp Motorcycles</b><br />Showroom address here, Town, Postcode</span></div>
+<div className="addr"><Icon name="pin" /><span><b style={{ color: '#fff' }}>GearUp Motorcycles</b><br />{addrMain}, {addrRest}</span></div>
 <div className="hrs"><b>Mon to Fri</b><span>9:00 to 17:30</span><b>Saturday</b><span>9:00 to 16:00</span><b>Sunday</b><span>Closed</span></div>
 <div className="ctas"><Link href="/contact" className="btn btn-red"><Icon name="cal" />Book a viewing</Link><Link href="/contact" className="btn btn-ghost"><Icon name="phone" />0744 072 1478</Link></div>
 </div>

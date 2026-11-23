@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { AccountPage } from '@/components/account/AccountPage';
+import { Icon } from '@/components/ui/Icon';
 import { money, orderStatus } from '@/lib/orders';
 import { getAccount } from '@/server/account';
 import { db } from '@/server/db';
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
   robots: { index: false },
 };
 
-export default async function OrdersPage() {
+export default async function OrdersPage({ searchParams }: { searchParams: Promise<{ paid?: string }> }) {
+  const { paid } = await searchParams;
   const { customer } = await getAccount();
   const orders = await db.order.findMany({
     where: { customerId: customer.id, status: { not: 'pending_payment' } },
@@ -21,6 +23,12 @@ export default async function OrdersPage() {
 
   return (
     <AccountPage crumb="My orders" title="My" em="orders">
+      {paid && (
+        <div className="success">
+          <Icon name="check" />
+          Payment received for order {paid}. Thank you! We will text you when your kit is on its way.
+        </div>
+      )}
       <div className="apanel">
         <div className="ph">
           <h3>My orders</h3>

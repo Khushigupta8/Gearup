@@ -72,7 +72,7 @@ export default async function ReservePage({ params }: { params: Promise<{ slug: 
             <div className="formcard">
               <h2>Sign in to reserve</h2>
               <p>
-                You need a GearUp account to reserve. It is where you follow your bike&apos;s PDI, pay the balance and keep your documents. It takes a
+                You need a GearUp account to reserve. It is where you see your reservation, deposit and balance. It takes a
                 minute.
               </p>
               <div className="inline-btns mt2">

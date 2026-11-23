@@ -57,7 +57,7 @@ export function StockRow({ bike }: { bike: StockRowData }) {
       <td>
         <div className="adm-money">
           £
-          <input form={formId} name="price" type="number" min={0} step={5} defaultValue={bike.pricePounds} aria-label="Price in pounds" />
+          <input form={formId} name="price" type="number" min={0} step={1} defaultValue={bike.pricePounds} aria-label="Price in pounds" />
         </div>
       </td>
       <td>

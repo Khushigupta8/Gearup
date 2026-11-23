@@ -162,7 +162,7 @@ export default async function HomePage() {
             </p>
             <div className="ctas">
               <Link href="/used-bikes" className="btn btn-red">
-                Browse 24 bikes <Icon name="right" />
+                Browse {bikes.length} bikes <Icon name="right" />
               </Link>
               <a href="#value" className="btn btn-ghost">
                 Value my bike
@@ -204,7 +204,7 @@ export default async function HomePage() {
       <section className="stats" aria-label="Why buy from GearUp">
         <div className="wrap">
           <div className="stat">
-            <b>24</b>
+            <b>{bikes.length}</b>
             <span>
               Bikes in stock<small>New arrivals every week</small>
             </span>

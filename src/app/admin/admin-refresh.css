@@ -199,3 +199,5 @@ a.adm-tile:hover { border-color: var(--a-line); box-shadow: var(--a-sh-h); trans
 .adm-dashgrid .adm-table th:nth-child(6), .adm-dashgrid .adm-table td:nth-child(6),
 .adm-dashgrid .adm-table th:nth-child(7), .adm-dashgrid .adm-table td:nth-child(7) { display: none }
 .adm-dashgrid .adm-table-wrap { overflow-x: visible }
+
+.adm-tabs { overflow-y: hidden }

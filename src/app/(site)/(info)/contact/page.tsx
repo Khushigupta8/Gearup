@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { pageMetadata } from '@/server/services/cms';
+import { getBusiness, pageMetadata } from '@/server/services/cms';
 import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
 import { LeadForm } from '@/components/forms/LeadForm';
@@ -13,7 +13,12 @@ export function generateMetadata(): Promise<Metadata> {
 });
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const biz = await getBusiness();
+  const addr = biz.address.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  const addrMain = addr[0] ?? 'Leeds, West Yorkshire';
+  const addrRest = addr.slice(1).join(', ') || 'Viewings by appointment';
+  const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr.length ? addr.join(', ') : 'GearUp Motorcycles Leeds')}`;
   return (
     <div className="pg-contact" style={{ display: 'contents' }}>
 
@@ -39,7 +44,7 @@ export default function ContactPage() {
 <div className="cblock"><span className="ic"><Icon name="phone" /></span><div><b>Call us</b><a href="tel:07440721478" className="go">0744 072 1478</a><span>Sales, finance and workshop</span></div></div>
 <div className="cblock wa"><span className="ic"><Icon name="chat" /></span><div><b>WhatsApp</b><a href="#enquiry" className="go">0744 072 1478</a><span>Send photos of your part-ex</span></div></div>
 <div className="cblock"><span className="ic"><Icon name="mail" /></span><div><b>Email</b><a href="mailto:sales@gearupmotorcycles.co.uk" className="go">sales@gearup&shy;motorcycles.co.uk</a><span>We reply in opening hours</span></div></div>
-<div className="cblock"><span className="ic"><Icon name="pin" /></span><div><b>Showroom</b><a href="#map" className="go">Showroom address here</a><span>Town, Postcode</span></div></div>
+<div className="cblock"><span className="ic"><Icon name="pin" /></span><div><b>Showroom</b><a href={mapUrl} className="go" target="_blank" rel="noopener">{addrMain}</a><span>{addrRest}</span></div></div>
 </div>
 </div>
 </section>
@@ -104,7 +109,7 @@ export default function ContactPage() {
 </svg>
 <span className="mpin" aria-hidden="true"></span>
 <span className="pinlab"><Icon name="pin" />GearUp Motorcycles</span>
-<div className="mfoot"><span><b>Showroom address here</b><small>Town, Postcode · Parking details to follow</small></span><a href="#map" className="btn btn-ink">Get directions</a></div>
+<div className="mfoot"><span><b>{addrMain}</b><small>{addrRest}</small></span><a href={mapUrl} className="btn btn-ink" target="_blank" rel="noopener">Get directions</a></div>
 </div>
 </div>
 </div>
@@ -116,7 +121,7 @@ export default function ContactPage() {
 <div className="alt">
 <div className="icard"><div className="ic red"><Icon name="play" /></div><h3>Video walkaround</h3><p>Every bike has a filmed walkaround. Want a closer look? Book a live video call and we will start it up for you.</p><Link href="/used-bikes" className="lnk mt1">Watch the videos <Icon name="right" /></Link></div>
 <div className="icard"><div className="ic"><Icon name="lock" /></div><h3>Reserve for £99</h3><p>Pay the deposit online and the bike comes off sale. The £99 comes off the price.</p><Link href="/faq#buying" className="lnk mt1">How reserving works <Icon name="right" /></Link></div>
-<div className="icard"><div className="ic"><Icon name="truck" /></div><h3>Delivered to your door</h3><p>Mainland UK delivery priced per mile from our showroom. Call or message us for a price.</p><a href="#enquiry" className="lnk mt1">Ask for a delivery price <Icon name="right" /></a></div>
+<div className="icard"><div className="ic"><Icon name="truck" /></div><h3>Delivered to your door</h3><p>Nationwide delivery priced per mile from our showroom. Call or message us for a price.</p><a href="#enquiry" className="lnk mt1">Ask for a delivery price <Icon name="right" /></a></div>
 </div>
 </div>
 </section>

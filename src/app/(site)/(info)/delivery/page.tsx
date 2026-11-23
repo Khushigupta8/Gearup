@@ -77,7 +77,7 @@ export default function DeliveryPage() {
 <div className="rates">
 <div><small>Rate per mile</small><b>£1.20</b><span className="samp">Sample</span></div>
 <div><small>Minimum charge</small><b>£49</b><span className="samp">Sample</span></div>
-<div><small>Coverage</small><b>UK</b><small style={{ textTransform: 'none', letterSpacing: 0, fontFamily: 'var(--sans)', fontWeight: 400 }}>Mainland only</small></div>
+<div><small>Coverage</small><b>UK</b><small style={{ textTransform: 'none', letterSpacing: 0, fontFamily: 'var(--sans)', fontWeight: 400 }}>Nationwide</small></div>
 </div>
 <ol className="how vsteps" style={{ gridTemplateColumns: '1fr', gap: '20px', marginTop: '30px' }}>
 <li style={{ display: 'grid', gridTemplateColumns: '64px 1fr', gap: '18px', padding: 0 }}><span className="ic"><Icon name="pin" /></span><div><h4 style={{ marginTop: '4px' }}>We measure the road miles</h4><p>From our showroom to your postcode, by the route the van will drive.</p></div></li>

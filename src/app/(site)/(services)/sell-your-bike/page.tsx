@@ -29,7 +29,7 @@ export default function SellYourBikePage() {
 <div className="mini">
 <div><b>Free</b><small>Valuation</small></div>
 <div><b>Bank</b><small>Transfer</small></div>
-<div><b>We collect</b><small>Mainland UK</small></div>
+<div><b>We collect</b><small>Nationwide</small></div>
 </div>
 </div>
 <LeadForm

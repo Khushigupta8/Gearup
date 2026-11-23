@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/server/services/cms';
 import { FaqList } from '@/components/cms/FaqList';

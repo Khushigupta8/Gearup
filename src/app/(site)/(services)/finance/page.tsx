@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { pageMetadata } from '@/server/services/cms';
+import { getPublicBikes } from '@/server/services/bikes';
+import { gbp, monthlyPayment } from '@/lib/format';
 import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
 import { LeadForm } from '@/components/forms/LeadForm';
@@ -14,7 +16,9 @@ export function generateMetadata(): Promise<Metadata> {
 });
 }
 
-export default function FinancePage() {
+export default async function FinancePage() {
+  const bikes = await getPublicBikes();
+  const cheapest = bikes.length ? Math.min(...bikes.map((b) => b.price)) : 0;
   return (
     <div className="pg-finance" style={{ display: 'contents' }}>
 
@@ -31,7 +35,7 @@ export default function FinancePage() {
 <a href="#calc" className="btn btn-ghost">Work out my payments</a>
 </div>
 </div>
-<div className="pbox"><b>19.9%</b><small>APR representative. Bikes from £2,295, or about £68 a month. Finance subject to status and affordability.</small></div>
+<div className="pbox"><b>19.9%</b><small>APR representative.{cheapest > 0 && ` Bikes from ${gbp(cheapest)}, or about ${gbp(Math.round(monthlyPayment(cheapest, 48)))} a month.`} Finance subject to status and affordability.</small></div>
 </div>
 </section>
 <section className="sec">
