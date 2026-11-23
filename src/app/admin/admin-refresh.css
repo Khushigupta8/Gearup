@@ -225,3 +225,36 @@ a.adm-tile:hover { border-color: var(--a-line); box-shadow: var(--a-sh-h); trans
   .adm-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) }
   .adm-savebar { flex-wrap: wrap }
 }
+
+/* ── Phone: hamburger menu + tables as labelled cards ── */
+.adm-menubtn { display: none }
+@media (max-width: 900px) {
+  .adm-side { flex-wrap: wrap; overflow: visible }
+  .adm-menubtn { display: inline-flex; align-items: center; gap: 10px; margin-left: auto; height: 38px; padding: 0 12px; border: 1px solid var(--a-side3); border-radius: var(--a-r-sm); background: var(--a-side2); color: #fff; font: inherit; font-weight: 600; font-size: 14px; cursor: pointer }
+  .adm-menubtn svg { width: 18px; height: 18px }
+  .adm-nav { display: none; flex-basis: 100%; flex-direction: column; overflow: visible; padding-top: 8px; gap: 12px }
+  .adm-nav.open { display: flex }
+  .adm-nav-group { flex-direction: column; gap: 2px }
+  .adm-nav-title { display: block; padding: 4px 10px }
+  .adm-nav-link { white-space: normal; padding: 10px }
+  .adm-nav-link.on::before { display: none }
+}
+@media (max-width: 700px) {
+  .adm-table, .adm-table tbody, .adm-table tr, .adm-table td { display: block; width: 100% }
+  .adm-table thead { display: none }
+  .adm-table-wrap, .adm-panel { overflow-x: visible }
+  .adm-table tbody tr { padding: 12px 14px; border-bottom: 1px solid var(--a-line) }
+  .adm-table tbody tr:last-child { border-bottom: 0 }
+  .adm-table td { border: 0; padding: 4px 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: right; min-height: 30px }
+  .adm-table td[data-label]::before { content: attr(data-label); color: var(--a-mut); font-size: 12.5px; font-weight: 600; text-align: left; flex: none }
+  .adm-table td:first-child { display: block; text-align: left; padding-bottom: 8px }
+  .adm-table td:first-child::before { display: none }
+  .adm-table td:empty, .adm-table td[data-label=""]::before { display: none }
+  .adm-table .adm-num { text-align: right }
+  .adm-table .adm-bike { min-width: 0 }
+  .adm-table .adm-actions { justify-content: flex-end; padding-top: 8px }
+  .adm-table .adm-actions::before { display: none }
+  .adm-table tr.is-new td:first-child { box-shadow: none }
+  .adm-table tr.is-new { box-shadow: inset 3px 0 0 var(--a-red) }
+  .adm-dashgrid .adm-table td { display: flex }
+}

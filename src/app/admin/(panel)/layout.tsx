@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { AdminNav } from '@/components/admin/AdminNav';
 import { IconSprite } from '@/components/ui/IconSprite';
+import { TableLabels } from '@/components/admin/TableLabels';
 import { SignOutButton } from '@/components/admin/SignOutButton';
 import { requireStaff } from '@/server/auth';
 
@@ -11,6 +12,7 @@ export default async function AdminPanelLayout({ children }: { children: ReactNo
   return (
     <div className="adm-shell">
       <IconSprite />
+      <TableLabels />
       <aside className="adm-side">
         <a href="/admin" className="adm-brand">
           {/* eslint-disable-next-line @next/next/no-img-element */}
