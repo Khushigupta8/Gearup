@@ -68,7 +68,7 @@ To use any of these rights, contact us using the details in section 1. We will r
 
 ## 7. Cookies
 
-Our website only uses the cookies it needs to work, such as keeping you signed in and remembering your basket. See our [cookie policy](/cookies) for details.
+Our website only uses the cookies it needs to work, such as keeping you signed in and remembering your basket. See our [cookie policy](/legal/cookies) for details.
 
 ## 8. Complaints
 

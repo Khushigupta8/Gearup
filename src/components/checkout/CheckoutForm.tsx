@@ -199,9 +199,20 @@ export function CheckoutForm({ bike, me, deposit }: { bike?: CheckoutBike; me: M
           <div className="form mt2">
             <label className="chk">
               <input type="checkbox" name="terms" required />
-              {bike
-                ? 'I agree to the reservation terms. My deposit comes off the price of the bike and is refundable if the bike fails its pre-sale checks.'
-                : 'I agree to the terms of sale. Unused kit can be returned within 14 days.'}
+              <span>
+                {bike
+                  ? 'I agree to the reservation terms. My deposit comes off the price of the bike and is refundable if the bike fails its pre-sale checks. '
+                  : 'I agree to the terms of sale. Unused kit can be returned within 14 days. '}
+                See the{' '}
+                <Link href="/legal/terms" target="_blank">
+                  terms of sale
+                </Link>{' '}
+                and{' '}
+                <Link href="/legal/returns" target="_blank">
+                  returns policy
+                </Link>
+                .
+              </span>
             </label>
             {error && (
               <p className="formerr" role="alert">

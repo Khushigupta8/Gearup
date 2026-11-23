@@ -203,7 +203,7 @@ export default function FinancePage() {
 <div className="icard mt2" style={{ background: 'var(--paper)', borderColor: 'var(--paper)' }}>
 <h3 style={{ marginTop: 0 }}>Ready when you are</h3>
 <p>Found the bike? Reserve it for £99 now and sort finance before you collect.</p>
-<div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '16px' }}><Link href="/used-bikes" className="btn btn-red">Browse bikes</Link><Link href="/used-bikes/2019-bmw-r1250gs/reserve" className="btn btn-ink">Reserve for £99</Link></div>
+<div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '16px' }}><Link href="/used-bikes" className="btn btn-red">Browse bikes</Link><Link href="/faq#buying" className="btn btn-ink">How reserving works</Link></div>
 </div>
 </div>
 </div>

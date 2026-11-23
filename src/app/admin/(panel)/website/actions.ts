@@ -193,7 +193,7 @@ export async function saveHeroSlide(_prev: CmsResult, form: FormData): Promise<C
       title: z.string().min(2, 'Add the bike name.').max(80),
       subtitle: z.string().max(40),
       imageUrl: z.string().min(1, 'Upload the bike picture.').max(500),
-      linkUrl: z.string().regex(/^\/[\w\-/?=&.]*$/, 'The link must be a page on this site, e.g. /used-bikes/2019-bmw-r1250gs').max(200),
+      linkUrl: z.string().regex(/^\/[\w\-/?=&.]*$/, 'The link must be a page on this site, e.g. /used-bikes/2021-lexmoto-lxr-125').max(200),
       startsAt: z.string(),
       endsAt: z.string(),
     })

@@ -75,7 +75,7 @@ export default function ContactPage() {
 <div className="frow"><div className="fl"><label htmlFor="ce">Email</label><input id="ce" type="email" placeholder="you@example.com" /></div><div className="fl"><label htmlFor="cc">Best way to reply</label><div className="sel"><select id="cc"><option>Phone call</option><option>WhatsApp</option><option>Email</option></select><Icon name="down" /></div></div></div>
 <div className="frow"><div className="fl"><label htmlFor="cd">Preferred date</label><input id="cd" type="date" /></div><div className="fl"><label htmlFor="ctm">Preferred time</label><div className="sel"><select id="ctm"><option>Morning (9:00 to 12:00)</option><option>Afternoon (12:00 to 15:00)</option><option>Late afternoon (15:00 to 17:30)</option><option>Saturday (9:00 to 16:00)</option></select><Icon name="down" /></div></div></div>
 <div className="fl"><label htmlFor="msg">Message</label><textarea id="msg" placeholder="e.g. I would like to view the MT-07 on Saturday morning."></textarea></div>
-<label className="chk"><input type="checkbox" defaultChecked /><span>Text me updates about this enquiry. We never share your details. See our <a href="#">privacy policy</a>.</span></label>
+<label className="chk"><input type="checkbox" defaultChecked /><span>Text me updates about this enquiry. We never share your details. See our <Link href="/legal/privacy">privacy policy</Link>.</span></label>
 <button className="btn btn-red" type="submit">Send enquiry <Icon name="right" /></button>
 </div>
 </LeadForm>
@@ -115,7 +115,7 @@ export default function ContactPage() {
 <div className="sh"><div><span className="tag">Can&apos;t make it in?</span><h2 className="disp">Buy from <em>anywhere</em> in the UK</h2><p>Most of our customers never visit. Here is how they do it.</p></div></div>
 <div className="alt">
 <div className="icard"><div className="ic red"><Icon name="play" /></div><h3>Video walkaround</h3><p>Every bike has a filmed walkaround. Want a closer look? Book a live video call and we will start it up for you.</p><Link href="/used-bikes" className="lnk mt1">Watch the videos <Icon name="right" /></Link></div>
-<div className="icard"><div className="ic"><Icon name="lock" /></div><h3>Reserve for £99</h3><p>Pay the deposit online and the bike comes off sale. The £99 comes off the price.</p><Link href="/used-bikes/2019-bmw-r1250gs/reserve" className="lnk mt1">How reserving works <Icon name="right" /></Link></div>
+<div className="icard"><div className="ic"><Icon name="lock" /></div><h3>Reserve for £99</h3><p>Pay the deposit online and the bike comes off sale. The £99 comes off the price.</p><Link href="/faq#buying" className="lnk mt1">How reserving works <Icon name="right" /></Link></div>
 <div className="icard"><div className="ic"><Icon name="truck" /></div><h3>Delivered to your door</h3><p>Mainland UK delivery priced per mile from our showroom. Call or message us for a price.</p><a href="#enquiry" className="lnk mt1">Ask for a delivery price <Icon name="right" /></a></div>
 </div>
 </div>

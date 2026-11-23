@@ -114,7 +114,7 @@ We work hard to keep the website accurate and available, but we cannot promise i
 
 ## 15. Complaints
 
-If something goes wrong, please tell us. Our [complaints procedure](/complaints) explains how we handle complaints.
+If something goes wrong, please tell us. Our [complaints procedure](/legal/complaints) explains how we handle complaints.
 
 ## 16. Changes to these terms
 

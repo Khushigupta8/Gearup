@@ -27,4 +27,4 @@ Please give us your name, your order or registration number, what went wrong and
 
 ## Your legal rights
 
-This procedure does not affect your legal rights. See our [terms and conditions](/terms) for more about your rights when you buy from us.
+This procedure does not affect your legal rights. See our [terms and conditions](/legal/terms) for more about your rights when you buy from us.

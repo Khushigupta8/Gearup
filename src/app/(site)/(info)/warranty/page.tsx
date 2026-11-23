@@ -4,6 +4,8 @@ import { pageMetadata } from '@/server/services/cms';
 import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
 import { Icon } from '@/components/ui/Icon';
+import { BikeCard } from '@/components/bikes/BikeCard';
+import { getPublicBikes } from '@/server/services/bikes';
 import '@/styles/pages/warranty.css';
 
 export function generateMetadata(): Promise<Metadata> {
@@ -13,7 +15,9 @@ export function generateMetadata(): Promise<Metadata> {
 });
 }
 
-export default function WarrantyPage() {
+export default async function WarrantyPage() {
+  const bikes = await getPublicBikes();
+  const demo = bikes.find((b) => b.badge?.kind === 'warranty') ?? bikes[0];
   return (
     <div className="pg-warranty" style={{ display: 'contents' }}>
 
@@ -95,13 +99,12 @@ export default function WarrantyPage() {
 <Link href="/used-bikes" className="btn btn-red mt3">Free warranty bikes <Icon name="right" /></Link>
 </div>
 <div className="demo">
-<span className="arrow">Example: 6 months free</span>
-<article className="bc">
-<Link href="/used-bikes/2019-bmw-r1250gs" className="im"><img src="/assets/images/bikes/kawasaki-ninja-zx6r.webp" alt="2020 Kawasaki Ninja ZX-6R" loading="lazy" /><span className="ribbon">6 months<br />warranty free</span><span className="pricechip"><b>£7,995</b><span>£236/mo</span></span></Link>
-<div className="bd"><h3><small>Kawasaki</small><Link href="/used-bikes/2019-bmw-r1250gs">Ninja ZX-6R</Link></h3>
-<div className="sp"><span><Icon name="cal" />2020</span><span><Icon name="gauge" />5,640 miles</span><span><Icon name="engine" />636cc</span></div>
-<div className="ft"><Link href="/used-bikes/2019-bmw-r1250gs/reserve" className="lnk">Reserve for £99 <Icon name="right" /></Link><span className="heart"><Icon name="heart" /></span></div></div>
-</article>
+{demo && (
+  <>
+    <span className="arrow">Example: {demo.badge?.kind === 'warranty' ? `${demo.badge.months} months free` : 'warranty included'}</span>
+    <BikeCard bike={demo} />
+  </>
+)}
 </div>
 </div>
 </section>
@@ -123,7 +126,7 @@ export default function WarrantyPage() {
 </section>
 <section className="sec paper" id="inspection">
 <div className="wrap">
-<div className="sh"><div><span className="tag">120-point inspection</span><h2 className="disp">Every check, <em>in full</em></h2><p>Before a bike goes on sale our technicians work through all 120 checks. If something fails, we fix it or the bike does not go on sale. Your bike&apos;s report is in your account.</p></div><Link href="/used-bikes/2019-bmw-r1250gs" className="lnk">See an example report <Icon name="right" /></Link></div>
+<div className="sh"><div><span className="tag">120-point inspection</span><h2 className="disp">Every check, <em>in full</em></h2><p>Before a bike goes on sale our technicians work through all 120 checks. If something fails, we fix it or the bike does not go on sale. Each bike&apos;s report is on its page.</p></div><Link href={demo ? `/used-bikes/${demo.slug}` : '/used-bikes'} className="lnk">See an example report <Icon name="right" /></Link></div>
 <div className="ibar">
 <a href="#c1"><b>24</b><small>Engine &amp; drivetrain</small></a>
 <a href="#c2"><b>16</b><small>Brakes &amp; ABS</small></a>

@@ -96,13 +96,6 @@ const warrantyTiers = [
   { n: 24, unit: 'Months', note: 'Free or extend' },
 ];
 
-const videos = [
-  { img: '/assets/images/gallery/bmw-r1250gs/01-side.webp', dur: '4:12', title: '2019 BMW R 1250 GS walkaround', note: 'Cold start, panniers, service book', slug: '2019-bmw-r1250gs' },
-  { img: '/assets/images/bikes/triumph-street-triple-rs.webp', dur: '3:05', title: 'Street Triple RS', note: 'Exhaust note and close-ups', slug: '2018-triumph-street-triple-rs' },
-  { img: '/assets/images/bikes/kawasaki-ninja-zx6r.webp', dur: '2:48', title: 'Ninja ZX-6R', note: 'Walkaround and dash check', slug: '2020-kawasaki-ninja-zx6r' },
-  { img: '/assets/images/bikes/triumph-bonneville-t120.webp', dur: '3:31', title: 'Bonneville T120', note: 'Just arrived', slug: '2019-triumph-bonneville-t120' },
-  { img: '/assets/images/bikes/honda-cmx500-rebel.webp', dur: '2:20', title: 'CMX500 Rebel', note: 'A2-friendly cruiser', slug: '2021-honda-cmx500-rebel' },
-];
 
 
 
@@ -140,6 +133,7 @@ export default async function HomePage() {
       return {
         href: b.linkUrl || '/used-bikes',
         image: b.imageUrl!,
+        photo: b.imageUrl!.includes('/bikes/'),
         name: b.title,
         kicker: b.subtitle ?? '',
         price: bike ? gbp(bike.price) : undefined,
@@ -543,16 +537,20 @@ export default async function HomePage() {
             </Link>
           </div>
           <div className="vids">
-            {videos.map((v) => (
-              <Link key={v.title} href={`/used-bikes/${v.slug}`} className="vid">
-                <img src={v.img} alt="" />
-                <span className="dur">{v.dur}</span>
+            {bikes.slice(0, 5).map((b) => (
+              <Link key={b.slug} href={`/used-bikes/${b.slug}`} className="vid">
+                <img src={b.image} alt="" />
+                <span className="dur">{b.detail?.video ? 'Video' : `${b.detail?.gallery.length ?? 1} photos`}</span>
                 <span className="pl">
                   <Icon name="play" />
                 </span>
                 <span>
-                  <b>{v.title}</b>
-                  <small>{v.note}</small>
+                  <b>
+                    {b.year} {b.make} {b.model}
+                  </b>
+                  <small>
+                    {b.mileage.toLocaleString('en-GB')} miles · {gbp(b.price)}
+                  </small>
                 </span>
               </Link>
             ))}

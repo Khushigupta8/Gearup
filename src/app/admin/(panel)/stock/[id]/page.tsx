@@ -104,6 +104,11 @@ export default async function EditBikePage({ params, searchParams }: { params: P
             )}
           </p>
         </div>
+        <div className="adm-head-acts">
+          <a href={`/admin/print/${bike.id}`} target="_blank" rel="noopener" className="adm-btn adm-btn-line">
+            Print bike (A4 + QR)
+          </a>
+        </div>
       </header>
       {created && <p className="adm-notice">Bike created. Now add photos below, then set the status to Available when it&apos;s ready to go live.</p>}
 

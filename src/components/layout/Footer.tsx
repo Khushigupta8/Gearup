@@ -5,6 +5,7 @@ import { footerNav, mobileNav } from '@/lib/navigation';
 import { site } from '@/lib/site';
 import { telHref, waHref } from '@/lib/cms';
 import { getBusiness } from '@/server/services/cms';
+import { CookieSettingsLink } from './CookieConsent';
 import { SocialLinks } from './SocialLinks';
 
 export async function Footer() {
@@ -78,8 +79,7 @@ export async function Footer() {
               © {new Date().getFullYear()} {site.name}.{biz.legalLine ? ` ${biz.legalLine}` : ''}
             </span>
             <span>
-              <Link href="/terms">Terms</Link> · <Link href="/privacy">Privacy</Link> · <Link href="/cookies">Cookies</Link> ·{' '}
-              <Link href="/complaints">Complaints</Link>
+              <Link href="/legal">Legal &amp; policies</Link> · <CookieSettingsLink />
             </span>
           </div>
         </div>

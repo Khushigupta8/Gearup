@@ -3,7 +3,7 @@ import type { NextConfig } from 'next';
 // Old static URLs (/finance.html etc.) keep working after the move to Next.js.
 const legacyPages: Record<string, string> = {
   index: '/',
-  bike: '/used-bikes/2019-bmw-r1250gs',
+  bike: '/used-bikes',
   reserve: '/used-bikes',
   account: '/account',
   'account-orders': '/account/orders',

@@ -1,0 +1,66 @@
+/* "Print bike" A4 spec sheet. Dark by default (premium showroom card), ?light=1 for ink-saving. */
+.psheet-wrap { --ps-bg: #0b0b0d; --ps-ink: #fff; --ps-mut: #a9a9b2; --ps-line: #26262c; --ps-card: #151518; --ps-red: #e1141b;
+  min-height: 100vh; background: #2b2b31; padding: 24px 16px 48px; font-family: var(--sans, "Archivo", Arial, sans-serif); }
+.psheet-wrap.light { --ps-bg: #fff; --ps-ink: #0b0b0d; --ps-mut: #5f5f68; --ps-line: #e4e4e8; --ps-card: #f5f5f7; }
+.ptools { max-width: 210mm; margin: 0 auto 14px; display: flex; gap: 16px; align-items: center; justify-content: flex-end; font-size: 14px }
+.ptools a { color: #e6e6ea; text-decoration: none }
+.ptools a:first-child { margin-right: auto }
+.ptools a:hover { text-decoration: underline }
+.ptools-print { height: 40px; padding: 0 18px; border: 0; border-radius: 8px; background: #e1141b; color: #fff; font: inherit; font-weight: 700; cursor: pointer }
+
+.psheet { width: 210mm; min-height: 297mm; margin: 0 auto; background: var(--ps-bg); color: var(--ps-ink); padding: 12mm 12mm 10mm; box-sizing: border-box;
+  display: flex; flex-direction: column; gap: 6mm; box-shadow: 0 20px 60px rgba(0, 0, 0, .4); -webkit-print-color-adjust: exact; print-color-adjust: exact }
+.psheet * { box-sizing: border-box }
+.ps-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1.2mm solid var(--ps-red); padding-bottom: 4mm }
+.ps-logo { height: 14mm; width: auto }
+.light .ps-logo { background: #0b0b0d; padding: 2mm 3mm; border-radius: 2mm }
+.ps-contact { text-align: right; display: grid }
+.ps-contact b { font-family: var(--disp, "Anton", Impact, sans-serif); font-weight: 400; font-size: 8mm; line-height: 1; letter-spacing: .02em }
+.ps-contact span { color: var(--ps-mut); font-size: 3.4mm; margin-top: 1mm }
+
+.ps-photo { position: relative; aspect-ratio: 4 / 3; max-height: 96mm; width: 100%; border-radius: 3mm; overflow: hidden; background: var(--ps-card); display: flex; align-items: center; justify-content: center; color: var(--ps-mut) }
+.ps-photo img { width: 100%; height: 100%; object-fit: cover }
+.ps-ribbon { position: absolute; top: 7mm; left: -16mm; width: 62mm; transform: rotate(-35deg); background: var(--ps-red); color: #fff; text-align: center;
+  font-family: var(--disp, "Anton", Impact, sans-serif); text-transform: uppercase; font-size: 4mm; line-height: 1.15; padding: 1.6mm 0 }
+.ps-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; margin-top: -3mm }
+.ps-thumbs img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 2mm }
+
+.ps-title { display: flex; justify-content: space-between; align-items: flex-end; gap: 6mm }
+.ps-title small { color: var(--ps-red); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 3.4mm }
+.ps-title h1 { font-family: var(--disp, "Anton", Impact, sans-serif); font-weight: 400; text-transform: uppercase; font-size: 12mm; line-height: .95; margin: 1mm 0 0 }
+.ps-variant { margin: 1.5mm 0 0; color: var(--ps-mut); font-size: 4mm }
+.ps-price { text-align: right; flex: none }
+.ps-price b { display: block; font-family: var(--disp, "Anton", Impact, sans-serif); font-weight: 400; font-size: 17mm; line-height: .9; color: var(--ps-red) }
+.ps-price span { display: block; margin-top: 1.5mm; font-size: 4mm; font-weight: 600 }
+
+.ps-body { display: grid; grid-template-columns: 1fr 62mm; gap: 6mm; align-items: start }
+.ps-specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: .3mm solid var(--ps-line); border-radius: 2.5mm; overflow: hidden }
+.ps-specs div { padding: 2.6mm 3mm; border-right: .3mm solid var(--ps-line); border-bottom: .3mm solid var(--ps-line) }
+.ps-specs div:nth-child(3n) { border-right: 0 }
+.ps-specs small { display: block; color: var(--ps-mut); font-size: 2.8mm; text-transform: uppercase; letter-spacing: .08em; font-weight: 700 }
+.ps-specs b { display: block; font-size: 4.2mm; margin-top: .6mm; font-weight: 700 }
+.ps-side { display: grid; gap: 3mm }
+.ps-qr { background: #fff; color: #0b0b0d; border-radius: 2.5mm; padding: 3mm; display: grid; grid-template-columns: 26mm 1fr; gap: 3mm; align-items: center }
+.ps-qrcode svg { width: 26mm; height: 26mm; display: block }
+.ps-qr b { display: block; font-family: var(--disp, "Anton", Impact, sans-serif); font-weight: 400; text-transform: uppercase; font-size: 5.4mm; line-height: 1; color: #e1141b }
+.ps-qr span { display: block; font-size: 3.1mm; line-height: 1.35; margin-top: 1mm }
+.ps-warranty { background: var(--ps-red); color: #fff; border-radius: 2.5mm; padding: 3mm; text-align: center; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; font-size: 3.6mm; line-height: 1.25 }
+
+.ps-lists { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm }
+.ps-lists h2 { font-family: var(--disp, "Anton", Impact, sans-serif); font-weight: 400; text-transform: uppercase; font-size: 5.4mm; margin: 0 0 2mm; border-left: 1.2mm solid var(--ps-red); padding-left: 2.5mm }
+.ps-lists ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 1.3mm; font-size: 3.6mm; line-height: 1.35 }
+.ps-lists li { padding-left: 4.5mm; position: relative }
+.ps-lists li::before { content: ""; position: absolute; left: 0; top: 1.4mm; width: 2mm; height: 2mm; border-radius: 50%; background: var(--ps-red) }
+
+.ps-usps { margin: auto 0 0; padding: 3mm 0 0; list-style: none; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2mm; border-top: .3mm solid var(--ps-line) }
+.ps-usps li { font-weight: 800; text-transform: uppercase; letter-spacing: .05em; font-size: 3.2mm; display: flex; align-items: center; gap: 1.6mm }
+.ps-usps li::before { content: "✓"; color: var(--ps-red); font-size: 4mm }
+.ps-foot { color: var(--ps-mut); font-size: 2.7mm; line-height: 1.4 }
+
+@page { size: A4 portrait; margin: 0 }
+@media print {
+  .psheet-wrap { background: none; padding: 0; min-height: 0 }
+  .ptools { display: none }
+  .psheet { box-shadow: none; margin: 0; height: 297mm; overflow: hidden }
+  body { margin: 0 }
+}

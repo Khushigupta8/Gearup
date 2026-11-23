@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { LeadForm } from '@/components/forms/LeadForm';
 import { JumpForm } from '@/components/info/JumpForm';
 import { Icon } from '@/components/ui/Icon';
+import { BikeCard } from '@/components/bikes/BikeCard';
+import { getPublicBikes } from '@/server/services/bikes';
 import '@/styles/pages/part-exchange.css';
 
 export function generateMetadata(): Promise<Metadata> {
@@ -15,7 +17,8 @@ export function generateMetadata(): Promise<Metadata> {
 });
 }
 
-export default function PartExchangePage() {
+export default async function PartExchangePage() {
+  const bikes = await getPublicBikes();
   return (
     <div className="pg-part-exchange" style={{ display: 'contents' }}>
 
@@ -161,24 +164,9 @@ export default function PartExchangePage() {
 <div className="wrap">
 <div className="sh"><div><span className="tag">Swap it for</span><h2 className="disp">Your next bike <em>is here</em></h2><p>Every one HPI checked, 120-point inspected and sold with warranty. Your part-ex goes towards any of them.</p></div><Link href="/used-bikes" className="btn btn-red">See all 24 bikes <Icon name="right" /></Link></div>
 <div className="stock">
-<article className="bc">
-<Link href="/used-bikes/2019-bmw-r1250gs" className="im"><img src="/assets/images/bikes/triumph-street-triple-rs.webp" alt="2018 Triumph Street Triple RS" loading="lazy" /><span className="ribbon">3 months<br />warranty free</span><span className="pricechip"><b>£6,495</b><span>£192/mo</span></span></Link>
-<div className="bd"><h3><small>Triumph</small><Link href="/used-bikes/2019-bmw-r1250gs">Street Triple RS</Link></h3>
-<div className="sp"><span><Icon name="cal" />2018</span><span><Icon name="gauge" />9,412 miles</span><span><Icon name="engine" />765cc</span></div>
-<div className="ft"><Link href="/used-bikes/2019-bmw-r1250gs/reserve" className="lnk">Reserve for £99 <Icon name="right" /></Link><span className="heart"><Icon name="heart" /></span></div></div>
-</article>
-<article className="bc">
-<Link href="/used-bikes/2019-bmw-r1250gs" className="im"><img src="/assets/images/bikes/yamaha-mt07.webp" alt="2021 Yamaha MT-07" loading="lazy" /><span className="flag">A2 compatible</span><span className="pricechip"><b>£5,295</b><span>£156/mo</span></span></Link>
-<div className="bd"><h3><small>Yamaha</small><Link href="/used-bikes/2019-bmw-r1250gs">MT-07</Link></h3>
-<div className="sp"><span><Icon name="cal" />2021</span><span><Icon name="gauge" />4,120 miles</span><span><Icon name="engine" />689cc</span></div>
-<div className="ft"><Link href="/used-bikes/2019-bmw-r1250gs/reserve" className="lnk">Reserve for £99 <Icon name="right" /></Link><span className="heart"><Icon name="heart" /></span></div></div>
-</article>
-<article className="bc">
-<Link href="/used-bikes/2019-bmw-r1250gs" className="im"><img src="/assets/images/bikes/kawasaki-ninja-zx6r.webp" alt="2020 Kawasaki Ninja ZX-6R" loading="lazy" /><span className="ribbon">6 months<br />warranty free</span><span className="pricechip"><b>£7,995</b><span>£236/mo</span></span></Link>
-<div className="bd"><h3><small>Kawasaki</small><Link href="/used-bikes/2019-bmw-r1250gs">Ninja ZX-6R</Link></h3>
-<div className="sp"><span><Icon name="cal" />2020</span><span><Icon name="gauge" />5,640 miles</span><span><Icon name="engine" />636cc</span></div>
-<div className="ft"><Link href="/used-bikes/2019-bmw-r1250gs/reserve" className="lnk">Reserve for £99 <Icon name="right" /></Link><span className="heart"><Icon name="heart" /></span></div></div>
-</article>
+{bikes.slice(0, 3).map((b) => (
+  <BikeCard key={b.slug} bike={b} />
+))}
 </div>
 <p className="rep" style={{ marginTop: '20px' }}>Monthly figures are an example over 48 months, £0 deposit, 19.9% APR representative. Finance subject to status and affordability.</p>
 </div>

@@ -1,0 +1,146 @@
+/* ═══════════════════════════════════════════════════════════════
+   Admin refresh (Nov 2026): modern look for DMS / CRM / CMS.
+   Clean sans type in sentence case, soft surfaces, icon nav, red accent.
+   Loaded after admin.css and overrides it.
+   ═══════════════════════════════════════════════════════════════ */
+.adm {
+  --a-bg: #f5f5f7; --a-card: #fff; --a-ink: #111114; --a-ink2: #3a3a42; --a-mut: #6e6e78; --a-line: #e6e6ea; --a-line2: #f0f0f3;
+  --a-side: #0f0f12; --a-side2: #1b1b20; --a-side3: #26262d; --a-red: #e1141b; --a-red-soft: #fdeeee;
+  --a-green: #16884a; --a-amber: #b86e04; --a-blue: #2457c5;
+  --a-r: 12px; --a-r-sm: 8px;
+  --a-sh: 0 1px 2px rgba(16, 16, 20, .04), 0 1px 3px rgba(16, 16, 20, .04);
+  --a-sh-h: 0 6px 20px rgba(16, 16, 20, .08);
+  font-family: var(--sans, "Archivo", system-ui, sans-serif);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.adm h1 { font-family: inherit; font-weight: 700; text-transform: none; font-size: 26px; letter-spacing: -.015em; line-height: 1.2 }
+.adm-muted { color: var(--a-mut) }
+
+/* sidebar */
+.adm-shell { grid-template-columns: 248px minmax(0, 1fr) }
+.adm-side { background: var(--a-side); padding: 16px 12px }
+.adm-brand { padding: 6px 10px 18px; border-bottom: 1px solid var(--a-side2); margin-bottom: 14px }
+.adm-brand img { height: 30px }
+.adm-brand span { font-family: inherit; letter-spacing: .04em; text-transform: none; font-size: 11px; font-weight: 600; background: var(--a-side3); color: #cfcfd6; padding: 3px 8px; border-radius: 999px }
+.adm-nav { gap: 18px }
+.adm-nav-title { font-family: inherit; letter-spacing: .06em; font-size: 11px; font-weight: 600; color: #7c7c86; padding: 0 10px 6px }
+.adm-nav-link { justify-content: flex-start; gap: 10px; padding: 8px 10px; color: #c6c6ce; font-weight: 500; font-size: 14px; position: relative; transition: background .15s, color .15s }
+.adm-nav-link > span { flex: 1 }
+.adm-nav-link .adm-ni { width: 18px; height: 18px; flex: none; color: #8a8a94; transition: color .15s }
+.adm-nav-link:hover { background: var(--a-side2); color: #fff }
+.adm-nav-link:hover .adm-ni { color: #fff }
+.adm-nav-link.on { background: var(--a-side3); color: #fff; font-weight: 600 }
+.adm-nav-link.on .adm-ni { color: var(--a-red) }
+.adm-nav-link.on::before { content: ""; position: absolute; left: -12px; top: 8px; bottom: 8px; width: 3px; border-radius: 0 3px 3px 0; background: var(--a-red) }
+.adm-nav-link.soon { opacity: .55 }
+.adm-nav-link i { background: var(--a-side3); color: #9a9aa3 }
+.adm-me { gap: 10px; justify-content: flex-start; padding: 14px 6px 2px }
+.adm-me > div { flex: 1; min-width: 0 }
+.adm-me b { font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.adm-me small { font-size: 12px }
+.adm-avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #e1141b, #8e0a10); color: #fff; font-weight: 700; font-size: 12.5px; display: flex; align-items: center; justify-content: center; flex: none }
+.adm-side .adm-link-btn { color: #a7a7b0; text-decoration: none; font-size: 12.5px }
+.adm-side .adm-link-btn:hover { color: #fff; text-decoration: underline }
+
+/* page */
+.adm-main { padding: 28px 36px 64px; max-width: 1440px }
+.adm-head { align-items: flex-end; margin-bottom: 22px; gap: 16px }
+.adm-head .adm-muted { margin-top: 4px; font-size: 14px }
+.adm-head-acts { display: flex; gap: 8px; flex-wrap: wrap }
+.adm-back { font-size: 13px; font-weight: 500; color: var(--a-mut); margin-bottom: 6px }
+
+/* surfaces */
+.adm-card { border-radius: var(--a-r); border-color: var(--a-line); box-shadow: var(--a-sh) }
+.adm-sec { padding: 20px 22px }
+.adm-sec h2, .adm-h2, .adm-modal-head h2 { font-family: inherit; text-transform: none; letter-spacing: -.005em; font-weight: 700; font-size: 16px }
+.adm-h2 { font-size: 17px; margin: 30px 0 12px }
+.adm-h3, .adm-guide h3 { font-family: inherit; text-transform: none; letter-spacing: 0; font-weight: 600; font-size: 14px; color: var(--a-ink2) }
+.adm-sec-head .adm-muted { font-size: 13.5px }
+.adm-empty { border-radius: var(--a-r); border: 1px dashed #d6d6dc; background: #fff; padding: 36px; font-size: 14px }
+
+/* stat tiles */
+.adm-tiles { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px }
+.adm-tile { position: relative; border-radius: var(--a-r); border-color: var(--a-line); box-shadow: var(--a-sh); padding: 16px 18px 18px; gap: 2px; transition: box-shadow .2s, transform .2s }
+a.adm-tile:hover { border-color: var(--a-line); box-shadow: var(--a-sh-h); transform: translateY(-1px) }
+.adm-tile small { font-size: 13px; font-weight: 500; color: var(--a-mut) }
+.adm-tile b { font-family: inherit; font-weight: 700; font-size: 28px; letter-spacing: -.02em; line-height: 1.15; font-variant-numeric: tabular-nums }
+.adm-tile-ic { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; background: #f2f2f5; color: var(--a-ink2) }
+.adm-tile-ic svg { width: 18px; height: 18px }
+.adm-tile.tone-green .adm-tile-ic { background: #e7f6ee; color: var(--a-green) }
+.adm-tile.tone-amber .adm-tile-ic { background: #fdf3e2; color: var(--a-amber) }
+.adm-tile.tone-blue .adm-tile-ic { background: #e9effc; color: var(--a-blue) }
+.adm-tile.tone-red .adm-tile-ic { background: var(--a-red-soft); color: var(--a-red) }
+.adm-tile.tone-ink .adm-tile-ic { background: var(--a-ink); color: #fff }
+
+/* tables */
+.adm-table { font-size: 14px }
+.adm-table th { font-family: inherit; text-transform: none; letter-spacing: 0; font-weight: 600; font-size: 12.5px; color: var(--a-mut); background: #fafafb; padding: 11px 14px; border-bottom: 1px solid var(--a-line) }
+.adm-table thead th:first-child { border-top-left-radius: var(--a-r) }
+.adm-table thead th:last-child { border-top-right-radius: var(--a-r) }
+.adm-table td { padding: 11px 14px; border-bottom: 1px solid var(--a-line2) }
+.adm-table tbody tr { transition: background .12s }
+.adm-table tbody tr:hover { background: #fafafc }
+.adm-kv th { background: none }
+.adm-bike img, .adm-noimg { width: 64px; height: 46px; border-radius: 7px }
+.adm-bike b { font-weight: 600 }
+.adm-bike small { font-size: 12.5px }
+
+/* buttons */
+.adm-btn { height: 36px; padding: 0 14px; gap: 7px; border-radius: var(--a-r-sm); border: 1px solid var(--a-ink); font-family: inherit; font-weight: 600; letter-spacing: 0; text-transform: none; font-size: 13.5px; box-shadow: 0 1px 2px rgba(16, 16, 20, .08); transition: background .15s, border-color .15s }
+.adm-btn svg { width: 16px; height: 16px }
+.adm-btn-sm { height: 30px; padding: 0 11px; font-size: 12.5px }
+.adm-btn-red { background: var(--a-red); border-color: var(--a-red) }
+.adm-btn-red:hover { background: #c40f15; border-color: #c40f15 }
+.adm-btn-line { background: #fff; color: var(--a-ink); border-color: #d9d9df }
+.adm-btn-line:hover { background: #f6f6f8; border-color: #c9c9d1 }
+.adm-btn-wa { border-color: #25d366 }
+.adm-photo-acts button, .adm-x { border-radius: 7px; border-color: #dedee4; font-weight: 500; transition: background .12s, border-color .12s }
+.adm-photo-acts button:hover:not(:disabled) { background: #f6f6f8; border-color: #c9c9d1 }
+
+/* inputs */
+.adm input[type=text], .adm input[type=email], .adm input[type=password], .adm input[type=number], .adm input[type=date], .adm input[type=tel], .adm input[type=search], .adm select, .adm textarea {
+  height: 38px; border: 1px solid #d9d9df; border-radius: var(--a-r-sm); padding: 0 11px; font-size: 14px; background: #fff;
+  transition: border-color .15s, box-shadow .15s; box-shadow: 0 1px 1px rgba(16, 16, 20, .03)
+}
+.adm textarea { height: auto; padding: 9px 11px }
+.adm input:hover, .adm select:hover, .adm textarea:hover { border-color: #c4c4cc }
+.adm input:focus, .adm select:focus, .adm textarea:focus { outline: 0; border-color: var(--a-red); box-shadow: 0 0 0 3px rgba(225, 20, 27, .14) }
+.adm-field { font-weight: 500; font-size: 13.5px; color: var(--a-ink2) }
+.adm-reg { letter-spacing: .06em }
+
+/* tabs and chips */
+.adm-tabs { gap: 2px; border-bottom: 1px solid var(--a-line); margin-bottom: 18px }
+.adm-tabs a { font-family: inherit; text-transform: none; letter-spacing: 0; font-weight: 500; font-size: 14px; padding: 10px 14px; border-radius: 0; color: var(--a-mut); border-bottom: 2px solid transparent; margin-bottom: -1px }
+.adm-tabs a.on { background: none; color: var(--a-ink); font-weight: 600; border-bottom-color: var(--a-red) }
+.adm-tabs a:not(.on):hover { color: var(--a-ink); border-bottom-color: #d6d6dc }
+.adm-chips a { height: 30px; border: 1px solid #dedee4; font-weight: 500; font-size: 13px }
+.adm-chips a.on { background: var(--a-ink); border-color: var(--a-ink) }
+
+/* pills and badges */
+.adm-pill, .adm-type, .adm-stage, .adm-act { letter-spacing: 0; text-transform: none; font-weight: 600; font-size: 12px; padding: 2px 9px; border-radius: 999px }
+.adm-stage.st-new { background: var(--a-red-soft); color: var(--a-red) }
+.adm-tag { border-radius: 6px; font-weight: 600 }
+.adm-count { background: #efeff2; font-weight: 600 }
+
+/* misc */
+.adm-notice { border-radius: var(--a-r); font-weight: 500 }
+.adm-savebar { border-radius: var(--a-r); background: rgba(255, 255, 255, .92); box-shadow: 0 -4px 16px rgba(16, 16, 20, .06); border: 1px solid var(--a-line) }
+.adm-margin b { font-family: inherit; font-weight: 700; font-size: 26px; letter-spacing: -.02em }
+.adm-guide summary { font-family: inherit; text-transform: none; letter-spacing: 0; font-weight: 600; font-size: 14px }
+.adm-sidelist a { font-weight: 500 }
+.adm-sidelist a.on { font-weight: 600 }
+.adm-modal { backdrop-filter: blur(3px) }
+.adm-modal-card { border-radius: 16px; box-shadow: 0 24px 64px rgba(0, 0, 0, .25) }
+
+/* login */
+.adm-login { background: radial-gradient(1200px 600px at 20% -10%, #2a0a0c, transparent 60%), var(--a-side) }
+.adm-login-card { border-radius: 18px; box-shadow: 0 30px 80px rgba(0, 0, 0, .45) }
+.adm-login h1 { font-size: 24px }
+
+@media (max-width: 900px) {
+  .adm-main { padding: 20px 16px 48px }
+  .adm-nav-link.on::before { display: none }
+  .adm-head { align-items: flex-start }
+}

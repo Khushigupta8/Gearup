@@ -41,10 +41,14 @@ async function main() {
     console.log('hero slides added:', hero.length);
   }
   for (const [slug, title] of [
-    ['terms', 'Terms & conditions'],
+    ['terms', 'Terms & conditions of sale'],
     ['privacy', 'Privacy policy'],
     ['cookies', 'Cookie policy'],
-    ['complaints', 'Complaints'],
+    ['returns', 'Returns, refunds & cancellations'],
+    ['vehicle-condition', 'Used motorcycle condition & warranty'],
+    ['delivery', 'Delivery & collection'],
+    ['insurance', 'Insurance information notice (IDD)'],
+    ['complaints', 'Complaints procedure'],
   ] as const) {
     const key = `page:${slug}`;
     if (await db.setting.findUnique({ where: { key } })) continue;

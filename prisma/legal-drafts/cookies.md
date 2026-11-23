@@ -18,12 +18,21 @@ Some bike pages may show walkaround videos from YouTube or Vimeo. When you play 
 
 ## Analytics
 
-We do not currently use analytics or advertising cookies. If we add them in the future, we will ask for your permission first and update this page.
+We do not currently use analytics or advertising cookies. If we add them in the future, they will only run if you have chosen "Accept all" in our cookie banner, and we will list them on this page.
 
-## Managing cookies
+## Your choice
 
-You can block or delete cookies in your browser settings. If you block the essential cookies, signing in and checkout will not work.
+When you first visit, a banner asks you to choose:
+
+- **Accept all**: essential cookies, plus analytics cookies if we add them.
+- **Essential only**: only the cookies the website needs to work.
+
+You can change your choice at any time with the "Cookie settings" link at the bottom of every page.
+
+## Managing cookies in your browser
+
+You can also block or delete cookies in your browser settings. If you block the essential cookies, signing in and checkout will not work.
 
 ## Contact
 
-Questions about cookies? Email sales@gearupmotorcycles.co.uk. See our [privacy policy](/privacy) for how we use personal information.
+Questions about cookies? Email sales@gearupmotorcycles.co.uk. See our [privacy policy](/legal/privacy) for how we use personal information.

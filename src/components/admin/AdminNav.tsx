@@ -2,35 +2,36 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Icon, type IconName } from '@/components/ui/Icon';
 
-type Item = { href: string; label: string; soon?: string; adminOnly?: boolean };
+type Item = { href: string; label: string; icon: IconName; soon?: string; adminOnly?: boolean };
 
 const sections: { title: string; items: Item[] }[] = [
-  { title: '', items: [{ href: '/admin', label: 'Dashboard' }] },
+  { title: '', items: [{ href: '/admin', label: 'Dashboard', icon: 'grid' }] },
   {
     title: 'DMS',
     items: [
-      { href: '/admin/stock', label: 'Stock' },
-      { href: '/admin/promos', label: 'Promo library' },
-      { href: '/admin/sales', label: 'Sales & reservations' },
-      { href: '/admin/valuations', label: 'Part-ex & valuations' },
+      { href: '/admin/stock', label: 'Stock', icon: 'moto' },
+      { href: '/admin/promos', label: 'Promo library', icon: 'tag' },
+      { href: '/admin/sales', label: 'Sales & reservations', icon: 'cart' },
+      { href: '/admin/valuations', label: 'Part-ex & valuations', icon: 'swap' },
     ],
   },
   {
     title: 'CRM',
     items: [
-      { href: '/admin/customers', label: 'Customers' },
-      { href: '/admin/leads', label: 'Leads & enquiries' },
+      { href: '/admin/customers', label: 'Customers', icon: 'users' },
+      { href: '/admin/leads', label: 'Leads & enquiries', icon: 'mail' },
     ],
   },
   {
     title: 'Shop & website',
     items: [
-      { href: '/admin/accessories', label: 'Accessories' },
-      { href: '/admin/website', label: 'Website (CMS)' },
+      { href: '/admin/accessories', label: 'Accessories', icon: 'helmet' },
+      { href: '/admin/website', label: 'Website (CMS)', icon: 'home' },
     ],
   },
-  { title: '', items: [{ href: '/admin/settings', label: 'Settings', soon: 'M4', adminOnly: true }] },
+  { title: '', items: [{ href: '/admin/settings', label: 'Settings', icon: 'gear', soon: 'M4', adminOnly: true }] },
 ];
 
 export function AdminNav({ role }: { role: string }) {
@@ -47,12 +48,14 @@ export function AdminNav({ role }: { role: string }) {
               const active = it.href === '/admin' ? pathname === '/admin' : pathname.startsWith(it.href);
               return it.soon ? (
                 <span key={it.href} className="adm-nav-link soon" title={`Coming in ${it.soon}`}>
-                  {it.label}
+                  <Icon name={it.icon} className="i adm-ni" />
+                  <span>{it.label}</span>
                   <i>{it.soon}</i>
                 </span>
               ) : (
-                <Link key={it.href} href={it.href} className={active ? 'adm-nav-link on' : 'adm-nav-link'}>
-                  {it.label}
+                <Link key={it.href} href={it.href} className={active ? 'adm-nav-link on' : 'adm-nav-link'} aria-current={active ? 'page' : undefined}>
+                  <Icon name={it.icon} className="i adm-ni" />
+                  <span>{it.label}</span>
                 </Link>
               );
             })}

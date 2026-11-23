@@ -17,6 +17,9 @@ import { getBusiness } from '@/server/services/cms';
 
 type Props = { params: Promise<{ slug: string }> };
 
+/** A bike page cached as 404 before the bike was listed must not stick: re-check at most every 5 minutes. */
+export const revalidate = 300;
+
 export async function generateStaticParams() {
   return (await getPublicBikes()).map((b) => ({ slug: b.slug }));
 }
@@ -63,7 +66,7 @@ export default async function BikePage({ params }: Props) {
     ['plate', 'Registration', bike.registration ?? 'Shown on viewing'],
     ...(d
       ? ([
-          ['users', 'Previous owners', String(d.owners)],
+          ['users', 'Previous owners', d.owners > 0 ? String(d.owners) : 'Ask us'],
           ['palette', 'Colour', d.colour],
           ['lplate', 'Licence', d.licence],
           ['fuel', 'Fuel', d.fuel],
@@ -258,10 +261,10 @@ export default async function BikePage({ params }: Props) {
                     <Icon name="engine" />
                     {bike.engineCc}cc
                   </span>
-                  {d && (
+                  {d && d.owners > 0 && (
                     <span>
                       <Icon name="users" />
-                      {d.owners} owners
+                      {d.owners} {d.owners === 1 ? 'owner' : 'owners'}
                     </span>
                   )}
                 </div>

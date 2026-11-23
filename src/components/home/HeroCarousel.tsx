@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export type HeroSlide = { href: string; image: string; name: string; kicker: string; price?: string; monthly?: string };
+/** photo: a normal bike photo (not a cut-out), shown as a framed card. */
+export type HeroSlide = { href: string; image: string; name: string; kicker: string; price?: string; monthly?: string; photo?: boolean };
 
 /** Home hero: bike cut-outs that rotate every 2s, pause on hover, and stop for reduced-motion users. */
 export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
@@ -27,7 +28,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
       {slides.map((s, i) => (
         <Link key={s.name} href={s.href} className={i === cur ? 'hslide on' : 'hslide'} aria-hidden={i !== cur} tabIndex={i === cur ? undefined : -1}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={s.image} alt={s.name} loading={i === 0 ? undefined : 'lazy'} />
+          <img src={s.image} alt={s.name} loading={i === 0 ? undefined : 'lazy'} className={s.photo ? 'photo' : undefined} />
           <span className="spot">
             <small>{s.kicker}</small>
             <strong>{s.name}</strong>

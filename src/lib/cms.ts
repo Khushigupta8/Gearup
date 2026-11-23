@@ -73,19 +73,20 @@ export const seoPages: { path: string; label: string }[] = [
   { path: '/faq', label: 'FAQs' },
   { path: '/about', label: 'About' },
   { path: '/contact', label: 'Contact' },
-  { path: '/terms', label: 'Terms & conditions' },
-  { path: '/privacy', label: 'Privacy policy' },
-  { path: '/cookies', label: 'Cookie policy' },
-  { path: '/complaints', label: 'Complaints' },
+  { path: '/legal', label: 'Legal & policies' },
 ];
 export type SeoEntry = { title?: string; description?: string };
 
 /** Simple text pages edited in the CMS. */
 export const legalPages = {
-  terms: { title: 'Terms & conditions', path: '/terms' },
-  privacy: { title: 'Privacy policy', path: '/privacy' },
-  cookies: { title: 'Cookie policy', path: '/cookies' },
-  complaints: { title: 'Complaints', path: '/complaints' },
+  terms: { title: 'Terms & conditions of sale', path: '/legal/terms', about: 'The legal terms for buying a motorbike, reserving online and ordering accessories.' },
+  privacy: { title: 'Privacy policy', path: '/legal/privacy', about: 'How we collect, store, use and protect your personal data.' },
+  cookies: { title: 'Cookie policy', path: '/legal/cookies', about: 'The cookies our website uses and how to change your choice.' },
+  returns: { title: 'Returns, refunds & cancellations', path: '/legal/returns', about: 'Cancelling, our 14-day money back guarantee, refunds and your consumer rights.' },
+  'vehicle-condition': { title: 'Used motorcycle condition & warranty', path: '/legal/vehicle-condition', about: 'How we prepare each bike, how we describe condition and how faults are handled.' },
+  delivery: { title: 'Delivery & collection', path: '/legal/delivery', about: 'Delivery costs, timescales, checking the bike on arrival and collection.' },
+  insurance: { title: 'Insurance information notice (IDD)', path: '/legal/insurance', about: 'Our status when introducing you to motorbike insurance, and how we are paid.' },
+  complaints: { title: 'Complaints procedure', path: '/legal/complaints', about: 'How to raise a complaint and what happens next.' },
 } as const;
 export type LegalSlug = keyof typeof legalPages;
 /** Not shown on the website until published is ticked in the CMS. */
