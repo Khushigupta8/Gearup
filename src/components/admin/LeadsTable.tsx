@@ -3,21 +3,21 @@ import type { Prisma } from '@/generated/prisma/client';
 import { leadStages, leadTypes, timeAgo } from '@/lib/crm';
 import { db } from '@/server/db';
 
-type Props = { where?: Prisma.LeadWhereInput; now: number; emptyText?: string };
+type Props = { where?: Prisma.LeadWhereInput; now: number; emptyText?: string; limit?: number; bare?: boolean };
 
 /** Lead list used by Leads, Valuations and the dashboard. */
-export async function LeadsTable({ where, now, emptyText = 'No leads yet. Website form submissions will appear here.' }: Props) {
+export async function LeadsTable({ where, now, emptyText = 'No leads yet. Website form submissions will appear here.', limit = 200, bare = false }: Props) {
   const leads = await db.lead.findMany({
     where,
     orderBy: { createdAt: 'desc' },
-    take: 200,
+    take: limit,
     include: { customer: true, assignedTo: { select: { name: true } }, bike: { select: { year: true, make: true, model: true } } },
   });
 
-  if (!leads.length) return <p className="adm-empty">{emptyText}</p>;
+  if (!leads.length) return <p className={bare ? 'adm-empty bare' : 'adm-empty'}>{emptyText}</p>;
 
   return (
-    <div className="adm-card adm-table-wrap">
+    <div className={bare ? 'adm-table-wrap' : 'adm-card adm-table-wrap'}>
       <table className="adm-table">
         <thead>
           <tr>
