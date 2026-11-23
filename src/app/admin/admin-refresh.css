@@ -203,3 +203,25 @@ a.adm-tile:hover { border-color: var(--a-line); box-shadow: var(--a-sh-h); trans
 .adm-tabs { overflow-y: hidden }
 .adm-cutout { display: flex; align-items: center; gap: 16px }
 .adm-cutout img { width: 220px; aspect-ratio: 16 / 10; object-fit: contain; background: repeating-conic-gradient(#eee 0 25%, #fff 0 50%) 0 0 / 14px 14px; border: 1px solid var(--a-line); border-radius: var(--a-r) }
+
+/* Mobile admin: the 248px sidebar above must not apply on small screens */
+@media (max-width: 900px) {
+  .adm-shell { grid-template-columns: minmax(0, 1fr) }
+  .adm-side { position: sticky; top: 0; z-index: 20; height: auto; padding: 10px 12px; flex-direction: row; align-items: center; gap: 10px; min-width: 0 }
+  .adm-brand { padding: 0; margin: 0; border: 0; flex: none }
+  .adm-brand span { display: none }
+  .adm-nav { flex: 1; min-width: 0; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none }
+  .adm-nav::-webkit-scrollbar { display: none }
+  .adm-nav-group { display: flex; gap: 4px; flex: none }
+  .adm-nav-link { white-space: nowrap; padding: 7px 10px }
+  .adm-nav-link.soon { display: none }
+  .adm-me { display: none }
+  .adm-main { min-width: 0; overflow-x: hidden }
+  .adm-statrow, .adm-dashgrid { grid-template-columns: minmax(0, 1fr) }
+  .adm-table-wrap, .adm-panel { max-width: 100%; overflow-x: auto }
+  .adm-head { flex-direction: column; align-items: stretch }
+  .adm-head-acts { justify-content: flex-start }
+  .adm-edit, .adm-split, .adm-seo-row { grid-template-columns: minmax(0, 1fr) }
+  .adm-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) }
+  .adm-savebar { flex-wrap: wrap }
+}

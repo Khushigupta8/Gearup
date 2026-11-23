@@ -1480,3 +1480,4 @@ form[aria-busy=true]{opacity:.7;pointer-events:none}
 .vid.cut:hover img{transform:translateX(-6px) scale(1.02)}
 .vid.cut::after{background:linear-gradient(transparent 55%,rgba(0,0,0,.75))}
 .vids .vid.cut:first-child img{inset:10% 4% 24% 4%;width:92%;height:66%}
+@media (max-width:1024px){.bc.big .im{width:100%;align-self:stretch}}
