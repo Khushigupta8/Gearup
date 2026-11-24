@@ -3,6 +3,9 @@ import { getPublicBikes } from '@/server/services/bikes';
 import { PHASE2 } from '@/lib/features';
 import { site } from '@/lib/site';
 
+// Include current stock without querying the database during next build.
+export const dynamic = 'force-dynamic';
+
 const pages = [
   '',
   '/used-bikes',

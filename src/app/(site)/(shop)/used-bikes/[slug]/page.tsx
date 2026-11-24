@@ -17,12 +17,8 @@ import { getBusiness } from '@/server/services/cms';
 
 type Props = { params: Promise<{ slug: string }> };
 
-/** A bike page cached as 404 before the bike was listed must not stick: re-check at most every 5 minutes. */
-export const revalidate = 300;
-
-export async function generateStaticParams() {
-  return (await getPublicBikes()).map((b) => ({ slug: b.slug }));
-}
+// Slugs are resolved from the DMS when requested, including newly listed bikes.
+// Do not enumerate stock during builds: deployment workers may not reach Postgres.
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const bike = await getPublicBike((await params).slug);
