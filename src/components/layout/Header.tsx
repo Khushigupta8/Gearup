@@ -3,14 +3,14 @@ import { PHASE2 } from '@/lib/features';
 import { Icon } from '@/components/ui/Icon';
 import { mainNav } from '@/lib/navigation';
 import { site } from '@/lib/site';
-import { telHref, waHref } from '@/lib/cms';
+import { telHref, waHref, type Business } from '@/lib/cms';
 import { getBusiness } from '@/server/services/cms';
 import { BasketCount } from './BasketCount';
 import { MenuButton } from './MenuButton';
 import { NavLink } from './NavLink';
 
-export async function Header() {
-  const biz = await getBusiness();
+export async function Header({ business }: { business?: Business } = {}) {
+  const biz = business ?? await getBusiness();
   return (
     <>
       <div className="promo">

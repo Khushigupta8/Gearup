@@ -2,12 +2,14 @@ import Link from 'next/link';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import { IconSprite } from '@/components/ui/IconSprite';
+import { defaultBusiness } from '@/lib/cms';
 
 export default function NotFound() {
   return (
     <>
       <IconSprite />
-      <Header />
+      {/* The global error page must also render when the database is unavailable. */}
+      <Header business={defaultBusiness} />
       <main>
         <section className="sec">
           <div className="wrap">
@@ -19,7 +21,7 @@ export default function NotFound() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer business={defaultBusiness} />
     </>
   );
 }

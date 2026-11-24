@@ -3,13 +3,13 @@ import { Fragment } from 'react';
 import { Icon } from '@/components/ui/Icon';
 import { footerNav, mobileNav } from '@/lib/navigation';
 import { site } from '@/lib/site';
-import { telHref, waHref } from '@/lib/cms';
+import { telHref, waHref, type Business } from '@/lib/cms';
 import { getBusiness } from '@/server/services/cms';
 import { CookieSettingsLink } from './CookieConsent';
 import { SocialLinks } from './SocialLinks';
 
-export async function Footer() {
-  const biz = await getBusiness();
+export async function Footer({ business }: { business?: Business } = {}) {
+  const biz = business ?? await getBusiness();
   const wa = waHref(biz.whatsapp);
   return (
     <>
