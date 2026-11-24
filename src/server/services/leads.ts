@@ -2,6 +2,7 @@ import 'server-only';
 import type { LeadType } from '@/generated/prisma/client';
 import { db } from '../db';
 import { renderEmail, sendEmail } from './email';
+import type { StoredLeadPhoto } from './lead-photos';
 
 export const leadTypeLabels: Record<LeadType, string> = {
   enquiry: 'General enquiry',
@@ -38,6 +39,8 @@ export type LeadInput = {
   sourcePage?: string;
   bikeSlug?: string;
   marketingConsent?: boolean;
+  photos?: StoredLeadPhoto[];
+  submissionIpHash?: string;
 };
 
 function splitName(name?: string) {
@@ -86,6 +89,8 @@ export async function createLead(input: LeadInput) {
       message: input.message?.slice(0, 5000) || null,
       data: input.fields,
       sourcePage: input.sourcePage?.slice(0, 200) ?? null,
+      submissionIpHash: input.submissionIpHash,
+      photos: input.photos?.length ? { create: input.photos } : undefined,
     },
   });
 
@@ -97,6 +102,7 @@ export async function createLead(input: LeadInput) {
     ...(customer.email ? ([['Email', customer.email]] as [string, string][]) : []),
     ...(customer.phone ? ([['Phone', customer.phone]] as [string, string][]) : []),
     ...(bike ? ([['Bike', `${bike.year} ${bike.make} ${bike.model}`]] as [string, string][]) : []),
+    ...(input.photos?.length ? ([['Photos', `${input.photos.length} attached — open the CRM to view them`]] as [string, string][]) : []),
     ...Object.entries(input.fields).filter(([, v]) => v),
   ];
 

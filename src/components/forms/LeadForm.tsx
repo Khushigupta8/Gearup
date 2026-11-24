@@ -1,8 +1,10 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
+import { useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
 import { site } from '@/lib/site';
+import { resizeImage } from '@/lib/resize-image';
+import { LEAD_PHOTO_MAX_BYTES, LEAD_PHOTO_MAX_COUNT } from '@/lib/lead-photos';
 
 export type LeadType = 'enquiry' | 'viewing' | 'finance' | 'part_exchange' | 'sell_bike' | 'insurance' | 'workshop' | 'newsletter';
 
@@ -91,6 +93,7 @@ export function LeadForm({
   const pathname = usePathname();
   const [state, setState] = useState<'idle' | 'sending' | 'done'>('idle');
   const [error, setError] = useState('');
+  const sending = useRef(false);
 
   function onChange(e: ChangeEvent<HTMLFormElement>) {
     const t = e.target as unknown as HTMLInputElement;
@@ -102,18 +105,20 @@ export function LeadForm({
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (sending.current) return;
     const form = e.currentTarget;
     const data = collect(form);
+    const stockChoice = form.elements.namedItem('bikeSlug');
+    const bikeSlug = stockChoice instanceof HTMLSelectElement ? stockChoice.value : '';
     if (!data.email && data.phone.replace(/\D/g, '').length < 7) {
       setError('Please add your email or mobile number so we can reply.');
       return;
     }
     setState('sending');
+    sending.current = true;
     setError('');
-    const res = await fetch('/api/leads', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    try {
+      const payload = {
         type: type === 'contact' ? (/viewing|video/i.test(Object.values(data.fields).join(' ')) ? 'viewing' : 'enquiry') : type,
         name: data.name || undefined,
         email: data.email || undefined,
@@ -121,17 +126,44 @@ export function LeadForm({
         message: data.message || undefined,
         fields: data.fields,
         sourcePage: pathname,
+        bikeSlug: bikeSlug || undefined,
         marketingConsent: data.consent,
         website: (form.elements.namedItem('website') as HTMLInputElement | null)?.value ?? '',
-      }),
-    }).catch(() => null);
-    if (res?.ok) {
-      setState('done');
-      return;
+      };
+      const photoInput = form.elements.namedItem('photos');
+      const files = photoInput instanceof HTMLInputElement ? Array.from(photoInput.files ?? []) : [];
+      if (files.length > LEAD_PHOTO_MAX_COUNT) throw new Error('Please choose up to 12 photos.');
+      let body: string | FormData = JSON.stringify(payload);
+      if (files.length) {
+        const multipart = new FormData();
+        multipart.set('payload', body);
+        for (const file of files) {
+          if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 20 * 1024 * 1024) throw new Error('Use JPG, PNG or WebP photos, up to 20 MB each.');
+          let photo = await resizeImage(file, 1400, 0.8);
+          if (photo.size > LEAD_PHOTO_MAX_BYTES) photo = await resizeImage(file, 1000, 0.65);
+          if (photo.size > LEAD_PHOTO_MAX_BYTES) photo = await resizeImage(file, 800, 0.5);
+          if (photo.type !== 'image/webp' || photo.size > LEAD_PHOTO_MAX_BYTES) throw new Error('One photo is too large to send. Please remove it and choose a smaller image.');
+          multipart.append('photos', photo);
+        }
+        body = multipart;
+      }
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        ...(typeof body === 'string' ? { headers: { 'Content-Type': 'application/json' } } : {}),
+        body,
+      });
+      if (res.ok) {
+        setState('done');
+        return;
+      }
+      const response = await res.json().catch(() => null);
+      throw new Error(response?.error ?? `Something went wrong. Please call us on ${site.phone.display}.`);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'We could not send your enquiry. Please try again.');
+      setState('idle');
+    } finally {
+      sending.current = false;
     }
-    const body = await res?.json().catch(() => null);
-    setError(body?.error ?? `Something went wrong. Please call us on ${site.phone.display}.`);
-    setState('idle');
   }
 
   if (state === 'done') return <div className={className} id={id}>{success}</div>;
@@ -139,6 +171,7 @@ export function LeadForm({
   return (
     <form className={className} id={id} onSubmit={onSubmit} onChange={onChange} data-react="1" aria-busy={state === 'sending'}>
       {children}
+      {state === 'sending' && <p role="status">Sending your enquiry and any selected photos…</p>}
       <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hp" />
       {error && (
         <p className="ferr" role="alert">

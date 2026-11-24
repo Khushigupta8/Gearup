@@ -115,7 +115,7 @@ export default async function AboutPage() {
 <div className="wrap">
 <div className="visit">
 <div>
-<div className="sh" style={{ marginBottom: 0 }}><div><span className="tag">Visit us</span><h2 className="disp">Come and see <em>the bikes</em></h2><p>Book a viewing or test ride and we will have the bike out, warmed up and ready. Or just drop in for a look round.</p></div></div>
+<div className="sh" style={{ marginBottom: 0 }}><div><span className="tag">Visit us</span><h2 className="disp">Come and see <em>the bikes</em></h2><p>Viewings by appointment basis only, so the bike is ready when you arrive.</p></div></div>
 <div className="addr"><Icon name="pin" /><span><b style={{ color: '#fff' }}>GearUp Motorcycles</b><br />{addrMain}, {addrRest}</span></div>
 <div className="hrs"><b>Mon to Fri</b><span>9:00 to 17:30</span><b>Saturday</b><span>9:00 to 16:00</span><b>Sunday</b><span>Closed</span></div>
 <div className="ctas"><Link href="/contact" className="btn btn-red"><Icon name="cal" />Book a viewing</Link><Link href="/contact" className="btn btn-ghost"><Icon name="phone" />0744 072 1478</Link></div>

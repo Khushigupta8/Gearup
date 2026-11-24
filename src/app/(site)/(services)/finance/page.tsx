@@ -4,6 +4,7 @@ import { getPublicBikes } from '@/server/services/bikes';
 import { gbp, monthlyPayment } from '@/lib/format';
 import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
+import { StockBikeField } from '@/components/forms/StockBikeField';
 import { LeadForm } from '@/components/forms/LeadForm';
 import { FinanceCalculator } from '@/components/finance/FinanceCalculator';
 import { Icon } from '@/components/ui/Icon';
@@ -16,8 +17,9 @@ export function generateMetadata(): Promise<Metadata> {
 });
 }
 
-export default async function FinancePage() {
-  const bikes = await getPublicBikes();
+export default async function FinancePage({ searchParams }: { searchParams: Promise<{ bike?: string | string[] }> }) {
+  const [bikes, query] = await Promise.all([getPublicBikes(), searchParams]);
+  const available = bikes.filter((bike) => bike.status === 'available');
   const cheapest = bikes.length ? Math.min(...bikes.map((b) => b.price)) : 0;
   return (
     <div className="pg-finance" style={{ display: 'contents' }}>
@@ -86,7 +88,7 @@ export default async function FinancePage() {
 <div className="fx-side">
 <div className="icard dk"><div className="ic red"><Icon name="tag" /></div><h3>Part-ex as your deposit</h3><p>Got a bike to trade in? Its value can go straight towards your deposit and bring the monthly figure down.</p><Link href="/part-exchange" className="lnk mt1" style={{ color: '#fff' }}>Value my bike <Icon name="right" /></Link></div>
 <div className="icard dk"><div className="ic"><Icon name="search" /></div><h3>Shop by monthly budget</h3><p>Every bike on our site shows a monthly figure, so you can shop by what you want to pay.</p>
-<ul className="clist"><li><Icon name="check" />Up to £100 a month: 6 bikes</li><li><Icon name="check" />Up to £150 a month: 9 bikes</li><li><Icon name="check" />Up to £200 a month: 15 bikes</li></ul>
+<ul className="clist">{[100, 150, 200].map((budget) => { const count = available.filter((bike) => monthlyPayment(bike.price, 48) <= budget).length; return <li key={budget}><Icon name="check" />Up to £{budget} a month: {count} {count === 1 ? 'bike' : 'bikes'}</li>; })}</ul>
 <Link href="/used-bikes" className="lnk mt2" style={{ color: '#fff' }}>Browse bikes <Icon name="right" /></Link></div>
 </div>
 </div>
@@ -117,7 +119,7 @@ export default async function FinancePage() {
 <div className="softnote mt2"><Icon name="info" /><span><b>Checking your eligibility</b> uses a soft search where the lender offers one, which is not visible to other lenders. A full credit check is only made if you choose to go ahead with an application. We will tell you before that happens.</span></div>
 <div className="fsec"><h3><span>01</span>The bike</h3>
 <div className="frow mt2">
-<div className="fl"><label htmlFor="fb">Bike you are interested in</label><div className="sel"><select id="fb"><option>2019 BMW R 1250 GS · £11,495</option><option>2018 Triumph Street Triple RS · £6,495</option><option>2021 Yamaha MT-07 · £5,295</option><option>2020 Kawasaki Z900 · £6,295</option><option>Not chosen yet</option></select><Icon name="down" /></div></div>
+<StockBikeField bikes={bikes} requestedSlug={query.bike} id="fb" />
 <div className="fl"><label htmlFor="fd">Deposit (optional)</label><input id="fd" placeholder="£0" inputMode="numeric" /><small>Include any part-exchange value.</small></div>
 </div>
 <div className="mt2"><span className="lbl fxl">Type of finance</span>
@@ -134,7 +136,7 @@ export default async function FinancePage() {
 </div>
 <div className="fsec"><h3><span>03</span>Your address</h3>
 <div className="form mt2">
-<div className="frow"><div className="fl"><label htmlFor="fpc">Postcode</label><input id="fpc" placeholder="e.g. M1 1AA" style={{ textTransform: 'uppercase' }} /></div><div className="fl"><label>&nbsp;</label><button className="btn btn-ink" type="button" style={{ width: '100%', height: '52px', fontSize: '16px' }}>Find address</button></div></div>
+<div className="fl"><label htmlFor="fpc">Postcode</label><input id="fpc" placeholder="e.g. M1 1AA" autoComplete="postal-code" style={{ textTransform: 'uppercase' }} /><small>Enter your address below.</small></div>
 <div className="fl"><label htmlFor="fa1">Address</label><input id="fa1" placeholder="House number and street" /></div>
 <div className="frow"><div className="fl"><label htmlFor="fty">Town or city</label><input id="fty" placeholder="Town or city" /></div><div className="fl"><label htmlFor="fres">Residential status</label><div className="sel"><select id="fres"><option>Homeowner</option><option>Renting</option><option>Living with parents</option><option>Council or housing association</option><option>Other</option></select><Icon name="down" /></div></div></div>
 <div className="frow"><div className="fl"><label htmlFor="fyy">Time at address: years</label><input id="fyy" placeholder="Years" inputMode="numeric" /></div><div className="fl"><label htmlFor="fmm">Months</label><input id="fmm" placeholder="Months" inputMode="numeric" /><small>Under 3 years? We will ask for your previous address.</small></div></div>

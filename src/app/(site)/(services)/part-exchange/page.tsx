@@ -3,6 +3,8 @@ import { pageMetadata } from '@/server/services/cms';
 import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
 import { LeadForm } from '@/components/forms/LeadForm';
+import { StockBikeField } from '@/components/forms/StockBikeField';
+import { LeadPhotoUpload } from '@/components/forms/LeadPhotoUpload';
 import { JumpForm } from '@/components/info/JumpForm';
 import { Icon } from '@/components/ui/Icon';
 import { BikeCard } from '@/components/bikes/BikeCard';
@@ -16,8 +18,8 @@ export function generateMetadata(): Promise<Metadata> {
 });
 }
 
-export default async function PartExchangePage() {
-  const bikes = await getPublicBikes();
+export default async function PartExchangePage({ searchParams }: { searchParams: Promise<{ bike?: string | string[] }> }) {
+  const [bikes, query] = await Promise.all([getPublicBikes(), searchParams]);
   return (
     <div className="pg-part-exchange" style={{ display: 'contents' }}>
 
@@ -115,11 +117,7 @@ export default async function PartExchangePage() {
 <div className="formcard">
 <h2>Add photos</h2>
 <p>Optional, but photos get you a firmer figure. Daylight works best.</p>
-<div className="uplgrid mt2">
-<label className="upl main"><input type="file" className="sr" multiple accept="image/*" /><Icon name="upload" /><b>Drag photos here</b><small>or tap to choose. Up to 12 photos.</small></label>
-<div className="upl"><small>Left side</small></div><div className="upl"><small>Right side</small></div><div className="upl"><small>Front</small></div>
-<div className="upl"><small>Clocks</small></div><div className="upl"><small>Tyres</small></div><div className="upl"><small>Any damage</small></div>
-</div>
+<LeadPhotoUpload />
 </div>
 <div className="formcard">
 <h2>Outstanding finance</h2>
@@ -136,7 +134,7 @@ export default async function PartExchangePage() {
 <div className="form mt2">
 <div className="frow"><div className="fl"><label htmlFor="dnm">Name</label><input id="dnm" placeholder="Your name" /></div><div className="fl"><label htmlFor="dmb">Mobile</label><input id="dmb" placeholder="07..." /></div></div>
 <div className="frow"><div className="fl"><label htmlFor="dem">Email</label><input id="dem" type="email" placeholder="you@example.com" /></div><div className="fl"><label htmlFor="dpc">Postcode</label><input id="dpc" placeholder="e.g. M1 1AA" style={{ textTransform: 'uppercase' }} /></div></div>
-<div className="fl"><label htmlFor="dwant">Bike you are interested in (optional)</label><div className="sel"><select id="dwant"><option>Not chosen yet</option><option>2019 BMW R 1250 GS · £11,495</option><option>2018 Triumph Street Triple RS · £6,495</option><option>2021 Yamaha MT-07 · £5,295</option></select><Icon name="down" /></div></div>
+<StockBikeField bikes={bikes} requestedSlug={query.bike} id="dwant" />
 <label className="chk"><input type="checkbox" defaultChecked />Text me the valuation and any updates.</label>
 <button className="btn btn-red" type="submit">Send for valuation <Icon name="right" /></button>
 </div>
@@ -161,7 +159,7 @@ export default async function PartExchangePage() {
 </section>
 <section className="sec dark">
 <div className="wrap">
-<div className="sh"><div><span className="tag">Swap it for</span><h2 className="disp">Your next bike <em>is here</em></h2><p>Every one HPI checked, 120-point inspected and sold with warranty. Your part-ex goes towards any of them.</p></div><Link href="/used-bikes" className="btn btn-red">See all 24 bikes <Icon name="right" /></Link></div>
+<div className="sh"><div><span className="tag">Swap it for</span><h2 className="disp">Your next bike <em>is here</em></h2><p>Every one HPI checked, 120-point inspected and sold with warranty. Your part-ex goes towards any of them.</p></div><Link href="/used-bikes" className="btn btn-red">See all {bikes.length} {bikes.length === 1 ? 'bike' : 'bikes'} <Icon name="right" /></Link></div>
 <div className="stock">
 {bikes.slice(0, 3).map((b) => (
   <BikeCard key={b.slug} bike={b} />

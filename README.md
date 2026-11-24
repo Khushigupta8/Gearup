@@ -8,9 +8,62 @@ Website and backend for GearUp Motorcycles, a used motorbike dealer in the UK. O
 
 ```
 npm install
-cp .env.example .env.local   # fill in what you need
+test -f .env.local || cp .env.example .env.local   # fill in what you need
 npm run dev                  # http://localhost:3000
 ```
+
+### Current local development environment
+
+The ignored `.env.local` uses the isolated PostgreSQL database `gearup_local` on
+`127.0.0.1:5432`. Its stock and CMS content were copied from GearUp through the
+Supabase management API; customer accounts, enquiries and orders were not copied.
+Do not replace this file with `.env.example` or run the sample seed over this copy.
+
+```sh
+npm ci
+npm run db:deploy
+npx tsx scripts/setup-local-admin.ts
+npm run dev -- --hostname 127.0.0.1 --port 3001
+```
+
+Open `http://localhost:3001` or `/admin/login`. The local admin credentials are
+`SEED_ADMIN_EMAIL` and `SEED_ADMIN_PASSWORD` in `.env.local`. The auth and site URL
+variables must use the same hostname and port as the browser. Payments, outbound
+email and DVLA lookup require their own credentials; a Supabase access token does
+not provide these services.
+
+Valuation photos use a **private** Supabase Storage bucket, `gearup-dev-enquiries`
+for local testing. Configure the server-only `SUPABASE_URL`,
+`SUPABASE_SERVICE_ROLE_KEY` and `LEAD_PHOTO_BUCKET`, then run:
+
+```sh
+npx tsx scripts/setup-enquiry-storage.ts
+```
+
+The upload accepts up to 12 photos, compresses them in the browser, and attaches
+them to the CRM lead. Full-size images are served through a staff-only route.
+Before deploying this change, apply the new Prisma migrations to the intended
+database and configure a separate private production bucket, such as
+`gearup-enquiries`. Keep production database/auth/payment/email settings intact;
+do not upload this local `.env.local` to Vercel. The management access token is
+only needed for setup and must never become a public environment variable.
+
+### Vercel database configuration
+
+The public site and sitemap read the DMS at request time; `next build` does not
+enumerate bikes or query the production database. A successful build alone does
+not verify database connectivity. Check `/used-bikes` after deployment.
+
+In the Vercel project's Production environment, use the Supabase **transaction
+pooler** URL (port 6543) for `DATABASE_URL`, and its **session pooler** URL (port
+5432) for `DIRECT_URL` when running migrations. Copy the host from Supabase's
+Connect panel. A `db.<project>.supabase.co` direct endpoint may be IPv6-only;
+Vercel should use the IPv4-compatible pooler. The local `127.0.0.1` database
+cannot be reached from a Vercel deployment.
+
+Set `BETTER_AUTH_URL` and `NEXT_PUBLIC_SITE_URL` to the deployed HTTPS URL and
+keep the production `BETTER_AUTH_SECRET` stable. Environment changes require a
+new deployment. See [Supabase's Prisma connection guide](https://supabase.com/docs/guides/database/prisma).
 
 | Script | |
 |---|---|

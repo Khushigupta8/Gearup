@@ -147,14 +147,30 @@ model Lead {
   message      String?
   data         Json? // the full form submission (reg, mileage, preferred date...)
   sourcePage   String?
+  submissionIpHash String?
   followUpAt   DateTime?
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   activities   LeadActivity[]
+  photos       LeadPhoto[]
 
   @@index([stage])
   @@index([type])
+  @@index([submissionIpHash, createdAt])
   @@map("lead")
+}
+
+model LeadPhoto {
+  id          String   @id @default(cuid())
+  leadId      String
+  lead        Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  storagePath String   @unique
+  name        String
+  size        Int
+  createdAt   DateTime @default(now())
+
+  @@index([leadId])
+  @@map("lead_photo")
 }
 
 model LeadActivity {

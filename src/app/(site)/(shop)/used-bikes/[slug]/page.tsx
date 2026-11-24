@@ -294,14 +294,14 @@ export default async function BikePage({ params }: Props) {
                     </Link>
                   )}
                   <div className="row">
-                    <Link href="/finance" className="btn btn-ink">
+                    <Link href={`/finance?bike=${encodeURIComponent(bike.slug)}#apply`} className="btn btn-ink">
                       Apply for finance
                     </Link>
-                    <Link href="/part-exchange" className="btn btn-line">
+                    <Link href={`/part-exchange?bike=${encodeURIComponent(bike.slug)}#details`} className="btn btn-line">
                       Part-ex my bike
                     </Link>
                   </div>
-                  <Link href="/contact" className="btn btn-line">
+                  <Link href={`/contact?bike=${encodeURIComponent(bike.slug)}#enquiry`} className="btn btn-line">
                     <Icon name="cal" />
                     Book a viewing
                   </Link>

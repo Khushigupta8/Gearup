@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { getBusiness, pageMetadata } from '@/server/services/cms';
 import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
+import { getPublicBikes } from '@/server/services/bikes';
+import { StockBikeField } from '@/components/forms/StockBikeField';
 import { LeadForm } from '@/components/forms/LeadForm';
 import { Icon } from '@/components/ui/Icon';
 import '@/styles/pages/contact.css';
@@ -13,8 +15,8 @@ export function generateMetadata(): Promise<Metadata> {
 });
 }
 
-export default async function ContactPage() {
-  const biz = await getBusiness();
+export default async function ContactPage({ searchParams }: { searchParams: Promise<{ bike?: string | string[] }> }) {
+  const [biz, bikes, query] = await Promise.all([getBusiness(), getPublicBikes(), searchParams]);
   const addr = biz.address.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
   const addrMain = addr[0] ?? 'Leeds, West Yorkshire';
   const addrRest = addr.slice(1).join(', ') || 'Viewings by appointment';
@@ -75,7 +77,7 @@ export default async function ContactPage() {
 <label className="rcard"><input type="radio" name="et" /><span className="dot"></span><span><b>Something else</b><small>Workshop, kit, anything</small></span></label>
 </div>
 </div>
-<div className="fl"><label htmlFor="bk">Which bike? (optional)</label><div className="sel"><select id="bk"><option>Not sure yet</option><option>2019 BMW R 1250 GS</option><option>Yamaha MT-07</option><option>Kawasaki Z900</option><option>Honda Rebel 500</option><option>Another bike in stock</option></select><Icon name="down" /></div></div>
+<StockBikeField bikes={bikes} requestedSlug={query.bike} id="bk" label="Which bike? (optional)" />
 <div className="frow"><div className="fl"><label htmlFor="cn">Your name</label><input id="cn" placeholder="First and last name" /></div><div className="fl"><label htmlFor="cm">Mobile</label><input id="cm" placeholder="07..." inputMode="tel" /></div></div>
 <div className="frow"><div className="fl"><label htmlFor="ce">Email</label><input id="ce" type="email" placeholder="you@example.com" /></div><div className="fl"><label htmlFor="cc">Best way to reply</label><div className="sel"><select id="cc"><option>Phone call</option><option>WhatsApp</option><option>Email</option></select><Icon name="down" /></div></div></div>
 <div className="frow"><div className="fl"><label htmlFor="cd">Preferred date</label><input id="cd" type="date" /></div><div className="fl"><label htmlFor="ctm">Preferred time</label><div className="sel"><select id="ctm"><option>Morning (9:00 to 12:00)</option><option>Afternoon (12:00 to 15:00)</option><option>Late afternoon (15:00 to 17:30)</option><option>Saturday (9:00 to 16:00)</option></select><Icon name="down" /></div></div></div>

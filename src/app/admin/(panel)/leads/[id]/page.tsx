@@ -18,6 +18,7 @@ export default async function LeadPage({ params }: { params: Promise<{ id: strin
       customer: { include: { _count: { select: { leads: true } } } },
       bike: { select: { id: true, slug: true, year: true, make: true, model: true, price: true, status: true } },
       activities: { orderBy: { createdAt: 'desc' } },
+      photos: { orderBy: { createdAt: 'asc' } },
     },
   });
   if (!lead) notFound();
@@ -90,6 +91,17 @@ export default async function LeadPage({ params }: { params: Promise<{ id: strin
               </tbody>
             </table>
           </section>
+
+          {lead.photos.length > 0 && <section className="adm-card adm-sec">
+            <h2>Customer photos ({lead.photos.length})</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12, marginTop: 16 }}>
+              {lead.photos.map((photo) => <a key={photo.id} href={`/api/admin/lead-photos/${photo.id}`} target="_blank" rel="noopener noreferrer">
+                {/* eslint-disable-next-line @next/next/no-img-element -- authenticated photo route, never sent to a public optimiser */}
+                <img src={`/api/admin/lead-photos/${photo.id}`} alt={photo.name} style={{ width: '100%', aspectRatio: '4 / 3', objectFit: 'cover', borderRadius: 8 }} />
+                <span>{photo.name} · Open full size</span>
+              </a>)}
+            </div>
+          </section>}
 
           <section className="adm-card adm-sec">
             <h2>Timeline</h2>
