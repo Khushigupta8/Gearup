@@ -9,6 +9,7 @@ export type StockRowData = {
   slug: string;
   name: string;
   registration: string | null;
+  showroomLocation: string;
   image: string | null;
   pricePounds: number;
   status: string;
@@ -48,6 +49,7 @@ export function StockRow({ bike }: { bike: StockRowData }) {
           </div>
         </div>
       </td>
+      <td>{bike.showroomLocation}</td>
       <td className="adm-num">
         <small className="adm-muted">
           {bike.photoCounts.main} / {bike.photoCounts.detail} / {bike.photoCounts.receipt}

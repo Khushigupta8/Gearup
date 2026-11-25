@@ -23,6 +23,8 @@ export type BikeFormValues = {
   owners?: number | null;
   keys?: number | null;
   motExpiry?: string | null; // yyyy-mm-dd
+  showroomLocation?: string;
+  deliveryAvailable?: boolean;
   pricePounds?: number;
   wasPricePounds?: number | null;
   status?: string;
@@ -198,6 +200,20 @@ export function BikeForm({ values = {}, mode }: { values?: BikeFormValues; mode:
           <Field label="MOT expiry" name="motExpiry">
             <input id="motExpiry" name="motExpiry" type="date" defaultValue={v.motExpiry ?? ''} />
           </Field>
+        </div>
+      </section>
+
+      <section className="adm-card adm-sec">
+        <h2>Showroom & delivery</h2>
+        <div className="adm-grid">
+          <Field label="Showroom location" name="showroomLocation" error={err('showroomLocation')} hint="Shown on the bike card. Enter a different location when stock moves to another showroom.">
+            <input id="showroomLocation" name="showroomLocation" required minLength={2} maxLength={80} defaultValue={v.showroomLocation ?? 'West Yorkshire'} />
+          </Field>
+        </div>
+        <div className="adm-checks">
+          <label>
+            <input type="checkbox" name="deliveryAvailable" defaultChecked={v.deliveryAvailable ?? true} /> Delivery available
+          </label>
         </div>
       </section>
 

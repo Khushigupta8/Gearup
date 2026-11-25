@@ -220,10 +220,6 @@ svg.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .bc:hover{box-shadow:0 18px 40px rgba(0,0,0,.12)}
 .bc .im{position:relative;aspect-ratio:16/11;overflow:hidden;background:#ddd}
 .bc .im img{width:100%;height:100%;object-fit:cover}
-.bc .pricechip{position:absolute;left:0;bottom:0;background:var(--ink);color:#fff;padding:8px 16px 8px 14px;display:flex;align-items:baseline;gap:10px;clip-path:polygon(0 0,100% 0,calc(100% - 12px) 100%,0 100%);padding-right:26px}
-.bc .pricechip b{font-family:var(--disp);font-weight:400;font-size:30px;line-height:1}
-.bc .pricechip span{font-size:14px;color:#ff6b70;font-weight:700}
-.bc .pricechip s{font-size:13px;color:#a6a6ad}
 .ribbon{position:absolute;top:18px;left:-46px;width:180px;transform:rotate(-45deg);background:var(--red);color:#fff;text-align:center;font-family:var(--narrow);font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:5px 0;line-height:1.1;box-shadow:0 3px 8px rgba(0,0,0,.25)}
 .flag{position:absolute;top:12px;right:12px;background:#fff;color:var(--ink);font-family:var(--narrow);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px}
 .flag.red{background:var(--red);color:#fff}
@@ -243,7 +239,6 @@ svg.i{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .bc.big .im{flex:1.35;aspect-ratio:auto;min-height:380px}
 .bc.big .bd{flex:1;padding:28px 26px}
 .bc.big h3{font-size:44px}
-.bc.big .pricechip b{font-size:40px}
 .bc.big .hl{list-style:none;display:grid;gap:9px;margin:4px 0 22px;font-size:15px}
 .bc.big .hl li{display:flex;gap:9px;align-items:flex-start}
 .bc.big .hl svg{color:var(--red);stroke-width:3;width:17px;height:17px;margin-top:2px}
@@ -623,8 +618,6 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 .toolbar .sel select{height:44px;border:1.5px solid var(--line);padding:0 36px 0 12px;font-size:15px;appearance:none;-webkit-appearance:none;background:#fff;min-width:200px}
 .toolbar .sel svg{bottom:13px}
 .vt{display:flex;border:1.5px solid var(--line)}
-.vt span{width:42px;height:41px;display:flex;align-items:center;justify-content:center}
-.vt span.on{background:var(--ink);color:#fff}
 .applied{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
 .applied span{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:#fff;font-size:13px;font-weight:600;padding:6px 10px}
 .applied span svg{width:13px;height:13px}
@@ -1481,3 +1474,47 @@ form[aria-busy=true]{opacity:.7;pointer-events:none}
 .vid.cut::after{background:linear-gradient(transparent 55%,rgba(0,0,0,.75))}
 .vids .vid.cut:first-child img{inset:10% 4% 24% 4%;width:92%;height:66%}
 @media (max-width:1024px){.bc.big .im{width:100%;align-self:stretch}}
+
+/* Stock cards: prices below the photo, DMS specifications and working list view. */
+.bike-card-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.bike-card-heading h3{min-width:0;overflow-wrap:anywhere}
+.bc .heart{flex:none;width:44px;height:44px;border-radius:8px}
+.bike-card-specs{display:flex;flex-wrap:wrap;align-content:flex-start;gap:5px;list-style:none;padding:0;margin:16px 0 20px}
+.bike-card-specs li{background:var(--ink);color:#fff;border-radius:3px;padding:5px 7px;font-size:12px;font-weight:700;line-height:1.25;overflow-wrap:anywhere;max-width:100%}
+.bike-card-prices{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;margin-top:auto;padding:0 0 18px}
+.bike-card-prices strong{display:block;font-family:var(--narrow);font-size:28px;line-height:1.1;font-weight:700;white-space:nowrap}
+.bike-card-prices small{display:block;margin-top:4px;color:var(--mut);font-size:12px}
+.bike-card-cash s{display:block;margin-bottom:3px;color:var(--mut);font-size:13px}
+.bike-card-monthly{text-align:right;color:var(--red);margin-left:auto}
+.bike-card-actions{display:grid;gap:8px}
+.bike-card-actions .btn{width:100%;min-height:46px;height:auto;padding:12px 16px;font-size:15px;text-align:center}
+.vt{overflow:hidden}
+.vt button{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:0;background:#fff;color:var(--ink);cursor:pointer}
+.vt button.on{background:var(--ink);color:#fff}
+.vt button:focus-visible{outline:2px solid var(--red);outline-offset:-4px}
+.promo-tile{box-shadow:0 12px 26px rgba(0,0,0,.22),0 3px 7px rgba(0,0,0,.12)}
+.lgrid.is-list{grid-template-columns:minmax(0,1fr)}
+.lgrid .bc.bc-list{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.3fr);align-items:start}
+.lgrid .bc.bc-list .im{width:100%;border-radius:var(--r) 0 0 0}
+.lgrid .bc.bc-list .bd{height:100%;min-width:0;padding:22px}
+.lgrid .bc.bc-list h3{font-size:30px}
+.bc-list .bike-card-actions{grid-template-columns:repeat(2,minmax(0,1fr))}
+.lgrid.is-list .promo-tile{flex-direction:row;align-items:center;gap:24px;padding:28px}
+.lgrid.is-list .promo-tile h3{font-size:34px}
+.lgrid.is-list .promo-tile p{margin-bottom:0}
+.lgrid.is-list .promo-tile>.btn{flex-shrink:0}
+@media(max-width:640px){
+  .lgrid .bc.bc-list{grid-template-columns:110px minmax(0,1fr);gap:14px;padding:14px}
+  .lgrid .bc.bc-list .im{border-radius:8px;grid-column:1;grid-row:1}
+  .lgrid .bc.bc-list .bd{display:contents}
+  .lgrid .bc.bc-list .bike-card-heading{grid-column:2;grid-row:1;gap:8px}
+  .lgrid .bc.bc-list h3{font-size:24px}
+  .bc-list .bike-card-heading h3 small{font-size:12px}
+  .bc-list .bike-card-specs{grid-column:1/-1;margin:0}
+  .bc-list .bike-card-prices{grid-column:1/-1;margin:0;padding:2px 0}
+  .bc-list .bike-card-actions{grid-column:1/-1;grid-template-columns:1fr}
+  .bc-list .ribbon{font-size:8px;top:13px;left:-48px;padding:3px 0;width:150px}
+  .bc-list .flag{font-size:9px;top:5px;right:5px;padding:3px 5px}
+  .bc-list .resb span{font-size:16px;border-width:2px;padding:3px}
+  .lgrid.is-list .promo-tile{flex-direction:column;align-items:stretch}
+}

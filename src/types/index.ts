@@ -53,6 +53,11 @@ export type Bike = {
   seoDescription?: string;
   /** Number plate, pulled from the DMS when the bike is added to stock. */
   registration?: string;
+  colour?: string;
+  fuel?: string;
+  gearbox?: string;
+  showroomLocation?: string;
+  deliveryAvailable?: boolean;
   /** Short bullet points shown on the large card. */
   highlights?: string[];
   /** Full bike page content. Bikes without it get a basic page. */

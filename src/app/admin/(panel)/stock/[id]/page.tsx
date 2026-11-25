@@ -57,6 +57,8 @@ export default async function EditBikePage({ params, searchParams }: { params: P
     owners: bike.owners,
     keys: bike.keys,
     motExpiry: ymd(bike.motExpiry),
+    showroomLocation: bike.showroomLocation,
+    deliveryAvailable: bike.deliveryAvailable,
     pricePounds: bike.price / 100,
     wasPricePounds: bike.wasPrice ? bike.wasPrice / 100 : null,
     status: bike.status,

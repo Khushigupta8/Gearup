@@ -44,7 +44,7 @@ function collect(form: HTMLFormElement) {
   const seen = new Set<string>();
   form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea').forEach((c) => {
     const type = c instanceof HTMLInputElement ? c.type : '';
-    if (['file', 'hidden', 'submit', 'password'].includes(type) || c.name === 'website') return;
+    if (['file', 'hidden', 'submit', 'password'].includes(type) || c.name === 'website' || c.hasAttribute('data-form-ignore')) return;
     if (type === 'radio') {
       if (seen.has(c.name)) return;
       seen.add(c.name);

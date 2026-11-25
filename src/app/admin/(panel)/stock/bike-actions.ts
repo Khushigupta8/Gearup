@@ -68,6 +68,8 @@ export async function saveBike(_prev: FormResult, form: FormData): Promise<FormR
     owners: d.owners,
     keys: d.keys,
     motExpiry: d.motExpiry,
+    showroomLocation: d.showroomLocation,
+    deliveryAvailable: d.deliveryAvailable,
     price: d.pricePounds * 100,
     wasPrice: d.wasPricePounds ? d.wasPricePounds * 100 : null,
     visible: d.visible,
@@ -121,7 +123,7 @@ export async function saveBike(_prev: FormResult, form: FormData): Promise<FormR
     db.bikeHistoryEntry.deleteMany({ where: { bikeId: id } }),
     db.bikeHistoryEntry.createMany({ data: history.map((h, i) => ({ ...h, bikeId: id, sortOrder: i })) }),
   ]);
-  await audit(user.id, 'bike.update', id, { status: d.status, price: data.price });
+  await audit(user.id, 'bike.update', id, { status: d.status, price: data.price, showroomLocation: data.showroomLocation, deliveryAvailable: data.deliveryAvailable });
   updateTag(BIKES_TAG);
   return { ok: true, message: d.status === 'available' && d.visible ? 'Saved. Live on the website.' : 'Saved.' };
 }

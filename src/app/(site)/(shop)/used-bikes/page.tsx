@@ -220,7 +220,7 @@ export default async function UsedBikesPage({ searchParams }: Props) {
           </div>
           <Suspense>
             <BikeListing
-              key={JSON.stringify(sp)}
+              filterKey={JSON.stringify(sp)}
               bikes={bikes}
               filters={<Filters all={all} f={f} sp={sp} />}
               applied={pills.map((p) => (

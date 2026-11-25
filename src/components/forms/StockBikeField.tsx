@@ -11,5 +11,5 @@ export function StockBikeField({ bikes, requestedSlug, id, label }: {
   const available = bikes.filter((bike) => bike.status === 'available');
   const initialSlug = available.find((bike) => bike.slug === requestedSlug)?.slug ?? '';
   return <StockBikeSelect key={initialSlug} id={id} label={label} initialSlug={initialSlug}
-    bikes={available.map(({ slug, year, make, model, price, image }) => ({ slug, year, make, model, price, image }))} />;
+    bikes={available.map(({ slug, year, make, model, price, image, registration }) => ({ slug, year, make, model, price, image, registration }))} />;
 }

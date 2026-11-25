@@ -30,77 +30,65 @@ export function BikeBadge({ bike }: { bike: Bike }) {
   return <span className={bike.badge.red ? 'flag red' : 'flag'}>{bike.badge.text}</span>;
 }
 
-/** Stock card used on the home page, the listing and "similar bikes". `big` adds highlights and two buttons. */
-export function BikeCard({ bike, big = false }: { bike: Bike; big?: boolean }) {
+/** Shared stock card; `big` adds highlights and `list` uses the catalogue's horizontal layout. */
+export function BikeCard({ bike, big = false, list = false }: { bike: Bike; big?: boolean; list?: boolean }) {
   const href = bikeHref(bike);
   const reserved = bike.status === 'reserved';
+  const specs = [
+    String(bike.year),
+    `${bike.mileage.toLocaleString('en-GB')} miles`,
+    `${bike.engineCc} cc`,
+    bike.gearbox,
+    bike.colour,
+    bike.fuel,
+    bike.showroomLocation,
+    bike.deliveryAvailable ? 'Delivery Available' : undefined,
+  ].filter((value): value is string => Boolean(value));
 
   return (
-    <article className={big ? 'bc big' : 'bc'}>
+    <article className={`bc${big ? ' big' : ''}${list ? ' bc-list' : ''}`}>
       <Link href={href} className={reserved ? 'im res' : 'im'}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={bike.image} alt={bikeName(bike)} loading="lazy" />
         <BikeBadge bike={bike} />
-        <span className="pricechip">
-          {bike.wasPrice && <s>{gbp(bike.wasPrice)}</s>}
-          <b>{gbp(bike.price)}</b>
-          <span>{gbp(Math.round(monthlyPayment(bike.price, 48)))}/mo</span>
-        </span>
       </Link>
       <div className="bd">
-        <h3>
-          <small>{bike.make}</small>
-          <Link href={href}>{bike.model}</Link>
-        </h3>
-        <div className="sp">
-          <span>
-            <Icon name="cal" />
-            {bike.year}
-          </span>
-          <span>
-            <Icon name="gauge" />
-            {bike.mileage.toLocaleString('en-GB')} miles
-          </span>
-          <span>
-            <Icon name="engine" />
-            {bike.engineCc}cc
-          </span>
+        <div className="bike-card-heading">
+          <h3>
+            <small>{bike.make}</small>
+            <Link href={href}>{bike.model}</Link>
+          </h3>
+          <SaveButton slug={bike.slug} />
         </div>
-        {big ? (
-          <>
-            {bike.highlights && (
-              <ul className="hl">
-                {bike.highlights.map((h) => (
-                  <li key={h}>
-                    <Icon name="check" />
-                    {h}
-                  </li>
-                ))}
-              </ul>
-            )}
-            <div className="two">
-              <Link href={`${href}/reserve`} className="btn btn-red">
-                Reserve for £99
-              </Link>
-              <Link href={href} className="btn btn-ink">
-                View bike
-              </Link>
-            </div>
-          </>
-        ) : (
-          <div className="ft">
-            {reserved ? (
-              <Link href={href} className="lnk">
-                Notify me if it returns <Icon name="right" />
-              </Link>
-            ) : (
-              <Link href={`${href}/reserve`} className="lnk">
-                Reserve for £99 <Icon name="right" />
-              </Link>
-            )}
-            <SaveButton slug={bike.slug} />
-          </div>
+        <ul className="bike-card-specs" aria-label="Bike specifications">
+          {specs.map((spec, index) => <li key={index}>{spec}</li>)}
+        </ul>
+        {big && bike.highlights && (
+          <ul className="hl">
+            {bike.highlights.map((highlight) => <li key={highlight}><Icon name="check" />{highlight}</li>)}
+          </ul>
         )}
+        <div className="bike-card-prices">
+          <div className="bike-card-cash">
+            {bike.wasPrice && bike.wasPrice > bike.price && <s>{gbp(bike.wasPrice)}</s>}
+            <strong>{gbp(bike.price)}</strong>
+            <small>Cash price</small>
+          </div>
+          <div className="bike-card-monthly" title="Example over 48 months, £0 deposit, 19.9% APR representative. Subject to status and affordability.">
+            <strong>{gbp(monthlyPayment(bike.price, 48), 2)}</strong>
+            <small>p/m* on finance</small>
+          </div>
+        </div>
+        <div className="bike-card-actions">
+          {reserved ? (
+            <Link href={href} className="btn btn-ink">View reserved bike <Icon name="right" /></Link>
+          ) : (
+            <>
+              <Link href={`/finance?bike=${encodeURIComponent(bike.slug)}#apply`} className="btn btn-red">Apply for finance</Link>
+              <Link href={`${href}/reserve`} className="btn btn-ink">Reserve for £99 <Icon name="right" /></Link>
+            </>
+          )}
+        </div>
       </div>
     </article>
   );

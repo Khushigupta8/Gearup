@@ -248,6 +248,10 @@ model Bike {
   keys      Int?
   motExpiry DateTime?
 
+  // showroom and fulfilment, managed with each stock record
+  showroomLocation String  @default("West Yorkshire")
+  deliveryAvailable Boolean @default(true)
+
   // price
   // all money in pence
   price    Int

@@ -73,6 +73,11 @@ function toBike(b: BikeRow): Bike {
     badge: badgeFor(b),
     status: b.status === 'reserved' ? 'reserved' : b.status === 'sold' ? 'sold' : 'available',
     registration: b.registration ?? undefined,
+    colour: b.colour ?? undefined,
+    fuel: b.fuel ?? undefined,
+    gearbox: b.gearbox ?? undefined,
+    showroomLocation: b.showroomLocation,
+    deliveryAvailable: b.deliveryAvailable,
     featured: b.featured,
     cutout: b.cutoutUrl ?? undefined,
     condition: b.condition,
@@ -96,7 +101,7 @@ const getPublicBikeRows = unstable_cache(
       orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
     }),
   // a fresh cache per deployment, so a deploy never serves rows cached by older code
-  ['public-bike-rows', process.env.VERCEL_DEPLOYMENT_ID ?? 'local'],
+  ['public-bike-rows-showroom', process.env.VERCEL_DEPLOYMENT_ID ?? 'local'],
   { tags: [BIKES_TAG] },
 );
 

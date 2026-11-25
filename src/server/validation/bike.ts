@@ -50,6 +50,8 @@ export const bikeFormSchema = z.object({
   owners: optInt(0, 50),
   keys: optInt(0, 10),
   motExpiry: z.preprocess((v) => (v ? new Date(String(v)) : null), z.date().nullable()),
+  showroomLocation: z.string().trim().min(2, 'Enter a showroom location').max(80, 'Use 80 characters or fewer'),
+  deliveryAvailable: bool,
 
   pricePounds: int(0, 1_000_000),
   wasPricePounds: optInt(0, 1_000_000),

@@ -12,19 +12,29 @@ function daysSince(date: Date): number {
   return Math.max(0, Math.floor((Date.now() - date.getTime()) / DAY));
 }
 
-export default async function StockPage({ searchParams }: { searchParams: Promise<{ show?: string }> }) {
-  const archived = (await searchParams).show === 'archived';
-  const rows = await db.bike.findMany({
-    where: archived ? { status: 'archived' } : { status: { not: 'archived' } },
+export default async function StockPage({ searchParams }: { searchParams: Promise<{ show?: string; showroom?: string }> }) {
+  const params = await searchParams;
+  const archived = params.show === 'archived';
+  const showroom = params.showroom ?? '';
+  const [rows, locations] = await Promise.all([db.bike.findMany({
+    where: {
+      status: archived ? 'archived' : { not: 'archived' },
+      ...(showroom ? { showroomLocation: showroom } : {}),
+    },
     orderBy: [{ status: 'asc' }, { publishedAt: 'desc' }],
     include: { photos: { select: { kind: true, url: true, sortOrder: true }, orderBy: { sortOrder: 'asc' } } },
-  });
+  }), db.bike.findMany({
+    distinct: ['showroomLocation'],
+    select: { showroomLocation: true },
+    orderBy: { showroomLocation: 'asc' },
+  })]);
 
   const bikes: StockRowData[] = rows.map((b) => ({
     id: b.id,
     slug: b.slug,
     name: `${b.year} ${b.make} ${b.model}`,
     registration: b.registration,
+    showroomLocation: b.showroomLocation,
     image: b.photos.find((p) => p.kind === 'main')?.url ?? null,
     pricePounds: Math.round(b.price / 100),
     status: b.status,
@@ -54,11 +64,24 @@ export default async function StockPage({ searchParams }: { searchParams: Promis
           + Add bike
         </Link>
       </header>
+      <form action="/admin/stock" className="adm-card adm-sec adm-stock-filter">
+        {archived && <input type="hidden" name="show" value="archived" />}
+        <div className="adm-field">
+          <label htmlFor="stock-showroom">Showroom</label>
+          <select id="stock-showroom" name="showroom" defaultValue={showroom}>
+            <option value="">All showrooms</option>
+            {showroom && !locations.some((l) => l.showroomLocation === showroom) && <option value={showroom}>{showroom}</option>}
+            {locations.map(({ showroomLocation }) => <option key={showroomLocation} value={showroomLocation}>{showroomLocation}</option>)}
+          </select>
+        </div>
+        <button type="submit" className="adm-btn">Filter stock</button>
+      </form>
       <div className="adm-card adm-table-wrap">
         <table className="adm-table">
           <thead>
             <tr>
               <th>Bike</th>
+              <th>Showroom</th>
               <th className="adm-num" title="Main / detailed / receipt photos">
                 Photos
               </th>
@@ -70,6 +93,7 @@ export default async function StockPage({ searchParams }: { searchParams: Promis
             </tr>
           </thead>
           <tbody>
+            {!bikes.length && <tr><td colSpan={8}>No bikes found in this showroom.</td></tr>}
             {bikes.map((b) => (
               <StockRow key={b.id} bike={b} />
             ))}

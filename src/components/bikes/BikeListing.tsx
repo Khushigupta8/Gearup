@@ -21,18 +21,20 @@ const sorts = {
 type SortKey = keyof typeof sorts;
 
 /** Toolbar, sort, pager and grid for /used-bikes. `filters` is the sidebar, `promo` the tile shown on page 1. */
-export function BikeListing({ bikes, filters, promo, applied = [] }: { bikes: Bike[]; filters: ReactNode; promo: ReactNode; applied?: ReactNode[] }) {
+export function BikeListing({ bikes, filters, promo, applied = [], filterKey }: { bikes: Bike[]; filters: ReactNode; promo: ReactNode; applied?: ReactNode[]; filterKey: string }) {
   const [sort, setSort] = useState<SortKey>('new');
-  const [page, setPage] = useState(1);
+  const [pagination, setPagination] = useState({ filterKey, page: 1 });
+  const [view, setView] = useState<'grid' | 'list'>('grid');
   const [filtersOpen, setFiltersOpen] = useState(false);
   const toolbar = useRef<HTMLDivElement>(null);
 
   const sorted = useMemo(() => [...bikes].sort(sorts[sort].fn), [bikes, sort]);
   const pages = Math.ceil(sorted.length / PER_PAGE);
+  const page = pagination.filterKey === filterKey ? Math.min(pagination.page, Math.max(1, pages)) : 1;
   const shown = sorted.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
   function goTo(p: number) {
-    setPage(p);
+    setPagination({ filterKey, page: p });
     toolbar.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -61,7 +63,7 @@ export function BikeListing({ bikes, filters, promo, applied = [] }: { bikes: Bi
                 value={sort}
                 onChange={(e) => {
                   setSort(e.target.value as SortKey);
-                  setPage(1);
+                  setPagination({ filterKey, page: 1 });
                 }}
               >
                 {Object.entries(sorts).map(([key, s]) => (
@@ -72,13 +74,13 @@ export function BikeListing({ bikes, filters, promo, applied = [] }: { bikes: Bi
               </select>
               <Icon name="down" />
             </div>
-            <div className="vt">
-              <span className="on">
+            <div className="vt" role="group" aria-label="Stock display">
+              <button type="button" className={view === 'grid' ? 'on' : undefined} aria-label="Grid view" aria-pressed={view === 'grid'} onClick={() => setView('grid')}>
                 <Icon name="grid" />
-              </span>
-              <span>
+              </button>
+              <button type="button" className={view === 'list' ? 'on' : undefined} aria-label="List view" aria-pressed={view === 'list'} onClick={() => setView('list')}>
                 <Icon name="list" />
-              </span>
+              </button>
             </div>
           </div>
         </div>
@@ -89,11 +91,11 @@ export function BikeListing({ bikes, filters, promo, applied = [] }: { bikes: Bi
             <p>Try removing a filter, or set up a stock alert below and we will message you when a match arrives.</p>
           </div>
         )}
-        <div className="lgrid" id="bikeGrid">
+        <div className={`lgrid${view === 'list' ? ' is-list' : ''}`} id="bikeGrid">
           {shown.map((bike, i) => (
             <Fragment key={bike.slug}>
               {page === 1 && i === PROMO_AFTER && promo}
-              <BikeCard bike={bike} />
+              <BikeCard bike={bike} list={view === 'list'} />
             </Fragment>
           ))}
         </div>
