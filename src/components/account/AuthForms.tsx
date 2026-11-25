@@ -4,8 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
 import { authClient } from '@/lib/auth-client';
-
-const safeNext = (next?: string) => (next && next.startsWith('/') && !next.startsWith('//') ? next : '/account');
+import { safeAccountPath } from '@/lib/auth-redirect';
 
 /** Sign in / create account card for /login. */
 export function AuthCard({ next, initial = 'signin' }: { next?: string; initial?: 'signin' | 'register' }) {
@@ -36,7 +35,7 @@ export function AuthCard({ next, initial = 'signin' }: { next?: string; initial?
       );
       return;
     }
-    router.replace(safeNext(next));
+    router.replace(safeAccountPath(next));
     router.refresh();
   }
 
@@ -117,19 +116,31 @@ export function ResetPasswordForm({ token }: { token?: string }) {
     const f = new FormData(e.currentTarget);
     setState('busy');
     setError('');
-    if (token) {
-      const { error } = await authClient.resetPassword({ newPassword: String(f.get('password')), token });
+    try {
+      if (token) {
+        const { error } = await authClient.resetPassword({ newPassword: String(f.get('password')), token });
+        if (error) {
+          setError('That reset link has expired or was already used. Ask for a new one.');
+          setState('idle');
+          return;
+        }
+        setState('done');
+        setTimeout(() => router.replace('/login'), 1500);
+        return;
+      }
+      const { error } = await authClient.requestPasswordReset({ email: String(f.get('email')).trim(), redirectTo: '/reset-password' });
       if (error) {
-        setError('That reset link has expired or was already used. Ask for a new one.');
+        setError(error.status === 503
+          ? 'Password reset emails are temporarily unavailable. Please contact us for help.'
+          : 'We could not request a reset link. Please try again in a few minutes.');
         setState('idle');
         return;
       }
-      setState('done');
-      setTimeout(() => router.replace('/login'), 1500);
-      return;
+      setState('sent'); // same message whether or not the email exists
+    } catch {
+      setError('We could not connect. Check your connection and try again.');
+      setState('idle');
     }
-    await authClient.requestPasswordReset({ email: String(f.get('email')).trim(), redirectTo: '/reset-password' });
-    setState('sent'); // same message whether or not the email exists
   }
 
   if (state === 'sent')

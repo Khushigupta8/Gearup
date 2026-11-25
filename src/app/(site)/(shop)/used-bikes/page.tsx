@@ -14,6 +14,7 @@ import {
   licenceOf,
   licenceOptions,
   makeKey,
+  modelKey,
   parseFilters,
   setHref,
   toggleHref,
@@ -49,6 +50,7 @@ function Option({ href, on, label, count }: { href: string; on: boolean; label: 
 function Filters({ all, f, sp }: { all: Bike[]; f: Filters; sp: SearchParams }) {
   const makes = [...new Map(all.map((b) => [makeKey(b.make), b.make])).entries()].sort((a, b) => a[1].localeCompare(b[1]));
   const styles = (Object.keys(styleLabels) as Bike['style'][]).filter((s) => all.some((b) => b.style === s));
+  const models = [...new Map(all.filter((b) => !f.make.length || f.make.includes(makeKey(b.make))).map((b) => [modelKey(b.model), b.model])).entries()].sort((a, b) => a[1].localeCompare(b[1]));
 
   return (
     <>
@@ -65,6 +67,12 @@ function Filters({ all, f, sp }: { all: Bike[]; f: Filters; sp: SearchParams }) 
         <h4>Make</h4>
         {makes.map(([key, name]) => (
           <Option key={key} href={toggleHref(sp, 'make', key)} on={f.make.includes(key)} label={name} count={countBy(all, f, 'make', (b) => makeKey(b.make) === key)} />
+        ))}
+      </div>
+      <div className="fgroup">
+        <h4>Model</h4>
+        {models.map(([key, name]) => (
+          <Option key={key} href={toggleHref(sp, 'model', key)} on={f.model.includes(key)} label={name} count={countBy(all, f, 'model', (b) => modelKey(b.model) === key)} />
         ))}
       </div>
       <div className="fgroup">
@@ -129,8 +137,10 @@ function Filters({ all, f, sp }: { all: Bike[]; f: Filters; sp: SearchParams }) 
 /** Labels for the "applied filters" pills. */
 function appliedPills(f: Filters, sp: SearchParams, all: Bike[]): { label: string; href: string }[] {
   const pills: { label: string; href: string }[] = [];
+  if (f.q) pills.push({ label: `Search: ${f.q}`, href: toggleHref(sp, 'q') });
   const makeName = (k: string) => all.find((b) => makeKey(b.make).startsWith(k))?.make ?? k;
   for (const m of f.make) pills.push({ label: makeName(m), href: toggleHref(sp, 'make', m) });
+  for (const m of f.model) pills.push({ label: all.find((b) => modelKey(b.model) === m)?.model ?? m, href: toggleHref(sp, 'model', m) });
   for (const s of f.style) pills.push({ label: styleLabels[s as Bike['style']] ?? s, href: toggleHref(sp, 'style', s) });
   for (const c of f.cc) pills.push({ label: ccBands.find((b) => b.key === c)?.label ?? c, href: toggleHref(sp, 'cc', c) });
   for (const l of f.licence) pills.push({ label: licenceOptions.find((o) => o.key === l)?.label ?? l, href: toggleHref(sp, 'licence', l) });

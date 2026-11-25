@@ -30,6 +30,15 @@ export const extraOptions = [
 ] as const;
 
 export const makeKey = (make: string) => make.toLowerCase().replace(/[^a-z0-9]/g, '');
+export const modelKey = (model: string) => model.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+/** Match words in any order, including registrations typed without spaces. */
+export function matchesBikeSearch(bike: Pick<Bike, 'year' | 'make' | 'model' | 'registration'>, query: string): boolean {
+  const normalise = (value: string) => value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const words = normalise(query).match(/[a-z0-9]+/g) ?? [];
+  const stock = normalise(`${bike.year} ${bike.make} ${bike.model} ${bike.registration ?? ''}`).replace(/[^a-z0-9]/g, '');
+  return words.every((word) => stock.includes(word));
+}
 
 /** CBT for 125cc and under, A2 if flagged or set, otherwise the licence set in the DMS. */
 export function licenceOf(b: Bike): 'cbt' | 'a2' | 'full_a' {
@@ -47,6 +56,8 @@ const num = (v: string | string[] | undefined) => {
 
 export type Filters = {
   make: string[];
+  model: string[];
+  q?: string;
   style: string[];
   cc: string[];
   licence: string[];
@@ -63,6 +74,8 @@ export function parseFilters(sp: SearchParams): Filters {
   const condition = list(sp.condition)[0];
   return {
     make: list(sp.make),
+    model: list(sp.model),
+    q: (Array.isArray(sp.q) ? sp.q[0] : sp.q)?.trim().slice(0, 100) || undefined,
     style: list(sp.style),
     cc: list(sp.cc),
     licence: list(sp.licence),
@@ -78,7 +91,9 @@ export function parseFilters(sp: SearchParams): Filters {
 
 /** Does a bike pass every filter except (optionally) one group? Used for both results and counts. */
 function passes(b: Bike, f: Filters, skip?: keyof Filters): boolean {
+  if (f.q && !matchesBikeSearch(b, f.q)) return false;
   if (skip !== 'make' && f.make.length && !f.make.some((m) => makeKey(b.make).startsWith(m))) return false;
+  if (skip !== 'model' && f.model.length && !f.model.includes(modelKey(b.model))) return false;
   if (skip !== 'style' && f.style.length && !f.style.includes(b.style)) return false;
   if (skip !== 'cc' && f.cc.length && !ccBands.some((band) => f.cc.includes(band.key) && band.test(b.engineCc))) return false;
   if (skip !== 'licence' && f.licence.length && !f.licence.includes(licenceOf(b))) return false;
@@ -102,7 +117,7 @@ export function applyFilters(bikes: Bike[], f: Filters): Bike[] {
 }
 
 /** Count per option, ignoring that option's own group (so ticking Honda still shows Yamaha's count). */
-export function countBy(bikes: Bike[], f: Filters, group: 'make' | 'style' | 'cc' | 'licence' | 'extra' | 'condition', test: (b: Bike) => boolean) {
+export function countBy(bikes: Bike[], f: Filters, group: 'make' | 'model' | 'style' | 'cc' | 'licence' | 'extra' | 'condition', test: (b: Bike) => boolean) {
   return bikes.filter((b) => passes(b, f, group) && test(b)).length;
 }
 
@@ -115,7 +130,11 @@ export function setHref(sp: SearchParams, key: string, value: string): string {
 /** A URL for the listing with one value toggled (or a param set/cleared). */
 export function toggleHref(sp: SearchParams, key: string, value?: string): string {
   const params = new URLSearchParams();
-  for (const [k, v] of Object.entries(sp)) for (const x of list(v)) params.append(k, x);
+  for (const [k, v] of Object.entries(sp)) {
+    // Search text is one value: preserve commas, spacing and case while other filters change.
+    const values = k === 'q' ? [Array.isArray(v) ? v[0] : v].filter((x): x is string => Boolean(x)) : list(v);
+    for (const x of values) params.append(k, x);
+  }
   const current = params.getAll(key);
   params.delete(key);
   if (value !== undefined) {

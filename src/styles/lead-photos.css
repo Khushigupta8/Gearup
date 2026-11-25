@@ -1,0 +1,8 @@
+/* Shared private-photo picker for part-exchange and Sell Your Bike. */
+.lead-photos{display:grid;gap:12px;margin-top:20px}
+.lead-photo-drop{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;padding:24px;text-align:center;cursor:pointer}
+.lead-photo-drop:focus-within{outline:2px solid var(--red);outline-offset:3px}
+.lead-photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+.lead-photo-preview img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px}
+.lead-photo-preview button{margin-top:6px;padding:6px 12px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);font:inherit;cursor:pointer}
+form[aria-busy="true"] .lead-photos,form[aria-busy="true"] button[type="submit"]{pointer-events:none;opacity:.65}

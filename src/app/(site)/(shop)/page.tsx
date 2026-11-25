@@ -200,7 +200,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <SearchDock makes={[...new Set(bikes.map((b) => b.make))].sort()} />
+      <SearchDock stock={bikes.map(({ make, model, style }) => ({ make, model, style }))} />
 
       <section className="stats" aria-label="Why buy from GearUp">
         <div className="wrap">

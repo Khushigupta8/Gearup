@@ -9,6 +9,7 @@ import { JumpForm } from '@/components/info/JumpForm';
 import { Icon } from '@/components/ui/Icon';
 import { BikeCard } from '@/components/bikes/BikeCard';
 import { getPublicBikes } from '@/server/services/bikes';
+import { valuationPrefill, type ValuationQuery } from '@/lib/valuation-prefill';
 import '@/styles/pages/part-exchange.css';
 
 export function generateMetadata(): Promise<Metadata> {
@@ -18,8 +19,9 @@ export function generateMetadata(): Promise<Metadata> {
 });
 }
 
-export default async function PartExchangePage({ searchParams }: { searchParams: Promise<{ bike?: string | string[] }> }) {
+export default async function PartExchangePage({ searchParams }: { searchParams: Promise<ValuationQuery & { bike?: string | string[] }> }) {
   const [bikes, query] = await Promise.all([getPublicBikes(), searchParams]);
+  const prefill = valuationPrefill(query);
   return (
     <div className="pg-part-exchange" style={{ display: 'contents' }}>
 
@@ -40,9 +42,9 @@ export default async function PartExchangePage({ searchParams }: { searchParams:
 <JumpForm className="valbox" copy={[["pxr", "dr"], ["pxm", "dm"]]} target="details">
 <h3>Value my bike</h3>
 <label className="sr" htmlFor="pxr">Registration</label>
-<div className="plate"><span><i></i>UK</span><input id="pxr" placeholder="ENTER REG" maxLength={8} /></div>
+<div className="plate"><span><i></i>UK</span><input id="pxr" defaultValue={prefill.registration} placeholder="ENTER REG" maxLength={8} /></div>
 <div className="row">
-<div className="sel"><label className="sr" htmlFor="pxm">Mileage</label><input id="pxm" placeholder="Mileage" inputMode="numeric" /></div>
+<div className="sel"><label className="sr" htmlFor="pxm">Mileage</label><input id="pxm" defaultValue={prefill.mileage} placeholder="Mileage" inputMode="numeric" /></div>
 <div className="sel"><label className="sr" htmlFor="pxc">Condition</label><select id="pxc"><option>Condition</option><option>Excellent</option><option>Good</option><option>Fair</option><option>Needs work</option></select><Icon name="down" /></div>
 </div>
 <button className="btn btn-red">Get my valuation <Icon name="right" /></button>
@@ -99,7 +101,7 @@ export default async function PartExchangePage({ searchParams }: { searchParams:
 <div className="formcard">
 <h2>Your bike</h2>
 <div className="form mt2">
-<div className="frow"><div className="fl"><label htmlFor="dr">Registration</label><div className="plate" style={{ height: '52px', border: '2px solid #d8b200' }}><span><i></i>UK</span><input id="dr" placeholder="AB12 CDE" maxLength={8} /></div></div><div className="fl"><label htmlFor="dm">Mileage</label><input id="dm" placeholder="e.g. 8,500" inputMode="numeric" /></div></div>
+<div className="frow"><div className="fl"><label htmlFor="dr">Registration</label><div className="plate" style={{ height: '52px', border: '2px solid #d8b200' }}><span><i></i>UK</span><input id="dr" defaultValue={prefill.registration} placeholder="AB12 CDE" maxLength={8} /></div></div><div className="fl"><label htmlFor="dm">Mileage</label><input id="dm" defaultValue={prefill.mileage} placeholder="e.g. 8,500" inputMode="numeric" /></div></div>
 <div className="frow three"><div className="fl"><label htmlFor="dsh">Service history</label><div className="sel"><select id="dsh"><option>Full dealer</option><option>Full, mixed</option><option>Part</option><option>None</option></select><Icon name="down" /></div></div><div className="fl"><label htmlFor="dk">Keys</label><div className="sel"><select id="dk"><option>2 keys</option><option>1 key</option></select><Icon name="down" /></div></div><div className="fl"><label htmlFor="dmot">MOT expiry</label><input id="dmot" placeholder="MM / YYYY" /></div></div>
 </div>
 </div>

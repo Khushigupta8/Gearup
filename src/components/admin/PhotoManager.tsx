@@ -81,6 +81,7 @@ export function PhotoManager({ bikeId, kind, photos }: { bikeId: string; kind: K
     const list = Array.from(files).filter((f) => f.type.startsWith('image/'));
     if (input.current) input.current.value = '';
     if (!list.length) return;
+    if (list.length > 40) return setError('Choose up to 40 photos at a time.');
     if (kind === 'receipt' && cleanup) setToClean(list);
     else void uploadFiles(list, false);
   }
@@ -88,6 +89,7 @@ export function PhotoManager({ bikeId, kind, photos }: { bikeId: string; kind: K
   /** ready = already processed (cleaned documents): upload as they are. */
   async function uploadFiles(list: File[], ready: boolean) {
     const done: { url: string; caption: string }[] = [];
+    let uploadError = '';
     try {
       for (const [i, file] of list.entries()) {
         setProgress(`Uploading ${i + 1} of ${list.length}…`);
@@ -100,14 +102,21 @@ export function PhotoManager({ bikeId, kind, photos }: { bikeId: string; kind: K
         const blob = await upload(`bikes/${bikeId}/${kind}/${safe}`, small, { access: 'public', handleUploadUrl: '/api/admin/upload' });
         done.push({ url: blob.url, caption: '' });
       }
-      setProgress('Saving…');
-      await addPhotos(bikeId, kind, done);
-      router.refresh();
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Upload failed. Try again.');
-      if (done.length) await addPhotos(bikeId, kind, done); // keep what did upload
-      router.refresh();
+      uploadError = e instanceof Error ? e.message : 'Upload failed. Try again.';
+    }
+    // Save successful uploads once, even when a later file failed. Never repeat a failed
+    // save automatically: the first request may have committed before the connection dropped.
+    try {
+      if (done.length) {
+        setProgress('Saving…');
+        await addPhotos(bikeId, kind, done);
+      }
+      if (uploadError) setError(uploadError);
+    } catch {
+      setError('The photos uploaded, but we could not confirm they were saved. Refresh the bike before uploading them again.');
     } finally {
+      router.refresh();
       setProgress('');
     }
   }

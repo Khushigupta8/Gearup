@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { AuthCard } from '@/components/account/AuthForms';
 import { Icon } from '@/components/ui/Icon';
 import { getUser, STAFF_ROLES } from '@/server/auth';
+import { safeAccountPath } from '@/lib/auth-redirect';
 
 export const metadata: Metadata = {
   title: 'Sign in · My account',
@@ -14,7 +15,8 @@ export const metadata: Metadata = {
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string; register?: string }> }) {
   const { next, register } = await searchParams;
   const user = await getUser();
-  if (user) redirect(STAFF_ROLES.includes(user.role) && !next?.startsWith('/checkout') ? '/admin' : next?.startsWith('/') ? next : '/account');
+  const returnTo = safeAccountPath(next);
+  if (user) redirect(STAFF_ROLES.includes(user.role) && !returnTo.startsWith('/checkout') ? '/admin' : returnTo);
 
   return (
     <>

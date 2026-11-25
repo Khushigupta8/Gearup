@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from '@/components/ui/Icon';
 import { LEAD_PHOTO_MAX_COUNT } from '@/lib/lead-photos';
+import '@/styles/lead-photos.css';
 
 type Photo = { file: File; preview: string };
 

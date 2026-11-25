@@ -5,6 +5,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { Icon } from '@/components/ui/Icon';
 import { gbp } from '@/lib/format';
+import { matchesBikeSearch } from '@/lib/bike-filters';
 import type { Bike } from '@/types';
 import '@/styles/stock-bike-select.css';
 
@@ -27,7 +28,7 @@ export function StockBikeSelect({ bikes, initialSlug = '', id = 'dwant', label =
   const selected = bikes.find((bike) => bike.slug === slug);
   const term = normalise(query);
   const options: (StockBike | undefined)[] = term
-    ? bikes.filter((bike) => normalise(`${nameOf(bike)} ${bike.registration ?? ''}`).includes(term))
+    ? bikes.filter((bike) => matchesBikeSearch(bike, query))
     : [undefined, ...bikes];
   const listId = `${id}-options`;
 

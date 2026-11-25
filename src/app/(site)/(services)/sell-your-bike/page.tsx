@@ -4,6 +4,8 @@ import { pageMetadata } from '@/server/services/cms';
 import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
 import { LeadForm } from '@/components/forms/LeadForm';
+import { LeadPhotoUpload } from '@/components/forms/LeadPhotoUpload';
+import { valuationPrefill, type ValuationQuery } from '@/lib/valuation-prefill';
 import { Icon } from '@/components/ui/Icon';
 import '@/styles/pages/sell-your-bike.css';
 
@@ -14,7 +16,8 @@ export function generateMetadata(): Promise<Metadata> {
 });
 }
 
-export default function SellYourBikePage() {
+export default async function SellYourBikePage({ searchParams }: { searchParams: Promise<ValuationQuery> }) {
+  const prefill = valuationPrefill(await searchParams);
   return (
     <div className="pg-sell-your-bike" style={{ display: 'contents' }}>
 
@@ -48,9 +51,9 @@ export default function SellYourBikePage() {
 >
 <h3>What&apos;s my bike worth?</h3>
 <label className="sr" htmlFor="sxr">Registration</label>
-<div className="plate"><span><i></i>UK</span><input id="sxr" placeholder="ENTER REG" maxLength={8} /></div>
+<div className="plate"><span><i></i>UK</span><input id="sxr" defaultValue={prefill.registration} placeholder="ENTER REG" maxLength={8} /></div>
 <div className="row">
-<div className="sel"><label className="sr" htmlFor="sxm">Mileage</label><input id="sxm" placeholder="Mileage" inputMode="numeric" /></div>
+<div className="sel"><label className="sr" htmlFor="sxm">Mileage</label><input id="sxm" defaultValue={prefill.mileage} placeholder="Mileage" inputMode="numeric" /></div>
 <div className="sel"><label className="sr" htmlFor="sxc">Condition</label><select id="sxc"><option>Condition</option><option>Excellent</option><option>Good</option><option>Fair</option><option>Needs work</option></select><Icon name="down" /></div>
 </div>
 <div className="row">
@@ -61,6 +64,7 @@ export default function SellYourBikePage() {
 <div className="sel"><label className="sr" htmlFor="sxn">Your name</label><input id="sxn" placeholder="Your name" autoComplete="name" /></div>
 <div className="sel"><label className="sr" htmlFor="sxt">Mobile</label><input id="sxt" type="tel" placeholder="Mobile" autoComplete="tel" /></div>
 </div>
+<div className="sell-photo-field"><LeadPhotoUpload /></div>
 <button className="btn btn-red">Get my offer <Icon name="right" /></button>
 <small>Free and no obligation. Buying too? <Link href="/part-exchange" style={{ textDecoration: 'underline', color: 'var(--ink)' }}>Part-exchange it</Link>.</small>
 </LeadForm>

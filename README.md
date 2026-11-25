@@ -2,7 +2,7 @@
 
 Website and backend for GearUp Motorcycles, a used motorbike dealer in the UK. One Next.js app (App Router, TypeScript) holds both the pages and the API.
 
-- **Live site:** https://gearup-website-ten.vercel.app
+- **Live site:** https://gearup-umber.vercel.app
 
 ## Run it
 
@@ -104,16 +104,32 @@ legacy/                       the approved HTML pages, kept only as the source f
 
 Folders in brackets like `(shop)` group routes without adding to the URL.
 
-## Porting a page
+## Phase 1 service setup
 
-Each route currently shows a placeholder pointing at its file in `legacy/pages/`. To port one:
+The catalogue, enquiry forms, DMS and CRM use the database above. The homepage
+make/model choices come from public stock. `/used-bikes` supports a `q` search
+and `model` filter alongside the existing make, price and specification filters.
+Valuation links carry `registration` and `mileage` into the chosen form; both
+part-exchange and Sell Your Bike support private customer photo attachments.
 
-1. Move the page's markup into its `page.tsx` as JSX (`class` → `className`, `href="finance.html"` → `<Link href="/finance">`).
-2. Move the page's `<style>` block into a CSS file next to the page or into `src/styles`.
-3. Rebuild any behaviour from `legacy/js/` as a `'use client'` component in `src/components`.
-4. Delete the legacy file.
+Public stock photos, receipt images, cut-outs, promo banners, CMS images and
+walkaround videos need a connected **Vercel Blob** store and its server-only
+`BLOB_READ_WRITE_TOKEN`. This is separate from the private enquiry photo bucket.
+Configure it locally and in Vercel's relevant environments. The DMS checks staff
+access, destination, file type and size before issuing a direct-upload token.
 
-Old `.html` URLs redirect to the new routes (see `next.config.ts`).
+Reservation deposits need `STRIPE_SECRET_KEY` and a verified webhook at
+`/api/webhooks/stripe` with `STRIPE_WEBHOOK_SECRET`. Outbound email needs
+`RESEND_API_KEY` and `MAIL_FROM` on a verified sending domain. Set
+`STAFF_NOTIFY_EMAIL` to the agreed enquiries inbox. Password-reset requests
+return the same unavailable response for every address until email is configured.
+Do not treat a successful build as confirmation that payment or email delivery works.
+
+Legal pages remain drafts until the business and partner information is supplied
+and reviewed. An insurance partner link requires the client's approved partner
+details. Neither a database token nor a Vercel deployment token provides these.
+
+Old `.html` URLs redirect to the current routes (see `next.config.ts`).
 
 ## Images
 

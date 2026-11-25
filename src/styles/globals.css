@@ -1518,3 +1518,13 @@ form[aria-busy=true]{opacity:.7;pointer-events:none}
   .bc-list .resb span{font-size:16px;border-width:2px;padding:3px}
   .lgrid.is-list .promo-tile{flex-direction:column;align-items:stretch}
 }
+
+/* Catalogue keyword search uses the same URL filters as the stock sidebar. */
+.stock-search{margin-bottom:22px}
+.stock-search label{display:block;margin-bottom:7px;font-size:13px;font-weight:700;color:var(--mut)}
+.stock-search>div{display:flex;gap:10px}
+.stock-search input{flex:1;min-width:0;height:48px;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:0 14px;font:inherit;background:#fff;color:var(--ink)}
+.stock-search input:focus-visible{outline:2px solid var(--red);outline-offset:1px}
+.stock-search .btn{height:48px;min-width:120px}
+.sell-photo-field{margin:18px 0;text-align:left}
+@media(max-width:480px){.stock-search>div{gap:8px}.stock-search .btn{min-width:96px;padding:0 14px;font-size:14px}.stock-search .btn .i{display:none}}

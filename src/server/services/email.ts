@@ -8,10 +8,14 @@ import 'server-only';
 
 type Mail = { to: string | string[]; subject: string; html: string; text: string; replyTo?: string };
 
+export function emailConfigured() {
+  return Boolean(process.env.RESEND_API_KEY?.trim() && process.env.MAIL_FROM?.trim());
+}
+
 export async function sendEmail(mail: Mail): Promise<{ sent: boolean; error?: string }> {
   const key = process.env.RESEND_API_KEY;
-  if (!key) {
-    console.info(`[email skipped: no RESEND_API_KEY] ${mail.subject} → ${[mail.to].flat().join(', ')}`);
+  if (!emailConfigured()) {
+    console.info(`[email skipped: configure RESEND_API_KEY and MAIL_FROM] ${mail.subject}`);
     return { sent: false, error: 'not configured' };
   }
   try {
@@ -19,7 +23,7 @@ export async function sendEmail(mail: Mail): Promise<{ sent: boolean; error?: st
       method: 'POST',
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: process.env.MAIL_FROM ?? 'GearUp Motorcycles <onboarding@resend.dev>',
+        from: process.env.MAIL_FROM,
         to: [mail.to].flat(),
         subject: mail.subject,
         html: mail.html,
