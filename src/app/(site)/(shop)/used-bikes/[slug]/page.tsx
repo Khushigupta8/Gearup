@@ -266,7 +266,7 @@ export default async function BikePage({ params }: Props) {
                 </div>
                 <div className="pricebox">
                   <div className="c">
-                    <small>Cash price</small>
+                    <small>Cash Price</small>
                     {gbp(bike.price)}
                   </div>
                   <div className="m">
@@ -309,7 +309,7 @@ export default async function BikePage({ params }: Props) {
                 <div className="contact">
                   <a href={telHref(biz.phone)} className="ph">
                     <Icon name="phone" />
-                    {biz.phone}
+                    Call Us
                   </a>
                   <a href={waHref(biz.whatsapp)} className="wa" target="_blank" rel="noopener">
                     <Icon name="wa" />

@@ -109,6 +109,8 @@ Folders in brackets like `(shop)` group routes without adding to the URL.
 The catalogue, enquiry forms, DMS and CRM use the database above. The homepage
 make/model choices come from public stock. `/used-bikes` supports a `q` search
 and `model` filter alongside the existing make, price and specification filters.
+The catalogue uses two cards per row on larger screens; the standalone keyword
+search bar is removed per client feedback. Photo selectors retain name/registration search.
 Valuation links carry `registration` and `mileage` into the chosen form; both
 part-exchange and Sell Your Bike support private customer photo attachments.
 
@@ -140,3 +142,18 @@ Lowercase, hyphenated WebP files (`yamaha-mt07.webp`), each in the folder that m
 - Work on a branch and open a pull request into `main`. Vercel posts a preview link on the PR.
 - Merging to `main` deploys to production.
 - Never commit `.env` files.
+
+## Delivery, blog and registration data
+
+Delivery information is available at `/delivery` and linked from the footer.
+Delivery pricing and dates are confirmed by the team; instant quotes and GPS
+tracking are not presented as available.
+
+Managers and admins can write, edit, publish and unpublish articles at
+`/admin/website/blog`. Drafts are excluded from public pages and the sitemap.
+The public blog starts empty until the team publishes its first article.
+
+DMS registration lookup needs `DVLA_API_KEY`. It fills the registered make,
+colour, manufacture year, engine size, fuel and MOT expiry where supplied.
+Model, mileage, gearbox and extras are entered and verified by staff. Stock
+cards show Manual/Automatic while full gearbox details remain in specifications.

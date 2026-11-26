@@ -621,7 +621,7 @@ body.menu-open .mnav{display:grid;position:fixed;inset:68px 0 auto 0;z-index:60;
 .applied{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
 .applied span{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:#fff;font-size:13px;font-weight:600;padding:6px 10px}
 .applied span svg{width:13px;height:13px}
-.lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.lgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
 .lgrid .bc .im{aspect-ratio:4/3}
 .lgrid .bc h3{font-size:24px}
 .promo-tile{background:var(--red);color:#fff;padding:26px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
@@ -1519,12 +1519,39 @@ form[aria-busy=true]{opacity:.7;pointer-events:none}
   .lgrid.is-list .promo-tile{flex-direction:column;align-items:stretch}
 }
 
-/* Catalogue keyword search uses the same URL filters as the stock sidebar. */
-.stock-search{margin-bottom:22px}
-.stock-search label{display:block;margin-bottom:7px;font-size:13px;font-weight:700;color:var(--mut)}
-.stock-search>div{display:flex;gap:10px}
-.stock-search input{flex:1;min-width:0;height:48px;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:0 14px;font:inherit;background:#fff;color:var(--ink)}
-.stock-search input:focus-visible{outline:2px solid var(--red);outline-offset:1px}
-.stock-search .btn{height:48px;min-width:120px}
 .sell-photo-field{margin:18px 0;text-align:left}
-@media(max-width:480px){.stock-search>div{gap:8px}.stock-search .btn{min-width:96px;padding:0 14px;font-size:14px}.stock-search .btn .i{display:none}}
+
+/* Stock cards follow Rahim's supplied reference. */
+.bc{box-shadow:0 4px 12px rgba(9,9,11,.13)}
+.bc .bd{padding:14px 14px 12px}
+.bc h3,.lgrid .bc h3{font-size:29px;line-height:1.1}
+.bc h3 small{font-family:var(--sans);font-size:19px;letter-spacing:0;margin-bottom:3px}
+.bc .heart{width:46px;height:46px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.bc .heart svg{width:25px;height:25px}
+.bike-card-specs{display:grid;gap:6px;margin:14px 0 20px;min-width:0}
+.bike-card-specs ul{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:0}
+.bike-card-specs li{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:#e8e8ea;color:#09090b;border-radius:999px;padding:6px 10px;font-family:Arial,sans-serif;font-size:14px;font-weight:700;line-height:1.25;max-width:100%;overflow-wrap:anywhere}
+.bike-card-specs li svg{flex:none;width:16px;height:16px;stroke-width:2.5}
+.bike-card-prices{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:end;gap:14px;padding-bottom:18px}
+.bike-card-prices strong{font-family:var(--sans);font-size:40px;line-height:1.05;font-weight:700;letter-spacing:-1.5px}
+.bike-card-prices small{font-family:Arial,sans-serif;font-size:14px;line-height:1.3;color:#09090b;margin-top:4px}
+.bike-card-cash{border-right:1px solid #c9c9ce;padding-right:10px}
+.bike-card-monthly{margin-left:0}
+.bike-card-actions{gap:7px}
+.bike-card-actions .btn{clip-path:none;border-radius:11px;min-height:46px;padding:10px 12px;font-family:var(--narrow);font-size:20px;letter-spacing:0;box-shadow:0 2px 5px rgba(9,9,11,.12)}
+.buybox .wbadge{position:relative;justify-content:center;text-align:center;padding-inline:50px}
+.buybox .wbadge>span{width:100%}
+.buybox .wbadge>svg{position:absolute;left:16px}
+.buybox .contact a,.buybox .contact button{height:50px;font-size:15px;box-shadow:0 3px 8px rgba(0,0,0,.12);border-width:0}
+.buybox .contact a.ph{background:var(--red);color:#fff}
+.buybox .contact a.ph svg,.buybox .contact a.wa svg{color:inherit}
+.buybox .contact a.ph:hover{background:#bd0911}
+.buybox .contact a.wa{background:#128c4b;color:#fff}
+.buybox .contact a.wa:hover{background:#087c3d}
+.buybox .contact .shr{background:#1769c2;color:#fff}
+.buybox .contact .shr svg{color:inherit}
+.buybox .contact .shr:hover{background:#12539b;color:#fff}
+@media (max-width:640px){.lgrid{grid-template-columns:minmax(0,1fr);gap:20px}.bc-list .bike-card-prices strong{font-size:36px}.bc-list .bike-card-specs{gap:6px}.bc-list .bike-card-specs ul{gap:6px}}
+@media (max-width:360px){.bike-card-specs li{font-size:12px;padding:6px 9px}.bike-card-prices strong{font-size:34px}.bike-card-prices small{font-size:12px}.bike-card-actions .btn{font-size:18px}}
+
+@media(max-width:360px){.bike-card-specs ul:last-child li{padding-inline:5px;gap:4px;font-size:11.5px}}

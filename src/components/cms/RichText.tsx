@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Fragment, type ReactNode } from 'react';
+import { safeContentLink } from '@/lib/blog';
 
 /**
  * CMS text formatting (kept deliberately small):
@@ -18,6 +19,7 @@ export function inline(text: string): ReactNode[] {
       out.push(<strong key={m.index}>{m[3]}</strong>);
     } else {
       const [, label, href] = m;
+      if (!safeContentLink(href)) { out.push(label); last = m.index + m[0].length; continue; }
       out.push(
         href.startsWith('/') ? (
           <Link key={m.index} href={href}>

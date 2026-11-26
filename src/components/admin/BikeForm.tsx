@@ -79,30 +79,52 @@ export function BikeForm({ values = {}, mode }: { values?: BikeFormValues; mode:
   const err = (k: string) => (state && !state.ok ? state.fields?.[k] : undefined);
   const formRef = useRef<HTMLFormElement>(null);
   const [lookup, setLookup] = useState<{ busy: boolean; msg?: string; ok?: boolean }>({ busy: false });
+  const normaliseReg = (reg: string) => reg.replace(/\s+/g, '').toUpperCase();
+  const lastAutoLookup = useRef(normaliseReg(values.registration ?? ''));
+  const lookupRun = useRef(0);
+  const lookupInFlight = useRef<string | null>(null);
 
   async function regLookup() {
     const form = formRef.current;
     if (!form) return;
     const reg = (form.elements.namedItem('registration') as HTMLInputElement).value;
+    if (!/^[A-Z0-9]{2,8}$/.test(normaliseReg(reg))) return setLookup({ busy: false, msg: 'Enter a valid UK registration.', ok: false });
+    if (lookupInFlight.current === normaliseReg(reg)) return;
+    lookupInFlight.current = normaliseReg(reg);
+    lastAutoLookup.current = normaliseReg(reg);
+    const run = ++lookupRun.current;
+    const names = ['registration', 'make', 'colour', 'year', 'engineCc', 'fuel', 'motExpiry'];
+    const before = Object.fromEntries(names.map((name) => [name, (form.elements.namedItem(name) as HTMLInputElement).value]));
     setLookup({ busy: true });
-    const res = await fetch(`/api/admin/dvla?reg=${encodeURIComponent(reg)}`);
-    const data = await res.json();
-    if (!res.ok) {
-      setLookup({ busy: false, msg: data.error, ok: false });
-      return;
+    try {
+      const res = await fetch(`/api/admin/dvla?reg=${encodeURIComponent(reg)}`, { signal: AbortSignal.timeout(12000) });
+      const data = await res.json();
+      if (run !== lookupRun.current) return;
+      if (normaliseReg((form.elements.namedItem('registration') as HTMLInputElement).value) !== normaliseReg(reg)) {
+        setLookup({ busy: false, msg: 'The registration changed. Look up the new registration to fill its details.', ok: false });
+        return;
+      }
+      if (!res.ok) {
+        setLookup({ busy: false, msg: data.error, ok: false });
+        return;
+      }
+      const set = (name: string, v: unknown) => {
+        const el = form.elements.namedItem(name) as HTMLInputElement | null;
+        if (el && el.value === before[name] && v != null && v !== '') el.value = String(v);
+      };
+      set('registration', data.registration);
+      set('make', data.make);
+      set('colour', data.colour);
+      set('year', data.year);
+      set('engineCc', data.engineCc);
+      set('fuel', data.fuel);
+      set('motExpiry', data.motExpiry);
+      setLookup({ busy: false, msg: 'Registered details filled from DVLA. Check the model, mileage and gearbox separately. You can edit the details and add extras below.', ok: true });
+    } catch {
+      if (run === lookupRun.current) setLookup({ busy: false, msg: 'The lookup could not connect. Try again, or enter the details manually.', ok: false });
+    } finally {
+      if (run === lookupRun.current) lookupInFlight.current = null;
     }
-    const set = (name: string, v: unknown) => {
-      const el = form.elements.namedItem(name) as HTMLInputElement | null;
-      if (el && v != null && v !== '') el.value = String(v);
-    };
-    set('registration', data.registration);
-    set('make', data.make);
-    set('colour', data.colour);
-    set('year', data.year);
-    set('engineCc', data.engineCc);
-    set('fuel', data.fuel);
-    set('motExpiry', data.motExpiry);
-    setLookup({ busy: false, msg: 'Filled in from the DVLA. Check the model and mileage.', ok: true });
   }
 
   // Submit without React's automatic form reset, so typed values survive a validation error.
@@ -120,9 +142,9 @@ export function BikeForm({ values = {}, mode }: { values?: BikeFormValues; mode:
       <section className="adm-card adm-sec">
         <h2>Registration</h2>
         <div className="adm-grid">
-          <Field label="Registration" name="registration" error={err('registration')} hint="Pulled from the DVLA when the lookup is switched on.">
+          <Field label="Registration" name="registration" error={err('registration')} hint="A new registration looks up make, registered colour, year, engine size, fuel and MOT expiry when the DVLA connection is enabled. All fields remain editable.">
             <div className="adm-inline">
-              <input id="registration" name="registration" defaultValue={v.registration ?? ''} className="adm-reg" placeholder="AB12 CDE" />
+              <input id="registration" name="registration" defaultValue={v.registration ?? ''} className="adm-reg" placeholder="AB12 CDE" onBlur={(event) => { const reg = normaliseReg(event.currentTarget.value); if (/^[A-Z0-9]{2,8}$/.test(reg) && reg !== lastAutoLookup.current) void regLookup(); }} />
               <button type="button" className="adm-btn adm-btn-sm" onClick={regLookup} disabled={lookup.busy}>
                 {lookup.busy ? 'Looking up…' : 'Look up'}
               </button>
@@ -132,7 +154,7 @@ export function BikeForm({ values = {}, mode }: { values?: BikeFormValues; mode:
             <input id="vin" name="vin" defaultValue={v.vin ?? ''} />
           </Field>
         </div>
-        {lookup.msg && <p className={lookup.ok ? 'adm-ok' : 'adm-err'}>{lookup.msg}</p>}
+        {lookup.msg && <p className={lookup.ok ? 'adm-ok' : 'adm-err'} role="status">{lookup.msg}</p>}
       </section>
 
       <section className="adm-card adm-sec">
@@ -182,13 +204,13 @@ export function BikeForm({ values = {}, mode }: { values?: BikeFormValues; mode:
               <option value="full_a">Full A</option>
             </select>
           </Field>
-          <Field label="Colour" name="colour">
+          <Field label="Colour" name="colour" hint="Registered colour from the lookup. Add other colour details or accessories in the overview or features below.">
             <input id="colour" name="colour" defaultValue={v.colour ?? ''} />
           </Field>
           <Field label="Fuel" name="fuel">
             <input id="fuel" name="fuel" defaultValue={v.fuel ?? 'Petrol'} />
           </Field>
-          <Field label="Gearbox" name="gearbox">
+          <Field label="Gearbox" name="gearbox" hint="Stock badges show Manual or Automatic. Keep the full gearbox information here and in the specification rows below.">
             <input id="gearbox" name="gearbox" defaultValue={v.gearbox ?? ''} placeholder="Manual, 6-speed" />
           </Field>
           <Field label="Previous owners" name="owners">

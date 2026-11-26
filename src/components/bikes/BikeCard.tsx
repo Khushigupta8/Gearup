@@ -4,6 +4,7 @@ import { bikeName } from '@/lib/bikes';
 import { gbp, monthlyPayment } from '@/lib/format';
 import type { Bike } from '@/types';
 import { SaveButton } from './SaveButton';
+import { transmissionLabel } from '@/lib/bike-display';
 
 export function bikeHref(bike: Bike) {
   return `/used-bikes/${bike.slug}`;
@@ -34,16 +35,10 @@ export function BikeBadge({ bike }: { bike: Bike }) {
 export function BikeCard({ bike, big = false, list = false }: { bike: Bike; big?: boolean; list?: boolean }) {
   const href = bikeHref(bike);
   const reserved = bike.status === 'reserved';
-  const specs = [
-    String(bike.year),
-    `${bike.mileage.toLocaleString('en-GB')} miles`,
-    `${bike.engineCc} cc`,
-    bike.gearbox,
-    bike.colour,
-    bike.fuel,
-    bike.showroomLocation,
-    bike.deliveryAvailable ? 'Delivery Available' : undefined,
-  ].filter((value): value is string => Boolean(value));
+  const specRows = [
+    [String(bike.year), `${bike.mileage.toLocaleString('en-GB')} miles`, `${bike.engineCc} cc`],
+    [transmissionLabel(bike.gearbox), bike.colour, bike.fuel].filter((value): value is string => Boolean(value)),
+  ];
 
   return (
     <article className={`bc${big ? ' big' : ''}${list ? ' bc-list' : ''}`}>
@@ -60,9 +55,13 @@ export function BikeCard({ bike, big = false, list = false }: { bike: Bike; big?
           </h3>
           <SaveButton slug={bike.slug} />
         </div>
-        <ul className="bike-card-specs" aria-label="Bike specifications">
-          {specs.map((spec, index) => <li key={index}>{spec}</li>)}
-        </ul>
+        <div className="bike-card-specs" role="group" aria-label="Bike specifications">
+          {specRows.map((row, index) => row.length > 0 && <ul key={index}>{row.map((spec, i) => <li key={i}>{spec}</li>)}</ul>)}
+          {(bike.showroomLocation || bike.deliveryAvailable) && <ul>
+            {bike.showroomLocation && <li><Icon name="pin" />{bike.showroomLocation}</li>}
+            {bike.deliveryAvailable && <li><Icon name="truck" />Delivery Available</li>}
+          </ul>}
+        </div>
         {big && bike.highlights && (
           <ul className="hl">
             {bike.highlights.map((highlight) => <li key={highlight}><Icon name="check" />{highlight}</li>)}
@@ -72,7 +71,7 @@ export function BikeCard({ bike, big = false, list = false }: { bike: Bike; big?
           <div className="bike-card-cash">
             {bike.wasPrice && bike.wasPrice > bike.price && <s>{gbp(bike.wasPrice)}</s>}
             <strong>{gbp(bike.price)}</strong>
-            <small>Cash price</small>
+            <small>Cash Price</small>
           </div>
           <div className="bike-card-monthly" title="Example over 48 months, £0 deposit, 19.9% APR representative. Subject to status and affordability.">
             <strong>{gbp(monthlyPayment(bike.price, 48), 2)}</strong>

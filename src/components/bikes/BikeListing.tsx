@@ -5,11 +5,10 @@ import { Icon } from '@/components/ui/Icon';
 import { monthlyPayment } from '@/lib/format';
 import type { Bike } from '@/types';
 import { BikeCard } from './BikeCard';
-import { StockSearch } from './StockSearch';
 
 const PER_PAGE = 8;
-/** On page 1 the promo tile sits after this many bikes (8 bikes + tile = full 3 x 3 grid). */
-const PROMO_AFTER = 5;
+/** Keep the first two rows focused on bikes before the part-exchange tile. */
+const PROMO_AFTER = 4;
 
 const sorts = {
   new: { label: 'Newest arrivals', fn: () => 0 },
@@ -46,7 +45,6 @@ export function BikeListing({ bikes, filters, promo, applied = [], filterKey }: 
       </aside>
 
       <div>
-        <StockSearch />
         <div className="toolbar" ref={toolbar}>
           <b>
             {bikes.length} {bikes.length === 1 ? 'bike' : 'bikes'}

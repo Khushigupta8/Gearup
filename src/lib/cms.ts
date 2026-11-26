@@ -56,7 +56,7 @@ export const faqSections: { key: string; label: string; page: string }[] = [
   { key: 'sell-your-bike', label: 'Sell your bike page', page: '/sell-your-bike' },
   { key: 'insurance', label: 'Insurance page', page: '/insurance' },
   { key: 'warranty', label: 'Warranty page', page: '/warranty' },
-  { key: 'delivery', label: 'Delivery page (Phase 2)', page: '/delivery' },
+  { key: 'delivery', label: 'Delivery page', page: '/delivery' },
 ];
 
 /** Pages whose Google title and description staff can override. */
@@ -73,6 +73,8 @@ export const seoPages: { path: string; label: string }[] = [
   { path: '/faq', label: 'FAQs' },
   { path: '/about', label: 'About' },
   { path: '/contact', label: 'Contact' },
+  { path: '/delivery', label: 'Delivery' },
+  { path: '/blog', label: 'Blog' },
   { path: '/legal', label: 'Legal & policies' },
 ];
 export type SeoEntry = { title?: string; description?: string };

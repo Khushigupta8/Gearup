@@ -16,7 +16,8 @@ export const mainNav: NavItem[] = [
 export const mobileNav: NavItem[] = [
   ...mainNav,
   { href: '/basket', label: 'Basket' },
-  ...(PHASE2 ? [{ href: '/delivery', label: 'Delivery' }] : []),
+  { href: '/delivery', label: 'Delivery' },
+  { href: '/blog', label: 'Blog' },
   { href: '/warranty', label: 'Warranty' },
   { href: '/account', label: PHASE2 ? 'Track my bike' : 'My account' },
   { href: '/contact', label: 'Contact' },
@@ -38,7 +39,8 @@ export const footerNav: { title: string; links: NavItem[] }[] = [
   {
     title: 'Help',
     links: [
-      ...(PHASE2 ? [{ href: '/delivery', label: 'Delivery & tracking' }] : []),
+      { href: '/delivery', label: 'Delivery' },
+      { href: '/blog', label: 'Blog' },
       { href: '/warranty', label: 'Warranty' },
       { href: '/workshop', label: 'Workshop & MOT' },
       { href: '/faq', label: 'FAQs' },

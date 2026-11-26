@@ -10,6 +10,7 @@ const tabs = [
   { href: '/admin/website/faqs', label: 'FAQs' },
   { href: '/admin/website/seo', label: 'SEO' },
   { href: '/admin/website/pages', label: 'Legal pages' },
+  { href: '/admin/website/blog', label: 'Blog' },
 ];
 
 export function WebsiteTabs() {

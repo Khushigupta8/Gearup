@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getPublicBikes } from '@/server/services/bikes';
-import { PHASE2 } from '@/lib/features';
+import { getPublishedPosts } from '@/server/services/blog';
 import { site } from '@/lib/site';
 
 // Include current stock without querying the database during next build.
@@ -15,7 +15,8 @@ const pages = [
   '/sell-your-bike',
   '/insurance',
   '/workshop',
-  ...(PHASE2 ? ['/delivery'] : []),
+  '/delivery',
+  '/blog',
   '/warranty',
   '/faq',
   '/about',
@@ -23,9 +24,10 @@ const pages = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const bikes = await getPublicBikes();
+  const [bikes, posts] = await Promise.all([getPublicBikes(), getPublishedPosts()]);
   return [
     ...pages.map((path) => ({ url: `${site.url}${path}` })),
     ...bikes.map((b) => ({ url: `${site.url}/used-bikes/${b.slug}` })),
+    ...posts.map((post) => ({ url: `${site.url}/blog/${post.slug}`, lastModified: post.updatedAt })),
   ];
 }
