@@ -34,10 +34,10 @@ export default async function TrackPage({ searchParams }: { searchParams: Promis
 
   return (
     <AccountPage crumb={PHASE2 ? 'Track my bike' : 'My reservation'} title={PHASE2 ? 'Track' : 'My'} em={PHASE2 ? 'my bike' : 'reservation'}>
-      {paid && (
+      {paid && order?.reference === paid && (
         <div className="success">
           <Icon name="check" />
-          Payment received for order {paid}. Your bike is reserved and off sale. We will text you within the hour.
+          Payment received for order {paid}. {order.status === 'payment_review' ? 'Your order needs review and is not confirmed yet. We will contact you to resolve this or arrange a refund.' : 'Your bike is reserved and off sale. We will contact you about the next steps.'}
         </div>
       )}
       {!order || !order.bike ? (
@@ -71,7 +71,7 @@ export default async function TrackPage({ searchParams }: { searchParams: Promis
                   {bike.photos[0] && <img src={bike.photos[0].url} alt={name} />}
                   <div>
                     <small>
-                      Order {order.reference} · reserved {shortDate(order.paidAt ?? order.createdAt)}
+                      Order {order.reference} · {order.status === 'payment_review' ? 'paid' : 'reserved'} {shortDate(order.paidAt ?? order.createdAt)}
                     </small>
                     <h2>{name}</h2>
                   </div>

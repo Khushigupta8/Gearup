@@ -2,41 +2,15 @@
 
 /* eslint-disable @next/next/no-img-element -- product photos sized by the site CSS */
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Icon } from '@/components/ui/Icon';
-import { basket, useBasket } from '@/lib/basket';
+import { basket } from '@/lib/basket';
 import { money } from '@/lib/orders';
-
-type Quote = {
-  lines: { variantId: string; productSlug: string; name: string; size: string | null; image: string | null; unit: number; qty: number; total: number; inStock: boolean }[];
-  itemsTotal: number;
-  discount: { code: string; label: string; amount: number } | null;
-  codeError: string | null;
-  postage: number;
-  missing: string[];
-};
+import { useBasketQuote } from './useBasketQuote';
 
 export function BasketView({ children }: { children?: React.ReactNode }) {
-  const b = useBasket();
-  const [quote, setQuote] = useState<Quote | null>(null);
+  const { basket: b, quote, error, retry } = useBasketQuote(false, 'delivery');
   const [code, setCode] = useState(b.code ?? '');
-  const key = JSON.stringify([b.lines, b.code]);
-
-  useEffect(() => {
-    let live = true;
-    fetch('/api/basket/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ lines: b.lines, code: b.code, fulfilment: 'delivery' }) })
-      .then((r) => r.json())
-      .then((q: Quote) => {
-        if (!live) return;
-        setQuote(q);
-        q.missing.forEach((id) => basket.setQty(id, 0)); // products removed from sale
-      })
-      .catch(() => undefined);
-    return () => {
-      live = false;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
 
   const empty = quote && quote.lines.length === 0;
   const kit = quote ? quote.itemsTotal - (quote.discount?.amount ?? 0) : 0;
@@ -46,7 +20,8 @@ export function BasketView({ children }: { children?: React.ReactNode }) {
       <div>
         <div className="formcard bk-sec">
           <h2>Kit &amp; accessories</h2>
-          {!quote && <p className="muted">Loading your basket…</p>}
+          {error && <div role="alert"><p>{error}</p><button type="button" className="btn btn-ink" onClick={retry}>Try again</button></div>}
+          {!quote && !error && <p className="muted">Loading your basket…</p>}
           {empty && (
             <p className="muted">
               Your basket is empty. <Link href="/accessories">Shop helmets, gloves, boots and more</Link>.
@@ -56,7 +31,7 @@ export function BasketView({ children }: { children?: React.ReactNode }) {
             <div className="bkline" key={l.variantId}>
               {l.image ? <img src={l.image} alt="" /> : <span />}
               <div>
-                <small>{[l.size && `Size ${l.size}`, !l.inStock && 'Low stock: we will call you'].filter(Boolean).join(' · ')}</small>
+                <small>{[l.size && `Size ${l.size}`, !l.inStock && 'Not enough stock: reduce the quantity'].filter(Boolean).join(' · ')}</small>
                 <b>{l.name}</b>
                 <div className="qty">
                   <button type="button" aria-label="One less" onClick={() => basket.setQty(l.variantId, l.qty - 1)}>
@@ -129,7 +104,7 @@ export function BasketView({ children }: { children?: React.ReactNode }) {
             <dd>{quote ? money(kit + quote.postage) : '…'}</dd>
           </dl>
           <p className="note">Free collection from the showroom, or free postage over £75. Kit bought with a bike comes on the van for free.</p>
-          {empty ? (
+          {!quote || quote.lines.some((line) => !line.inStock) ? <p className="note">{error ? "Retry to check availability before checkout." : quote ? "Reduce quantities that exceed available stock." : "Checking availability…"}</p> : empty ? (
             <Link href="/accessories" className="btn btn-red" style={{ width: '100%', height: 56, marginTop: 16 }}>
               Shop kit
             </Link>

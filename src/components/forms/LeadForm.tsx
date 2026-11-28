@@ -5,6 +5,7 @@ import { useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } fr
 import { site } from '@/lib/site';
 import { resizeImage } from '@/lib/resize-image';
 import { LEAD_PHOTO_MAX_BYTES, LEAD_PHOTO_MAX_COUNT } from '@/lib/lead-photos';
+import { validateLead } from '@/lib/lead-validation';
 
 export type LeadType = 'enquiry' | 'viewing' | 'finance' | 'part_exchange' | 'sell_bike' | 'insurance' | 'workshop' | 'newsletter';
 
@@ -36,6 +37,7 @@ function groupLabel(form: HTMLFormElement, radio: HTMLInputElement) {
 /** Reads every field into a readable { label: value } record for the CRM. */
 function collect(form: HTMLFormElement) {
   const fields: Record<string, string> = {};
+  const values: Record<string, string> = {};
   const name: string[] = [];
   let email = '';
   let phone = '';
@@ -44,22 +46,27 @@ function collect(form: HTMLFormElement) {
   const seen = new Set<string>();
   form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea').forEach((c) => {
     const type = c instanceof HTMLInputElement ? c.type : '';
-    if (['file', 'hidden', 'submit', 'password'].includes(type) || c.name === 'website' || c.hasAttribute('data-form-ignore')) return;
+    if (c.disabled || ['file', 'hidden', 'submit', 'password'].includes(type) || c.name === 'website' || c.hasAttribute('data-form-ignore')) return;
     if (type === 'radio') {
       if (seen.has(c.name)) return;
       seen.add(c.name);
       const checked = form.querySelector<HTMLInputElement>(`input[type=radio][name="${CSS.escape(c.name)}"]:checked`);
-      if (checked) fields[groupLabel(form, c as HTMLInputElement).slice(0, 90)] = clean(checked.closest('label')?.querySelector('b')?.textContent) || labelFor(form, checked);
+      if (checked) {
+        fields[groupLabel(form, c as HTMLInputElement).slice(0, 90)] = clean(checked.closest('label')?.querySelector('b')?.textContent) || labelFor(form, checked);
+        values[c.name] = checked.value === 'on' ? fields[groupLabel(form, c as HTMLInputElement).slice(0, 90)] : checked.value;
+      }
       return;
     }
     const label = labelFor(form, c);
     if (type === 'checkbox') {
       const box = c as HTMLInputElement;
+      if (c.name || c.id) values[c.name || c.id] = box.checked ? 'yes' : 'no';
       if (/offer|news|marketing|email me/i.test(label)) consent = box.checked;
       if (box.checked) fields[label.slice(0, 90)] = 'Yes';
       return;
     }
     let value = c.value.trim();
+    if (c.id || c.name) values[c.id || c.name] = value;
     if (c instanceof HTMLSelectElement && c.selectedIndex >= 0) value = clean(c.options[c.selectedIndex].text);
     if (!value) return;
     if (type === 'email') email = value;
@@ -68,7 +75,7 @@ function collect(form: HTMLFormElement) {
     else if (c instanceof HTMLTextAreaElement) message = value;
     fields[label.slice(0, 90)] = value.slice(0, 2000);
   });
-  return { fields, name: name.join(' '), email, phone, message, consent };
+  return { fields, values, name: name.join(' '), email, phone, message, consent };
 }
 
 /**
@@ -110,6 +117,8 @@ export function LeadForm({
     const data = collect(form);
     const stockChoice = form.elements.namedItem('bikeSlug');
     const bikeSlug = stockChoice instanceof HTMLSelectElement ? stockChoice.value : '';
+    const validationError = validateLead({ type, email: data.email, phone: data.phone, bikeSlug, values: data.values });
+    if (validationError) { setError(validationError); return; }
     if (!data.email && data.phone.replace(/\D/g, '').length < 7) {
       setError('Please add your email or mobile number so we can reply.');
       return;
@@ -125,6 +134,7 @@ export function LeadForm({
         phone: data.phone || undefined,
         message: data.message || undefined,
         fields: data.fields,
+        values: data.values,
         sourcePage: pathname,
         bikeSlug: bikeSlug || undefined,
         marketingConsent: data.consent,

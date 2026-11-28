@@ -39,7 +39,7 @@ export default async function PartExchangePage({ searchParams }: { searchParams:
 <span><Icon name="check" />Collected when we deliver</span>
 </div>
 </div>
-<JumpForm className="valbox" copy={[["pxr", "dr"], ["pxm", "dm"]]} target="details">
+<JumpForm className="valbox" copy={[["pxr", "dr"], ["pxm", "dm"]]} target="details" condition={{ from: "pxc", name: "cond" }}>
 <h3>Value my bike</h3>
 <label className="sr" htmlFor="pxr">Registration</label>
 <div className="plate"><span><i></i>UK</span><input id="pxr" defaultValue={prefill.registration} placeholder="ENTER REG" maxLength={8} /></div>
@@ -109,10 +109,10 @@ export default async function PartExchangePage({ searchParams }: { searchParams:
 <h2>Overall condition</h2>
 <p>Pick the one that fits best. We will check it when we see the bike.</p>
 <div className="radios mt2" style={{ gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))' }}>
-<label className="rcard"><input type="radio" name="cond" /><span className="dot"></span><span><b>Excellent</b><small>Like new. No marks, tyres good.</small></span></label>
-<label className="rcard on"><input type="radio" name="cond" defaultChecked /><span className="dot"></span><span><b>Good</b><small>Light marks for its age. Rides well.</small></span></label>
-<label className="rcard"><input type="radio" name="cond" /><span className="dot"></span><span><b>Fair</b><small>Scuffs or dents. Some parts worn.</small></span></label>
-<label className="rcard"><input type="radio" name="cond" /><span className="dot"></span><span><b>Needs work</b><small>Faults, damage or a non-runner.</small></span></label>
+<label className="rcard"><input type="radio" name="cond" value="Excellent" /><span className="dot"></span><span><b>Excellent</b><small>Like new. No marks, tyres good.</small></span></label>
+<label className="rcard on"><input type="radio" name="cond" value="Good" defaultChecked /><span className="dot"></span><span><b>Good</b><small>Light marks for its age. Rides well.</small></span></label>
+<label className="rcard"><input type="radio" name="cond" value="Fair" /><span className="dot"></span><span><b>Fair</b><small>Scuffs or dents. Some parts worn.</small></span></label>
+<label className="rcard"><input type="radio" name="cond" value="Needs work" /><span className="dot"></span><span><b>Needs work</b><small>Faults, damage or a non-runner.</small></span></label>
 </div>
 <div className="fl mt2"><label htmlFor="dn">Anything we should know? (optional)</label><textarea id="dn" placeholder="Damage, faults, modifications, recent work..."></textarea></div>
 </div>

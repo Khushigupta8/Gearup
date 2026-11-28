@@ -30,6 +30,7 @@ export function ProductForm({ values, categories }: { values: ProductValues; cat
   const [variants, setVariants] = useState<Variant[]>(values.variants.length ? values.variants : [{ name: 'Standard', price: '', wasPrice: '', stock: '0' }]);
   const [image, setImage] = useState(values.image);
   const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
 
   function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -40,10 +41,13 @@ export function ProductForm({ values, categories }: { values: ProductValues; cat
   async function onImage(file?: File) {
     if (!file) return;
     setUploading(true);
+    setUploadError('');
     try {
       const small = await resizeImage(file, 1400);
       const blob = await upload(`products/${small.name.toLowerCase().replace(/[^a-z0-9.]+/g, '-')}`, small, { access: 'public', handleUploadUrl: '/api/admin/upload' });
       setImage(blob.url);
+    } catch {
+      setUploadError('We could not upload this photo. Check that media storage is connected, then choose the photo again.');
     } finally {
       setUploading(false);
     }
@@ -55,6 +59,7 @@ export function ProductForm({ values, categories }: { values: ProductValues; cat
     <form onSubmit={submit} className="adm-bikeform">
       {values.id && <input type="hidden" name="id" value={values.id} />}
       <input type="hidden" name="image" value={image} />
+      {uploadError && <p className="adm-err" role="alert">{uploadError}</p>}
       <section className="adm-card adm-sec">
         <h2>Product</h2>
         <div className="adm-prodtop">

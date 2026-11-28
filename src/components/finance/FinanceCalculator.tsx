@@ -22,12 +22,12 @@ export function FinanceCalculator() {
         <label htmlFor="rng">Bike price</label>
         <output id="rngOut">{gbp(price)}</output>
       </div>
-      <input type="range" id="rng" min={1495} max={17995} step={100} value={price} style={pct(price, 1495, 17995)} onChange={(e) => setPrice(+e.target.value)} />
+      <input type="range" id="rng" min={1495} max={17995} step={100} value={price} style={pct(price, 1495, 17995)} onChange={(e) => { const next = +e.target.value; setPrice(next); setDeposit((old) => Math.min(old, next)); }} />
       <div className="top">
         <label htmlFor="depRng">Your deposit or part-ex</label>
         <output id="depOut">{gbp(deposit)}</output>
       </div>
-      <input type="range" id="depRng" min={0} max={4000} step={50} value={deposit} style={pct(deposit, 0, 4000)} onChange={(e) => setDeposit(+e.target.value)} />
+      <input type="range" id="depRng" min={0} max={Math.min(4000, price)} step={1} value={deposit} style={pct(deposit, 0, Math.min(4000, price))} onChange={(e) => setDeposit(Math.min(price, +e.target.value))} />
       <div className="top" style={{ marginBottom: 12 }}>
         <label>Term</label>
       </div>
@@ -49,7 +49,7 @@ export function FinanceCalculator() {
       </div>
       <div className="tline">
         <span>Total payable, including deposit</span>
-        <b id="totOut">{gbp(amount ? monthly * months + deposit : 0, 2)}</b>
+        <b id="totOut">{gbp(monthly * months + deposit, 2)}</b>
       </div>
       <div className="tline">
         <span>Interest rate</span>

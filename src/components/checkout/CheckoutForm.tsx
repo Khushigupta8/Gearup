@@ -6,17 +6,10 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState, type FormEvent } from 'react';
 import { beginCheckout } from '@/app/(site)/checkout/actions';
 import { Icon } from '@/components/ui/Icon';
-import { basket, useBasket } from '@/lib/basket';
+import { basket } from '@/lib/basket';
 import { monthlyPayment } from '@/lib/format';
 import { money } from '@/lib/orders';
-
-type Quote = {
-  lines: { variantId: string; name: string; size: string | null; image: string | null; unit: number; qty: number; total: number }[];
-  itemsTotal: number;
-  discount: { code: string; label: string; amount: number } | null;
-  codeError: string | null;
-  postage: number;
-};
+import { useBasketQuote } from './useBasketQuote';
 
 export type CheckoutBike = {
   slug: string;
@@ -31,34 +24,11 @@ export type CheckoutBike = {
 
 type Me = { firstName: string; lastName: string; email: string; phone: string; address: string; postcode: string };
 
-/** Fetches the server price for the browser basket whenever it (or the delivery choice) changes. */
-function useQuote(withBike: boolean, fulfilment: 'collection' | 'delivery') {
-  const b = useBasket();
-  const [quote, setQuote] = useState<Quote | null>(null);
-  const key = JSON.stringify([b.lines, b.code, withBike, fulfilment]);
-  useEffect(() => {
-    let live = true;
-    fetch('/api/basket/quote', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lines: b.lines, code: b.code, withBike, fulfilment }),
-    })
-      .then((r) => r.json())
-      .then((q) => live && setQuote(q))
-      .catch(() => undefined);
-    return () => {
-      live = false;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
-  return { quote, basket: b };
-}
-
 export function CheckoutForm({ bike, me, deposit }: { bike?: CheckoutBike; me: Me; deposit: number }) {
   const pathname = usePathname();
   const [fulfilment, setFulfilment] = useState<'collection' | 'delivery'>(bike ? 'collection' : 'delivery');
   const [balance, setBalance] = useState<'finance' | 'bank_transfer' | 'part_exchange'>('finance');
-  const { quote, basket: b } = useQuote(Boolean(bike), fulfilment);
+  const { quote, basket: b, error: quoteError, retry } = useBasketQuote(Boolean(bike), fulfilment);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
@@ -70,6 +40,7 @@ export function CheckoutForm({ bike, me, deposit }: { bike?: CheckoutBike; me: M
     const f = new FormData(e.currentTarget);
     setBusy(true);
     setError('');
+    try {
     const res = await beginCheckout({
       bikeSlug: bike?.slug,
       lines: b.lines,
@@ -90,12 +61,14 @@ export function CheckoutForm({ bike, me, deposit }: { bike?: CheckoutBike; me: M
       return;
     }
     setError(res.error);
-    setBusy(false);
+    } catch { setError('Payment could not be started. Please try again.'); }
+    finally { setBusy(false); }
   }
 
   return (
     <div className="split">
       <form className="form" onSubmit={submit}>
+        {quoteError && <div className="formcard" role="alert"><p>{quoteError}</p><button type="button" className="btn btn-ink" onClick={retry}>Try again</button></div>}
         <div className="formcard">
           <h2>Your details</h2>
           <p>
@@ -214,12 +187,13 @@ export function CheckoutForm({ bike, me, deposit }: { bike?: CheckoutBike; me: M
                 .
               </span>
             </label>
+            {quote?.lines.some((line) => !line.inStock) && <p role="alert">Some items exceed available stock. <Link href="/basket">Update your basket</Link> before paying.</p>}
             {error && (
               <p className="formerr" role="alert">
                 {error}
               </p>
             )}
-            <button className="btn btn-red" type="submit" disabled={busy || !quote}>
+            <button className="btn btn-red" type="submit" disabled={busy || !quote || quote.lines.some((line) => !line.inStock)}>
               <Icon name="lock" />
               {busy ? 'Taking you to secure payment…' : bike ? `Pay ${money(dueToday)} and reserve my bike` : `Pay ${money(dueToday)}`}
             </button>

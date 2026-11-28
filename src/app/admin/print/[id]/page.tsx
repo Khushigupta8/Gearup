@@ -162,8 +162,8 @@ export default async function PrintBikePage({ params, searchParams }: { params: 
 
         <ul className="ps-usps">
           <li>No admin fees</li>
-          <li>HPI clear</li>
-          <li>120-point inspection</li>
+          {bike.hpiClearAt && bike.hpiReference && <li>HPI clear · {date(bike.hpiClearAt)}</li>}
+          {bike.inspectionCompletedAt && bike.inspectionReference && <li>120-point inspection · {date(bike.inspectionCompletedAt)}</li>}
           <li>Nationwide delivery</li>
           <li>Part-exchange welcome</li>
         </ul>

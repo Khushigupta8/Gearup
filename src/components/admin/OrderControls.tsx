@@ -48,6 +48,8 @@ export function StatusControls({ orderId, status, hasBike }: { orderId: string; 
     });
 
   if (status === 'pending_payment') return <p className="adm-muted">Waiting for the customer to finish paying. Unpaid holds release after 30 minutes.</p>;
+  if (status === 'completed') return <p className="adm-muted">This sale is complete. Its order and stock status are locked.</p>;
+  if (status === 'payment_review') return <div><p>Payment was received, but stock or the amount needs review. Do not fulfil this order. Contact the customer and refund the payment in Stripe before recording the refund here.</p><button type="button" className="adm-btn" disabled={pending} onClick={() => setConfirm('refunded')}>Record refund</button>{confirm === 'refunded' && <button type="button" className="adm-btn" disabled={pending} onClick={() => run('refunded')}>Confirm payment refunded in Stripe</button>}</div>;
   if (status === 'cancelled' || status === 'refunded') return <p className="adm-muted">This order is {orderStatus[status].label.toLowerCase()}.</p>;
 
   return (
@@ -67,8 +69,7 @@ export function StatusControls({ orderId, status, hasBike }: { orderId: string; 
           </button>
         </p>
       )}
-      {status !== 'completed' &&
-        (confirm === 'cancelled' ? (
+      {(confirm === 'cancelled' ? (
           <p className="adm-confirm">
             {hasBike ? 'The bike goes back on sale. ' : ''}Refund the payment in Stripe as well.{' '}
             <button type="button" className="adm-btn adm-btn-sm adm-btn-red" onClick={() => run('cancelled')} disabled={pending}>

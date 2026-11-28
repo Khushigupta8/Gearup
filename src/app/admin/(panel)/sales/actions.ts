@@ -6,6 +6,8 @@ import { requireStaff } from '@/server/auth';
 import { db } from '@/server/db';
 import { BIKES_TAG } from '@/server/services/bikes';
 import { PRODUCTS_TAG } from '@/server/services/shop';
+import { lockInventory } from '@/server/services/inventory-lock';
+import { canTransitionOrder } from '@/lib/order-transitions';
 
 /** Tick or untick a prep stage. The customer's "Track my bike" page updates straight away. */
 export async function setStage(orderId: string, templateId: string, done: boolean) {
@@ -25,31 +27,32 @@ const statuses = ['reserved', 'in_preparation', 'ready', 'out_for_delivery', 'co
 export async function setOrderStatus(orderId: string, status: (typeof statuses)[number]) {
   const user = await requireStaff();
   z.enum(statuses).parse(status);
-  const order = await db.order.findUnique({ where: { id: orderId }, include: { bike: true, items: true } });
-  if (!order) return;
-  await db.order.update({ where: { id: orderId }, data: { status } });
+  await db.$transaction(async (tx) => {
+    await lockInventory(tx);
+    const order = await tx.order.findUnique({ where: { id: orderId }, include: { bike: true, items: true } });
+    if (!order || !canTransitionOrder(order.status, status)) return;
+    await tx.order.update({ where: { id: orderId }, data: { status } });
 
-  // Cancelling a paid order puts its kit back into stock (once).
-  const wasLive = !['cancelled', 'refunded', 'pending_payment'].includes(order.status);
-  if ((status === 'cancelled' || status === 'refunded') && wasLive && order.items.length) {
-    await db.$transaction(
-      order.items.filter((i) => i.variantId).map((i) => db.productVariant.update({ where: { id: i.variantId! }, data: { stockQty: { increment: i.quantity } } })),
-    );
-    updateTag(PRODUCTS_TAG);
-  }
+    // Cancelling a paid order puts its kit back into stock (once).
+    const wasLive = !['cancelled', 'refunded', 'pending_payment', 'payment_review'].includes(order.status);
+    if ((status === 'cancelled' || status === 'refunded') && wasLive && order.items.length) {
+      for (const item of order.items) if (item.variantId) await tx.productVariant.update({ where: { id: item.variantId }, data: { stockQty: { increment: item.quantity } } });
+    }
 
-  if (order.bike) {
-    if (status === 'completed') {
-      // Sale done: the bike is sold to this customer.
-      await db.bike.update({ where: { id: order.bike.id }, data: { status: 'sold', soldAt: new Date(), soldPrice: order.bike.price, buyerId: order.customerId } });
+    if (order.bike) {
+      if (status === 'completed') {
+        // Sale done: the bike is sold to this customer.
+        await tx.bike.update({ where: { id: order.bike.id }, data: { status: 'sold', soldAt: new Date(), soldPrice: order.bike.price, buyerId: order.customerId } });
+      }
+      if (wasLive && (status === 'cancelled' || status === 'refunded') && order.bike.status === 'reserved') {
+        // Put the bike back on sale.
+        await tx.bike.update({ where: { id: order.bike.id }, data: { status: 'available', reservedAt: null } });
+      }
     }
-    if ((status === 'cancelled' || status === 'refunded') && order.bike.status === 'reserved') {
-      // Put the bike back on sale.
-      await db.bike.update({ where: { id: order.bike.id }, data: { status: 'available', reservedAt: null } });
-    }
-    updateTag(BIKES_TAG);
-  }
-  await db.auditLog.create({ data: { userId: user.id, action: `order.${status}`, entity: 'order', entityId: orderId } });
+    await tx.auditLog.create({ data: { userId: user.id, action: `order.${status}`, entity: 'order', entityId: orderId } });
+  }, { maxWait: 10000, timeout: 15000 });
+  updateTag(BIKES_TAG);
+  updateTag(PRODUCTS_TAG);
   revalidatePath(`/admin/sales/${orderId}`);
   revalidatePath('/admin/sales');
 }

@@ -25,35 +25,35 @@ export default async function InsurancePage({ searchParams }: { searchParams: Pr
 <div>
 <div className="crumbs"><Link href="/">Home</Link><span className="s">/</span><span>Insurance</span></div>
 <h1 className="disp">Bike insurance <em>sorted</em></h1>
-<p className="lede">Compare motorbike insurance quotes from leading UK insurers in minutes, through our trusted insurance partner. Get covered before you collect your bike.</p>
+<p className="lede">Ask our team about insurance for your bike. Online quote comparison is not available yet. Please arrange cover before collecting your bike.</p>
 <div className="ctas"><a href="#quote" className="btn btn-red">Get a quote <Icon name="right" /></a><Link href="/contact" className="btn btn-ghost">Ask our team</Link></div>
 </div>
-<div className="pbox"><b>2 min</b><small>to compare quotes from UK insurers. Free, no obligation.</small></div>
+<div className="pbox"><b>2 min</b><small>to send an enquiry. We will follow up during opening hours.</small></div>
 </div>
 </section>
 <section className="sec" id="quote">
 <div className="wrap">
 <div className="split">
 <div>
-<div className="sh"><div><span className="tag">Get a quote</span><h2 className="disp">Tell us about <em>you &amp; the bike</em></h2><p>We pass your details to our insurance partner, who compares the market and shows you live prices.</p></div></div>
+<div className="sh"><div><span className="tag">Get a quote</span><h2 className="disp">Tell us about <em>you &amp; the bike</em></h2><p>We pass your details to our insurance partner, when the service is available. This form requests a follow-up; it does not generate an instant quote.</p></div></div>
 <LeadForm
   type="insurance"
   className="formcard"
   success={
     <div className="success">
       <Icon name="check" />
-      Thanks. We have your details and will be in touch with your insurance quotes.
+      Thanks. Your insurance enquiry has been saved. Our team will contact you about the available options.
     </div>
   }
 >
 <div className="form">
 <div className="fl"><label htmlFor="ireg">Bike registration</label><div className="plate" style={{ height: '56px', border: '2px solid #d8b200' }}><span><i></i>UK</span><input id="ireg" placeholder="AB12 CDE" maxLength={8} /></div><small>Buying from GearUp? Leave it blank and pick the bike below.</small></div>
 <StockBikeField bikes={bikes} requestedSlug={query.bike} id="ibike" label="Or the GearUp bike you are buying (optional)" />
-<div className="frow"><div className="fl"><label htmlFor="idob">Date of birth</label><input id="idob" placeholder="DD / MM / YYYY" /></div><div className="fl sel"><label htmlFor="ilic">Licence</label><select id="ilic"><option>CBT</option><option>A1</option><option>A2</option><option>Full A</option></select><Icon name="down" /></div></div>
-<div className="frow"><div className="fl"><label htmlFor="ipc">Postcode where the bike is kept</label><input id="ipc" placeholder="e.g. M1 1AA" style={{ textTransform: 'uppercase' }} /></div><div className="fl sel"><label htmlFor="icov">Cover</label><select id="icov"><option>Fully comprehensive</option><option>Third party, fire &amp; theft</option><option>Third party only</option></select><Icon name="down" /></div></div>
-<div className="frow"><div className="fl"><label htmlFor="iem">Email</label><input id="iem" type="email" placeholder="you@example.com" /></div><div className="fl"><label htmlFor="imb">Mobile</label><input id="imb" placeholder="07..." /></div></div>
-<label className="chk"><input type="checkbox" />I agree to my details being shared with GearUp&apos;s insurance partner to provide quotes.</label>
-<button className="btn btn-red" type="submit">Compare quotes <Icon name="right" /></button>
+<div className="frow"><div className="fl"><label htmlFor="idob">Date of birth</label><input id="idob" required placeholder="DD / MM / YYYY" /></div><div className="fl sel"><label htmlFor="ilic">Licence</label><select id="ilic"><option>CBT</option><option>A1</option><option>A2</option><option>Full A</option></select><Icon name="down" /></div></div>
+<div className="frow"><div className="fl"><label htmlFor="ipc">Postcode where the bike is kept</label><input id="ipc" required placeholder="e.g. M1 1AA" style={{ textTransform: 'uppercase' }} /></div><div className="fl sel"><label htmlFor="icov">Cover</label><select id="icov"><option>Fully comprehensive</option><option>Third party, fire &amp; theft</option><option>Third party only</option></select><Icon name="down" /></div></div>
+<div className="frow"><div className="fl"><label htmlFor="iem">Email</label><input id="iem" required type="email" placeholder="you@example.com" /></div><div className="fl"><label htmlFor="imb">Mobile</label><input id="imb" required placeholder="07..." /></div></div>
+<label className="chk"><input type="checkbox" name="insuranceSharing" required />I agree to my details being shared with GearUp&apos;s insurance partner to provide quotes.</label>
+<button className="btn btn-red" type="submit">Request insurance help <Icon name="right" /></button>
 </div>
 </LeadForm>
 </div>

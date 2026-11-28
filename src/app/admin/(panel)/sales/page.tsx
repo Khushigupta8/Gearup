@@ -11,6 +11,7 @@ const requestTime = () => Date.now();
 
 const views = [
   ['active', 'Active'],
+  ['review', 'Payment review'],
   ['bikes', 'Bike reservations'],
   ['kit', 'Kit orders'],
   ['completed', 'Completed'],
@@ -21,7 +22,8 @@ export default async function SalesPage({ searchParams }: { searchParams: Promis
   const { view = 'active' } = await searchParams;
   const now = requestTime();
   const where: Prisma.OrderWhereInput = {
-    ...(view === 'active' ? { status: { in: ['reserved', 'in_preparation', 'ready', 'out_for_delivery'] } } : {}),
+    ...(view === 'active' ? { status: { in: ['payment_review', 'reserved', 'in_preparation', 'ready', 'out_for_delivery'] } } : {}),
+    ...(view === 'review' ? { status: 'payment_review' } : {}),
     ...(view === 'bikes' ? { bikeId: { not: null }, status: { not: 'pending_payment' } } : {}),
     ...(view === 'kit' ? { bikeId: null, status: { not: 'pending_payment' } } : {}),
     ...(view === 'completed' ? { status: 'completed' } : {}),

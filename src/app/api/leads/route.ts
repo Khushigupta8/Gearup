@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { LEAD_PHOTO_MAX_BYTES, LEAD_PHOTO_MAX_COUNT, LEAD_REQUEST_MAX_BYTES } from '@/lib/lead-photos';
 import { db } from '@/server/db';
 import { createLead } from '@/server/services/leads';
+import { validateLead } from '@/lib/lead-validation';
 import { removeLeadPhotos, storeLeadPhotos, type StoredLeadPhoto } from '@/server/services/lead-photos';
 
 export const maxDuration = 60;
@@ -15,6 +16,7 @@ const schema = z.object({
   phone: z.string().trim().max(40).optional(),
   message: z.string().max(5000).optional(),
   fields: z.record(z.string().max(100), z.string().max(2000)).default({}),
+  values: z.record(z.string().max(100), z.string().max(2000)).default({}),
   sourcePage: z.string().max(200).optional(),
   bikeSlug: z.string().max(120).optional(),
   marketingConsent: z.boolean().optional(),
@@ -65,6 +67,13 @@ export async function POST(request: Request) {
 
   // Bots fill every field; pretend it worked.
   if (input.website) return NextResponse.json({ ok: true });
+  if (Object.keys(input.values).length > 60) return NextResponse.json({ error: 'Bad request' }, { status: 400 });
+  const validationError = validateLead(input);
+  if (validationError) return NextResponse.json({ error: validationError }, { status: 400 });
+  // Store explicit consent flags independently of the human-readable checkbox labels.
+  for (const key of ['financeEligibility', 'financeSearch', 'privacyAcknowledged', 'insuranceSharing']) {
+    if (key in input.values) input.fields[key] = input.values[key];
+  }
 
   const phoneDigits = input.phone?.replace(/\D/g, '') ?? '';
   if (!input.email && phoneDigits.length < 7) {

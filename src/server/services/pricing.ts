@@ -1,5 +1,7 @@
 import 'server-only';
 import { db } from '../db';
+import type { Prisma } from '@/generated/prisma/client';
+import { mergeBasketLines } from '@/lib/basket-lines';
 
 export type PricedLine = {
   variantId: string;
@@ -33,11 +35,12 @@ export async function quoteKit(
   input: { variantId: string; qty: number }[],
   code: string | undefined,
   opts: { withBike: boolean; fulfilment: 'collection' | 'delivery' },
+  client: Prisma.TransactionClient = db,
 ): Promise<KitQuote> {
-  const wanted = input.filter((l) => l.qty > 0).slice(0, 30);
-  const variants = await db.productVariant.findMany({
+  const wanted = mergeBasketLines(input);
+  const variants = await client.productVariant.findMany({
     where: { id: { in: wanted.map((l) => l.variantId) }, product: { active: true } },
-    include: { product: true },
+    include: { product: true, orderItems: { where: { order: { status: 'pending_payment', holdExpiresAt: { gt: new Date() } } }, select: { quantity: true } } },
   });
 
   const lines: PricedLine[] = [];
@@ -48,7 +51,8 @@ export async function quoteKit(
       missing.push(l.variantId);
       continue;
     }
-    const qty = Math.min(10, Math.max(1, Math.round(l.qty)));
+    const qty = l.qty;
+    const held = v.orderItems.reduce((sum, item) => sum + item.quantity, 0);
     lines.push({
       variantId: v.id,
       productSlug: v.product.slug,
@@ -58,7 +62,7 @@ export async function quoteKit(
       unit: v.price,
       qty,
       total: v.price * qty,
-      inStock: v.stockQty >= qty,
+      inStock: Number.isInteger(qty) && qty > 0 && qty <= 10 && v.stockQty - held >= qty,
     });
   }
   const itemsTotal = lines.reduce((s, l) => s + l.total, 0);
@@ -67,7 +71,7 @@ export async function quoteKit(
   let codeError: string | null = null;
   const c = code?.trim().toUpperCase();
   if (c) {
-    const dc = await db.discountCode.findUnique({ where: { code: c } });
+    const dc = await client.discountCode.findUnique({ where: { code: c } });
     const now = new Date();
     if (!dc || !dc.active || (dc.startsAt && dc.startsAt > now) || (dc.endsAt && dc.endsAt < now)) codeError = 'That code isn’t valid.';
     else if (dc.maxUses != null && dc.timesUsed >= dc.maxUses) codeError = 'That code has been used up.';

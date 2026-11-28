@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { telHref, waHref } from '@/lib/cms';
 import { getBusiness, pageMetadata } from '@/server/services/cms';
 import { FaqList } from '@/components/cms/FaqList';
 import Link from 'next/link';
@@ -34,18 +35,18 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
 <p className="lede">Questions about a bike, finance or delivery? Call, WhatsApp or send a message. You will get a straight answer from someone who knows the bike.</p>
 </div>
 <div className="pbox">
-<span className="open">Showroom open today</span>
-<div><b>0744 072 1478</b><small>Mon to Fri 9:00 to 17:30 · Sat 9:00 to 16:00</small></div>
-<div className="row"><a href="tel:07440721478" className="btn btn-red"><Icon name="phone" />Call now</a><a href="#enquiry" className="btn btn-ghost"><Icon name="chat" />WhatsApp</a></div>
+<span className="open">Showroom enquiries</span>
+<div><b>{biz.phone}</b><small>{biz.hours.map(([day, time]) => `${day} ${time}`).join(" · ")}</small></div>
+<div className="row"><a href={telHref(biz.phone)} className="btn btn-red"><Icon name="phone" />Call now</a><a href={waHref(biz.whatsapp)} className="btn btn-ghost"><Icon name="chat" />WhatsApp</a></div>
 </div>
 </div>
 </section>
 <section className="sec" style={{ paddingTop: 0 }}>
 <div className="wrap">
 <div className="cblocks four">
-<div className="cblock"><span className="ic"><Icon name="phone" /></span><div><b>Call us</b><a href="tel:07440721478" className="go">0744 072 1478</a><span>Sales, finance and workshop</span></div></div>
-<div className="cblock wa"><span className="ic"><Icon name="chat" /></span><div><b>WhatsApp</b><a href="#enquiry" className="go">0744 072 1478</a><span>Send photos of your part-ex</span></div></div>
-<div className="cblock"><span className="ic"><Icon name="mail" /></span><div><b>Email</b><a href="mailto:sales@gearupmotorcycles.co.uk" className="go">sales@gearup&shy;motorcycles.co.uk</a><span>We reply in opening hours</span></div></div>
+<div className="cblock"><span className="ic"><Icon name="phone" /></span><div><b>Call us</b><a href={telHref(biz.phone)} className="go">{biz.phone}</a><span>Sales, finance and workshop</span></div></div>
+<div className="cblock wa"><span className="ic"><Icon name="chat" /></span><div><b>WhatsApp</b><a href={waHref(biz.whatsapp)} className="go">{biz.phone}</a><span>Send photos of your part-ex</span></div></div>
+<div className="cblock"><span className="ic"><Icon name="mail" /></span><div><b>Email</b><a href={`mailto:${biz.email}`} className="go">{biz.email}</a><span>We reply in opening hours</span></div></div>
 <div className="cblock"><span className="ic"><Icon name="pin" /></span><div><b>Showroom</b><a href={mapUrl} className="go" target="_blank" rel="noopener">{addrMain}</a><span>{addrRest}</span></div></div>
 </div>
 </div>
@@ -88,8 +89,8 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
 </LeadForm>
 <div className="side stick">
 <div className="hours">
-<h3>Opening hours <span>Open now</span></h3>
-<dl><dt className="today">Monday to Friday</dt><dd className="today">9:00 to 17:30</dd><dt>Saturday</dt><dd>9:00 to 16:00</dd><dt>Sunday</dt><dd>Closed</dd><dt>Bank holidays</dt><dd>Call ahead</dd></dl>
+<h3>Opening hours</h3>
+<dl>{biz.hours.map(([day, time]) => <div key={day} style={{ display: "contents" }}><dt>{day}</dt><dd>{time}</dd></div>)}<dt>Bank holidays</dt><dd>Call ahead</dd></dl>
 <p>Viewings by appointment basis only, so the bike is ready when you arrive.</p>
 </div>
 <div className="mapbox" id="map">

@@ -62,6 +62,7 @@ export async function toggleSavedBike(slug: string): Promise<{ saved: boolean } 
 export async function mySavedSlugs(): Promise<string[]> {
   const user = await getUser();
   if (!user) return [];
+  if (!(await db.user.findUnique({ where: { id: user.id }, select: { emailVerified: true } }))?.emailVerified) return [];
   // Read-only: don't create a customer just because someone is browsing while signed in.
   const customer = await db.customer.findUnique({ where: { userId: user.id }, select: { id: true } });
   if (!customer) return [];

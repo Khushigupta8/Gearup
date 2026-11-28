@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { LeadForm } from '@/components/forms/LeadForm';
 import { Icon } from '@/components/ui/Icon';
 import '@/styles/pages/workshop.css';
+import { workshopDates, workshopTimes } from '@/lib/workshop-booking';
+import { connection } from 'next/server';
 
 export function generateMetadata(): Promise<Metadata> {
   return pageMetadata('/workshop', {
@@ -13,7 +15,9 @@ export function generateMetadata(): Promise<Metadata> {
 });
 }
 
-export default function WorkshopPage() {
+export default async function WorkshopPage() {
+  await connection();
+  const dates = workshopDates();
   return (
     <div className="pg-workshop" style={{ display: 'contents' }}>
 
@@ -67,7 +71,7 @@ export default function WorkshopPage() {
   }
 >
 <h2>Book your bike in</h2>
-<p>Takes two minutes. We text to confirm your slot.</p>
+<p>Choose a preferred day and time. This is a request; we will confirm availability before booking.</p>
 <div className="bsec" style={{ borderTop: 0, paddingTop: 0 }}>
 <div className="h4"><i>1</i>Your bike</div>
 <div className="frow">
@@ -90,9 +94,9 @@ export default function WorkshopPage() {
 <div className="bsec">
 <div className="h4"><i>3</i>Day and time</div>
 <div className="form">
-<div className="fl" style={{ maxWidth: '320px' }}><label htmlFor="wdt">Date</label><div className="sel"><select id="wdt" defaultValue="Wed 18 Nov"><option>Tue 17 Nov</option><option>Wed 18 Nov</option><option>Thu 19 Nov</option><option>Fri 20 Nov</option><option>Sat 21 Nov</option><option>Mon 23 Nov</option></select><Icon name="down" /></div></div>
-<div className="fl"><span className="lbl">Drop-off time</span>
-<div className="slots"><label><input type="radio" name="wtm" /><span><s>9:00</s></span></label><label><input type="radio" name="wtm" defaultChecked /><span>10:00</span></label><label><input type="radio" name="wtm" /><span>11:30</span></label><label><input type="radio" name="wtm" /><span>13:30</span></label><label><input type="radio" name="wtm" /><span>15:00</span></label></div>
+<div className="fl" style={{ maxWidth: '320px' }}><label htmlFor="wdt">Date</label><div className="sel"><select id="wdt" required defaultValue={dates[0]?.value}>{dates.map((date) => <option key={date.value} value={date.value}>{date.label}</option>)}</select><Icon name="down" /></div></div>
+<div className="fl"><span className="lbl">Preferred drop-off time</span>
+<div className="slots" data-q="Preferred drop-off time">{workshopTimes.map((time) => <label key={time}><input type="radio" name="wtm" value={time} defaultChecked={time === "10:00"} /><span>{time}</span></label>)}</div>
 </div>
 </div>
 <label className="chk mt1"><input type="checkbox" />Text me if an earlier slot comes up</label>
@@ -120,11 +124,11 @@ export default function WorkshopPage() {
 <div className="icard dk">
 <span className="ic red"><Icon name="clock" /></span>
 <h3>Workshop hours</h3>
-<table className="hours mt1">
+<table className="hours mt1"><tbody>
 <tr><td>Monday to Friday</td><td>9:00 to 17:30</td></tr>
 <tr><td>Saturday</td><td>9:00 to 16:00</td></tr>
 <tr className="c"><td>Sunday</td><td>Closed</td></tr>
-</table>
+</tbody></table>
 <p style={{ marginTop: '14px' }}>Rather talk? Call <b style={{ color: '#fff' }}>0744 072 1478</b>.</p>
 </div>
 </aside>

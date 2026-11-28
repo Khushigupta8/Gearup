@@ -23,6 +23,10 @@ export type BikeFormValues = {
   owners?: number | null;
   keys?: number | null;
   motExpiry?: string | null; // yyyy-mm-dd
+  hpiClearAt?: string | null;
+  hpiReference?: string | null;
+  inspectionCompletedAt?: string | null;
+  inspectionReference?: string | null;
   showroomLocation?: string;
   deliveryAvailable?: boolean;
   pricePounds?: number;
@@ -289,6 +293,16 @@ export function BikeForm({ values = {}, mode }: { values?: BikeFormValues; mode:
         </div>
       </section>
 
+      <section className="adm-card adm-sec">
+        <h2>Completed checks</h2>
+        <p className="adm-muted">Only record completed checks backed by a report. The print sheet shows clearance and inspection claims when both the date and reference are present.</p>
+        <div className="adm-grid">
+          <Field label="HPI clear: check date" name="hpiClearAt" error={err('hpiClearAt')}><input id="hpiClearAt" name="hpiClearAt" type="date" defaultValue={v.hpiClearAt ?? ''} /></Field>
+          <Field label="HPI report reference" name="hpiReference" error={err('hpiReference')}><input id="hpiReference" name="hpiReference" maxLength={300} defaultValue={v.hpiReference ?? ''} /></Field>
+          <Field label="120-point inspection completed" name="inspectionCompletedAt" error={err('inspectionCompletedAt')}><input id="inspectionCompletedAt" name="inspectionCompletedAt" type="date" defaultValue={v.inspectionCompletedAt ?? ''} /></Field>
+          <Field label="Inspection report reference" name="inspectionReference" error={err('inspectionReference')}><input id="inspectionReference" name="inspectionReference" maxLength={300} defaultValue={v.inspectionReference ?? ''} /></Field>
+        </div>
+      </section>
       <section className="adm-card adm-sec">
         <h2>Description</h2>
         <div className="adm-grid">

@@ -6,12 +6,14 @@ import { z } from 'zod';
 import { requireStaff } from '@/server/auth';
 import { db } from '@/server/db';
 import { PRODUCTS_TAG } from '@/server/services/shop';
+import { poundsToPence } from '@/lib/money-input';
+import { lockInventory } from '@/server/services/inventory-lock';
 
 export type ShopResult = { ok: true; message?: string } | { ok: false; error: string } | null;
 
 const text = z.string().trim().max(300).transform((v) => v || null);
-const pence = z.preprocess((v) => Math.round(Number(String(v ?? '').replace(/[^0-9.]/g, '')) * 100), z.number().int().min(0).max(10_000_000));
-const optPence = z.preprocess((v) => (String(v ?? '').trim() === '' ? null : Math.round(Number(String(v).replace(/[^0-9.]/g, '')) * 100)), z.number().int().min(0).nullable());
+const pence = z.preprocess(poundsToPence, z.number().int().min(0).max(10_000_000));
+const optPence = z.preprocess((v) => (String(v ?? '').trim() === '' ? null : poundsToPence(v)), z.number().int().min(0).max(10_000_000).nullable());
 
 const productSchema = z.object({
   id: z.string().optional(),
@@ -40,31 +42,34 @@ export async function saveProduct(_prev: ShopResult, form: FormData): Promise<Sh
     const m = /^variant\[(\d+)\]\[(\w+)\]$/.exec(k);
     if (m) rows.set(m[1], { ...(rows.get(m[1]) ?? {}), [m[2]]: String(v) });
   }
-  const variants = [...rows.values()]
-    .filter((r) => r.name?.trim() || r.price?.trim())
-    .map((r) =>
-      z
-        .object({ id: z.string().optional(), name: z.string().trim().min(1).max(40), price: pence, wasPrice: optPence, stock: z.coerce.number().int().min(0).max(9999), remove: z.string().optional() })
-        .parse({ ...r, id: r.id || undefined }),
-    );
+  const variantSchema = z.object({ id: z.string().optional(), name: z.string().trim().min(1).max(40), price: pence, wasPrice: optPence, stock: z.coerce.number().int().min(0).max(9999), remove: z.string().optional() });
+  const validated = z.array(variantSchema).max(100).safeParse([...rows.values()].map((r) => ({ ...r, id: r.id || undefined })));
+  if (!validated.success) return { ok: false, error: 'Check each size: add a name, a valid price (e.g. 25.00), and a whole stock quantity from 0 to 9999.' };
+  const variants = validated.data;
   if (!variants.filter((v) => !v.remove).length) return { ok: false, error: 'Add at least one size/price (use "Standard" if it has no sizes).' };
 
   const data = { ...d, images: image ? [image] : [] };
-  const product = id
-    ? await db.product.update({ where: { id }, data })
-    : await db.product.create({ data: { ...data, slug: `${slugify(d.name)}-${Date.now().toString(36).slice(-4)}` } });
+  const existingIds = variants.flatMap((v) => v.id ? [v.id] : []);
+  if (existingIds.length && (!id || await db.productVariant.count({ where: { id: { in: existingIds }, productId: id } }) !== existingIds.length)) return { ok: false, error: 'A size does not belong to this product. Refresh and try again.' };
+  const product = await db.$transaction(async (tx) => {
+    await lockInventory(tx);
+    const product = id
+      ? await tx.product.update({ where: { id }, data })
+      : await tx.product.create({ data: { ...data, slug: `${slugify(d.name)}-${crypto.randomUUID().slice(0, 8)}` } });
 
-  for (const v of variants) {
-    if (v.id && v.remove) {
-      const used = await db.orderItem.count({ where: { variantId: v.id } });
-      if (used) await db.productVariant.update({ where: { id: v.id }, data: { stockQty: 0 } });
-      else await db.productVariant.delete({ where: { id: v.id } });
-    } else if (v.id) {
-      await db.productVariant.update({ where: { id: v.id }, data: { name: v.name, price: v.price, wasPrice: v.wasPrice, stockQty: v.stock } });
-    } else if (!v.remove) {
-      await db.productVariant.create({ data: { productId: product.id, name: v.name, price: v.price, wasPrice: v.wasPrice, stockQty: v.stock } });
+    for (const v of variants) {
+      if (v.id && v.remove) {
+        const used = await tx.orderItem.count({ where: { variantId: v.id } });
+        if (used) await tx.productVariant.update({ where: { id: v.id }, data: { stockQty: 0 } });
+        else await tx.productVariant.delete({ where: { id: v.id } });
+      } else if (v.id) {
+        await tx.productVariant.update({ where: { id: v.id }, data: { name: v.name, price: v.price, wasPrice: v.wasPrice, stockQty: v.stock } });
+      } else if (!v.remove) {
+        await tx.productVariant.create({ data: { productId: product.id, name: v.name, price: v.price, wasPrice: v.wasPrice, stockQty: v.stock } });
+      }
     }
-  }
+    return product;
+  });
   updateTag(PRODUCTS_TAG);
   revalidatePath('/admin/accessories');
   if (!id) redirect(`/admin/accessories/${product.id}?created=1`);

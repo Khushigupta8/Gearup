@@ -2,6 +2,7 @@
 
 export const orderStatus = {
   pending_payment: { label: 'Awaiting payment', pill: '' },
+  payment_review: { label: 'Payment received · under review', pill: 'r' },
   reserved: { label: 'Reserved', pill: 'r' },
   in_preparation: { label: 'In prep', pill: 'r' },
   ready: { label: 'Ready', pill: 'g' },

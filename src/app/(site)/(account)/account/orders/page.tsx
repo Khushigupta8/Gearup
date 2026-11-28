@@ -21,12 +21,14 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
     include: { bike: { select: { year: true, make: true, model: true } }, items: true },
   });
 
+  const paidOrder = orders.find((order) => order.reference === paid && order.amountPaid > 0);
+
   return (
     <AccountPage crumb="My orders" title="My" em="orders">
-      {paid && (
+      {paidOrder && (
         <div className="success">
           <Icon name="check" />
-          Payment received for order {paid}. Thank you! We will text you when your kit is on its way.
+          Payment received for order {paidOrder.reference}. {paidOrder.status === 'payment_review' ? 'Your order needs review and is not confirmed yet. We will contact you to resolve this or arrange a refund.' : 'Thank you! We will contact you when your order is ready.'}
         </div>
       )}
       <div className="apanel">

@@ -50,6 +50,10 @@ export const bikeFormSchema = z.object({
   owners: optInt(0, 50),
   keys: optInt(0, 10),
   motExpiry: z.preprocess((v) => (v ? new Date(String(v)) : null), z.date().nullable()),
+  hpiClearAt: z.preprocess((v) => (v ? new Date(String(v)) : null), z.date().refine((date) => date <= new Date(), 'Use the date the check was completed.').nullable()),
+  hpiReference: z.string().trim().max(300).optional(),
+  inspectionCompletedAt: z.preprocess((v) => (v ? new Date(String(v)) : null), z.date().refine((date) => date <= new Date(), 'Use the date the inspection was completed.').nullable()),
+  inspectionReference: z.string().trim().max(300).optional(),
   showroomLocation: z.string().trim().min(2, 'Enter a showroom location').max(80, 'Use 80 characters or fewer'),
   deliveryAvailable: bool,
 
@@ -74,6 +78,10 @@ export const bikeFormSchema = z.object({
   historyText: z.string().optional(),
   seoTitle: text,
   seoDescription: text,
+}).superRefine((bike, ctx) => {
+  for (const [date, reference] of [['hpiClearAt', 'hpiReference'], ['inspectionCompletedAt', 'inspectionReference']] as const) {
+    if (Boolean(bike[date]) !== Boolean(bike[reference])) ctx.addIssue({ code: 'custom', path: [reference], message: 'Add both the completed date and report reference, or leave both blank.' });
+  }
 });
 
 export type BikeFormInput = z.infer<typeof bikeFormSchema>;

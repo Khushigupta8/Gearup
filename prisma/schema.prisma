@@ -271,6 +271,10 @@ model Bike {
   specRows         Json? // [[label, value], ...]
   highlights       String[]
   inspectionReport Json? // { date, results: [[area, result]] } until the PDI checklist (Phase 2)
+  hpiClearAt DateTime?
+  hpiReference String?
+  inspectionCompletedAt DateTime?
+  inspectionReference String?
   videoUrl         String? // walkaround video: an uploaded file (Vercel Blob) or a YouTube / Vimeo link
   cutoutUrl        String? // bike on a transparent background, for the home hero and showcase
   seoTitle         String?
@@ -410,6 +414,7 @@ enum Fulfilment {
 
 enum OrderStatus {
   pending_payment
+  payment_review
   reserved
   in_preparation
   ready

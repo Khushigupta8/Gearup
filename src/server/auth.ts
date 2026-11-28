@@ -7,7 +7,6 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import type { Role } from '@/generated/prisma/client';
 import { db } from './db';
-import { customerForUser } from './services/customers';
 import { renderEmail, sendEmail } from './services/email';
 
 export const auth = betterAuth({
@@ -24,14 +23,12 @@ export const auth = betterAuth({
       await sendEmail({ to: user.email, subject: 'Reset your GearUp password', ...mail });
     },
   },
-  databaseHooks: {
-    user: {
-      create: {
-        // Every website account gets a CRM customer (joined up with any earlier enquiries by email).
-        after: async (user) => {
-          await customerForUser(user);
-        },
-      },
+  emailVerification: {
+    sendOnSignUp: false,
+    sendVerificationEmail: async ({ user, url }) => {
+      const mail = renderEmail({ heading: 'Verify your email', paragraphs: ['Confirm this email address to access your existing GearUp customer records.'], cta: { label: 'Verify email', href: url } });
+      const result = await sendEmail({ to: user.email, subject: 'Verify your GearUp email', ...mail });
+      if (!result.sent) throw new Error('Verification email could not be sent. Please try again later.');
     },
   },
   user: {
